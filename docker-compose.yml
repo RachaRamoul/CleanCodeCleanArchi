@@ -1,22 +1,15 @@
 version: '3'
 services:
-  backend:
+  app:
     build: .
-    container_name: backend
+    container_name: fullstack_app
     ports:
-      - "3000:3000"
-    depends_on:
-      - db
-    environment:
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_USER: postgres
-      DB_PASSWORD: postgres
-      DB_DATABASE: user_db
+      - "3000:3000"  # Port du backend
     volumes:
       - .:/usr/src/app
+    environment:
+      - NODE_ENV=development
     command: npm run start:dev
-
   db:
     image: postgres
     container_name: db

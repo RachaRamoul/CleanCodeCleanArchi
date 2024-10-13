@@ -2,17 +2,17 @@ import express, { Request, Response } from 'express';
 import { AddUserUseCase } from '../../../application/usecases/add-user.usecase';
 import { ListUsersUseCase } from '../../../application/usecases/list-users.usecase';
 import { PostgresUserRepository } from '../../repositories/postgres/user.repository';
-import path from 'path'; // Ajoute cela pour servir les fichiers statiques
+import path from 'path';
 
 const app = express();
 app.use(express.json());
 
-// Servir les fichiers statiques (comme index.html) depuis le dossier frontend
-app.use(express.static(path.join(__dirname, '../../../frontend')));
+// Utilise le dossier "dist" de React pour servir les fichiers statiques
+app.use(express.static(path.join(__dirname, '../../../infrastructure/react/dist')));
 
-// Route pour l'index.html (facultatif si le fichier est déjà servi comme fichier statique)
-app.get('/', (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, '../../../frontend/index.html'));
+// Route pour servir l'index.html de React
+app.get('*', (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '../../../infrastructure/react/dist/index.html'));
 });
 
 const userRepository = new PostgresUserRepository();

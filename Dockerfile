@@ -1,20 +1,26 @@
-# Utiliser l'image Node.js
+# Utiliser une image Node.js
 FROM node:16
 
-# Définir le répertoire de travail
+# Définir le répertoire de travail pour le backend
 WORKDIR /usr/src/app
 
-# Copier les fichiers package.json et package-lock.json
+# Copier les fichiers package.json et installer les dépendances
 COPY package*.json ./
+RUN npm install
 
-# Installer les dépendances, y compris les types pour pg et express
-RUN npm install && npm install --save-dev @types/express @types/pg
-
-# Copier tout le contenu du projet
+# Copier tout le code du backend
 COPY . .
 
-# Exposer le port de l'application
+# Construire le frontend React
+WORKDIR /usr/src/app/src/infrastructure/react
+RUN npm install
+RUN npm run build
+
+# Retourner au répertoire backend pour lancer l'application
+WORKDIR /usr/src/app
+
+# Exposer le port du backend (par exemple NestJS ou Express)
 EXPOSE 3000
 
-# Lancer l'application
+# Lancer l'application backend
 CMD ["npm", "run", "start:dev"]
