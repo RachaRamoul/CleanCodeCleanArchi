@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const HomePage: React.FC = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:3000/users')
+    fetch('http://localhost:8000/users')
       .then((response) => response.json())
       .then((data) => setUsers(data))
       .catch((error) => console.error('Erreur:', error));
@@ -20,6 +21,10 @@ const HomePage: React.FC = () => {
           </li>
         ))}
       </ul>
+      <h1>Ajouter un utilisateur</h1>
+      <Link to="/add-user">
+        <button>Ajouter un utilisateur</button>
+      </Link>
     </div>
   );
 };

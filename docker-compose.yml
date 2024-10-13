@@ -1,15 +1,32 @@
 version: '3'
 services:
-  app:
+  backend:
     build: .
-    container_name: fullstack_app
+    container_name: backend
     ports:
-      - "3000:3000"  # Port du backend
+      - "8000:8000"  # Le backend est accessible sur le port 8000
     volumes:
       - .:/usr/src/app
+    depends_on:
+      - db
     environment:
       - NODE_ENV=development
+      - DB_HOST=db
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_DATABASE=user_db
     command: npm run start:dev
+
+  frontend:
+    build:
+      context: ./src/infrastructure/react  # Le répertoire du frontend React
+    container_name: frontend
+    ports:
+      - "3000:3000"  # Le frontend Vite est accessible sur le port 3000
+    volumes:
+      - ./src/infrastructure/react:/usr/src/app
+    command: npm run dev
+
   db:
     image: postgres
     container_name: db
