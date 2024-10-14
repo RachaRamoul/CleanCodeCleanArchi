@@ -1,8 +1,8 @@
 import { User } from '../../domain/entities/user.entity';
-import { UserRepository } from '../repositories/user.repository';
+import { IUserRepository } from '../repositories/user.repository';
 
 export class ListUsersUseCase {
-  constructor(private repository: UserRepository) {}
+  constructor(private repository: IUserRepository) {}
 
   async execute(): Promise<User[]> {
     return await this.repository.listUsers();

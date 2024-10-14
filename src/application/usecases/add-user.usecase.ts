@@ -1,11 +1,10 @@
-import { UserRepository } from '../repositories/user.repository';
+import { IUserRepository } from '../repositories/user.repository';
 import { User } from '../../domain/entities/user.entity';
-
 export class AddUserUseCase {
-  constructor(private repository: UserRepository) {}
+  constructor(private repository: IUserRepository) {}
 
   async execute(firstName: string, lastName: string): Promise<void> {
-    const user = new User(Date.now().toString(), firstName, lastName);
-    await this.repository.addUser(user);
+    const user = new User('', firstName, lastName);
+    await this.repository.save(user);
   }
 }
