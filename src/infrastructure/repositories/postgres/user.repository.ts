@@ -1,35 +1,29 @@
-import { Pool } from 'pg';
-import { UserRepository } from '../../../application/repositories/user.repository';
 import { User } from '../../../domain/entities/user.entity';
+import { UserEntity } from '../../persistence/entities/user.entity-persistence';
+import { UserMapper } from '../../persistence/mappers/user.mapper';
+import { AppDataSource } from '../../config/database.config';
+import { IUserRepository } from '../../../application/repositories/user.repository';
 
-export class PostgresUserRepository implements UserRepository {
-  private pool: Pool;
+export class PostgresUserRepository implements IUserRepository {
+  private userRepository = AppDataSource.getRepository(UserEntity);
 
-  constructor() {
-    this.pool = new Pool({
-      host: process.env.DB_HOST,
-      port: parseInt(process.env.DB_PORT || '5432'),
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
-    });
+  async findById(id: string): Promise<User | null> {
+    const userEntity = await this.userRepository.findOneBy({ id });
+    return userEntity ? UserMapper.toDomain(userEntity) : null;
   }
 
-  async addUser(user: User): Promise<void> {
-    await this.pool.query(
-      'INSERT INTO users (id, first_name, last_name) VALUES ($1, $2, $3)',
-      [user.id, user.firstName, user.lastName]
-    );
+  async save(user: User): Promise<User> {
+    const userEntity = UserMapper.toModel(user);
+    const savedUserEntity = await this.userRepository.save(userEntity);
+    return UserMapper.toDomain(savedUserEntity);
   }
 
   async listUsers(): Promise<User[]> {
-    const result = await this.pool.query('SELECT id, first_name, last_name FROM users');
-    return result.rows.map((row: { id: string, first_name: string, last_name: string }) => 
-      new User(row.id, row.first_name, row.last_name)
-    );
+    const userEntities = await this.userRepository.find();
+    return userEntities.map((userEntity) => UserMapper.toDomain(userEntity));
   }
 
   async removeUser(id: string): Promise<void> {
-    await this.pool.query('DELETE FROM users WHERE id = $1', [id]);
+    await this.userRepository.delete({ id });
   }
 }

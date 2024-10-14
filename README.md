@@ -7,8 +7,14 @@
 
 ## Setup
 
-1. Install dependencies:
+1. Lancer le projet
 
    ```bash
-   npm install
+   docker-compose up --build
+   ```
+
+2. Lancer les migrations
+
+   ```bash
+   make db-run-migration 
    ```
