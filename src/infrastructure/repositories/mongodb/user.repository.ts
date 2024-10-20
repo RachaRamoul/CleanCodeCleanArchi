@@ -1,12 +1,12 @@
 import { User } from '../../../domain/entities/user.entity';
-import { UserEntity } from '../../persistence/entities/user.entity-persistence';
-import { UserMapper } from '../../persistence/mappers/user.mapper';
+import { UserMongoEntity } from '../../persistence/entities/user.entity-mongo';
+import { UserMapper } from '../../persistence/mappers/user.mapper-postgres';
 import { AppDataSource } from '../../config/database.config';
 import { IUserRepository } from '../../../application/repositories/user.repository';
 import { ObjectId } from 'mongodb';
 
 export class MongoUserRepository implements IUserRepository {
-  private userRepository = AppDataSource.getMongoRepository(UserEntity);
+  private userRepository = AppDataSource.getMongoRepository(UserMongoEntity);
 
   async findById(id: string): Promise<User | null> {
     const userEntity = await this.userRepository.findOne({ where: { _id: new ObjectId(id) } });

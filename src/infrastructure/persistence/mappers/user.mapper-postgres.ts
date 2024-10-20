@@ -1,13 +1,13 @@
 import { User } from '../../../domain/entities/user.entity';
-import { UserEntity } from '../entities/user.entity-persistence';
+import { UserPostgresEntity } from '../entities/user.entity-postgres';
 
 export class UserMapper {
-  static toDomain(userEntity: UserEntity): User {
+  static toDomain(userEntity: UserPostgresEntity): User {
     return new User(userEntity.id, userEntity.firstName, userEntity.lastName);
   }
 
-  static toModel(user: User): UserEntity {
-    const userEntity = new UserEntity();
+  static toModel(user: User): UserPostgresEntity {
+    const userEntity = new UserPostgresEntity();
     userEntity.firstName = user.firstName;
     userEntity.lastName = user.lastName;
     return userEntity;

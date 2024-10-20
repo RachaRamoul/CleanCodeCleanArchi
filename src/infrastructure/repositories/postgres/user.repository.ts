@@ -1,11 +1,11 @@
 import { User } from '../../../domain/entities/user.entity';
-import { UserEntity } from '../../persistence/entities/user.entity-persistence';
-import { UserMapper } from '../../persistence/mappers/user.mapper';
+import { UserPostgresEntity } from '../../persistence/entities/user.entity-postgres';
+import { UserMapper } from '../../persistence/mappers/user.mapper-postgres';
 import { AppDataSource } from '../../config/database.config';
 import { IUserRepository } from '../../../application/repositories/user.repository';
 
 export class PostgresUserRepository implements IUserRepository {
-  private userRepository = AppDataSource.getRepository(UserEntity);
+  private userRepository = AppDataSource.getRepository(UserPostgresEntity);
 
   async findById(id: string): Promise<User | null> {
     const userEntity = await this.userRepository.findOneBy({ id });

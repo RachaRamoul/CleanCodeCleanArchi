@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
 import { AddUserUseCase } from '../../../../application/usecases/add-user.usecase';
 import { ListUsersUseCase } from '../../../../application/usecases/list-users.usecase';
-import { PostgresUserRepository } from '../../../../infrastructure/repositories/postgres/user.repository';
-import { MongoUserRepository } from '../../../../infrastructure/repositories/mongodb/user.repository';
+import {repositories} from '../../../repositories/index';
 
-const userRepository = new MongoUserRepository();
+const {UserRepository} = repositories();
+
+const userRepository = new UserRepository();
 const addUserUseCase = new AddUserUseCase(userRepository);
 const listUsersUseCase = new ListUsersUseCase(userRepository);
 

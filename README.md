@@ -25,3 +25,9 @@
    ```bash
    make db-run-migration 
    ```
+
+## A savoir
+
+Changer dans le .env la variable d'environnmenet DB_TYPE
+Base de données MongoDB => DB_TYPE=mongodb
+Base de données Postgres => DB_TYPE=postgres

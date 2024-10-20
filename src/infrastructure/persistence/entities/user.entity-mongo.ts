@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, ObjectIdColumn } from 'typeorm'
 import { User } from '../../../domain/entities/user.entity';
 
 @Entity('users')
-export class UserEntity implements User {
+export class UserMongoEntity implements User {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
