@@ -1,4 +1,4 @@
-import app from './infrastructure/frameworks/express/express-framework';
+import app from './infrastructure/frameworks/express/express.server';
 import { AppDataSource } from '../src/infrastructure/config/database.config';
 
 async function bootstrap() {

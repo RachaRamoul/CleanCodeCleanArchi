@@ -13,7 +13,14 @@
    docker-compose up --build
    ```
 
-2. Lancer les migrations
+2. Installer les dépendances du frontend
+
+   ```bash
+   docker-compose run -it frontend /bin/sh
+   npm install 
+   ```
+
+3. Lancer les migrations
 
    ```bash
    make db-run-migration 
