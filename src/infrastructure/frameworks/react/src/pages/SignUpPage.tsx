@@ -9,13 +9,14 @@ const SignUpPage: React.FC = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [siretNumber, setSiretNumber] = useState('');
   const [companyName, setCompanyName] = useState('');
+  const [password, setPassword] = useState(''); // Nouvel état pour le mot de passe
   const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!firstName || !lastName || !email || !phoneNumber || !siretNumber || !companyName) {
-      setError('Tous les champs doivent être remplis.');
+    if (!firstName || !lastName || !email || !phoneNumber || !siretNumber || !companyName || !password) {
+      setError('Tous les champs doivent être remplis, y compris le mot de passe.');
       return;
     }
 
@@ -25,7 +26,7 @@ const SignUpPage: React.FC = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ firstName, lastName, email, phoneNumber, siretNumber, companyName }),
+        body: JSON.stringify({ firstName, lastName, email, phoneNumber, siretNumber, companyName, password }), // Ajout de password
       });
 
       if (!response.ok) {
@@ -33,12 +34,14 @@ const SignUpPage: React.FC = () => {
         throw new Error(message);
       }
 
+      // Réinitialisation des états
       setFirstName('');
       setLastName('');
       setEmail('');
       setPhoneNumber('');
       setSiretNumber('');
       setCompanyName('');
+      setPassword(''); // Réinitialisation de password
       setError('');
       alert('Inscription réussie !');
     } catch (err: unknown) {
@@ -106,6 +109,15 @@ const SignUpPage: React.FC = () => {
               value={companyName}
               onChange={(e) => setCompanyName(e.target.value)}
               placeholder="Nom de l'entreprise"
+              required
+            />
+          </div>
+          <div className="input-group">
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Mot de passe"
               required
             />
           </div>

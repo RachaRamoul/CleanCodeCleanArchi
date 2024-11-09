@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ObjectIdColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { User } from '../../../domain/entities/user.entity';
 
 @Entity('users')
@@ -6,16 +6,34 @@ export class UserMongoEntity implements User {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @ObjectIdColumn()
-  _id?: string;
-
   @Column()
   firstName!: string;
 
   @Column()
   lastName!: string;
 
+  @Column()
+  email!: string;
+
+  @Column()
+  phoneNumber!: string;
+
+  @Column()
+  siretNumber!: string;
+
+  @Column()
+  companyName!: string;
+
+  // Convertir l'entité MongoDB en un objet de domaine User
   toDomain(): User {
-    return new User(this.id, this.firstName, this.lastName);
+    return new User(
+      this.id,
+      this.firstName,
+      this.lastName,
+      this.email,
+      this.phoneNumber,
+      this.siretNumber,
+      this.companyName
+    );
   }
 }
