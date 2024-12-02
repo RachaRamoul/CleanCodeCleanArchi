@@ -1,6 +1,6 @@
 import { User } from '../../../domain/entities/user.entity';
-import { UserMongoEntity } from '../../persistence/entities/user.entity-mongo';
-import { UserMapper } from '../../persistence/mappers/user.mapper-postgres';
+import { UserMongoEntity } from '../../persistence/entities/mongo/user.entity-mongo';
+import { UserMapper } from '../../persistence/mappers/postgres/user.mapper-postgres';
 import { AppDataSource } from '../../config/database.config';
 import { IUserRepository } from '../../../application/repositories/user.repository';
 import { ObjectId } from 'mongodb';

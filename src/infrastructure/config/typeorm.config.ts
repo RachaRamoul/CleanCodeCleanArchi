@@ -15,7 +15,7 @@ export const getDataSourceOptions = (): DataSourceOptions => {
     return {
       type: 'postgres',
       url: process.env.POSTGRES_URL,
-      entities: ['src/infrastructure/persistence/entities/*.entity-postgres.ts'],
+      entities: ['src/infrastructure/persistence/entities/postgres/*.entity-postgres.ts'],
       migrations: ['src/infrastructure/migrations/postgres/*.ts'],
       ...commonConfig,
     };
@@ -24,7 +24,7 @@ export const getDataSourceOptions = (): DataSourceOptions => {
       type: 'mongodb',
       url: process.env.MONGO_URL,
       useUnifiedTopology: true,
-      entities: ['src/infrastructure/persistence/entities/*.entity-mongo.ts'],
+      entities: ['src/infrastructure/persistence/entities/mongo/*.entity-mongo.ts'],
       ...commonConfig,
     };
   }

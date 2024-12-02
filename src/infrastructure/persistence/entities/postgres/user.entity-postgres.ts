@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ObjectIdColumn } from 'typeorm';
-import { User } from '../../../domain/entities/user.entity';
+import { User } from '../../../../domain/entities/user.entity';
 
 @Entity('users')
 export class UserPostgresEntity implements User {
@@ -11,8 +11,4 @@ export class UserPostgresEntity implements User {
 
   @Column()
   lastName!: string;
-
-  toDomain(): User {
-    return new User(this.id, this.firstName, this.lastName);
-  }
 }

@@ -1,5 +1,5 @@
-import { User } from '../../../domain/entities/user.entity';
-import { UserMongoEntity } from '../entities/user.entity-mongo';
+import { User } from '../../../../domain/entities/user.entity';
+import { UserMongoEntity } from '../../entities/mongo/user.entity-mongo';
 
 export class UserMapper {
   static toDomain(userEntity: UserMongoEntity): User {

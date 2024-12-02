@@ -1,5 +1,5 @@
-import { User } from '../../../domain/entities/user.entity';
-import { UserPostgresEntity } from '../entities/user.entity-postgres';
+import { User } from '../../../../domain/entities/user.entity';
+import { UserPostgresEntity } from '../../entities/postgres/user.entity-postgres';
 
 export class UserMapper {
   static toDomain(userEntity: UserPostgresEntity): User {

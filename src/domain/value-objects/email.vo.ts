@@ -1,7 +1,9 @@
+import { InvalidEmail } from "../errors/email.error";
+
 export class Email {
     constructor(public email: string) {
       if (!this.validate(email)) {
-        throw new Error('Invalid email format.');
+        throw new InvalidEmail(email);
       }
       this.email = email;
     }
