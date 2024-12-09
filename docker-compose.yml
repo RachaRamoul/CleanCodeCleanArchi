@@ -2,32 +2,33 @@ version: '3'
 
 services:
   backend:
-    build: .
+    build:
+      context: ./src/infrastructure/
+      dockerfile: frameworks/backend/Dockerfile
     container_name: backend
     ports:
-      - "8000:8000"  # Le backend est accessible sur le port 8000
+      - "8000:8000" 
     depends_on:
       - postgres
-      - mongo
+      - mongodb
     environment:
-      DB_HOST: postgres
-      DB_PORT: 5432
-      DB_USER: postgres
-      DB_PASSWORD: postgres
-      DB_DATABASE: user_db
+      - DB_TYPE=${DB_TYPE}
+      - POSTGRES_URL=${POSTGRES_URL}
+      - MONGO_URL=${MONGO_URL}
     volumes:
-      - .:/usr/src/app
-    command: npm run start:dev
+      - ./src/infrastructure/database:/usr/src/infrastructure/database
+      - ./src/infrastructure/frameworks/backend/${BACKEND_FRAMEWORK}:/usr/src/infrastructure/frameworks/backend/${BACKEND_FRAMEWORK}
+      - ./src/domain:/usr/src/domain
+      - ./src/application:/usr/src/application
 
   frontend:
     build:
-      context: ./src/infrastructure/frameworks/react  # Le répertoire du frontend React
+      context: ./src/infrastructure/frameworks/frontend/react  
     container_name: frontend
     ports:
       - "3000:3000" 
     volumes:
-      - ./src/infrastructure/frameworks/react:/usr/src/app
-    command: npm run dev
+      - ./src/infrastructure/frameworks/frontend/${FRONTEND_FRAMEWORK}:/usr/src/infrastructure/frameworks/frontend/${FRONTEND_FRAMEWORK}
 
   postgres:
     image: postgres
@@ -41,9 +42,9 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     
-  mongo:
+  mongodb:
     image: mongo:5.0
-    container_name: mongo
+    container_name: mongodb
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=password
@@ -59,11 +60,11 @@ services:
     environment:
       - ME_CONFIG_MONGODB_ADMINUSERNAME=root
       - ME_CONFIG_MONGODB_ADMINPASSWORD=password
-      - ME_CONFIG_MONGODB_URL=mongodb://root:password@mongo:27017/triumph?authSource=admin
+      - ME_CONFIG_MONGODB_URL=${MONGO_URL:-mongodb://root:password@mongodb:27017/triumph?authSource=admin}
       - ME_CONFIG_BASICAUTH_USERNAME=mexpress
       - ME_CONFIG_BASICAUTH_PASSWORD=mexpress
-    links:
-      - mongo
+    depends_on:
+      - mongodb
     restart: unless-stopped
     ports:
       - "8081:8081"
@@ -71,5 +72,5 @@ services:
 volumes:
     mongodb_data: {}
     postgres_data: {}
-
+    
 

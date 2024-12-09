@@ -28,6 +28,16 @@
 
 ## A savoir
 
-Changer dans le .env la variable d'environnmenet DB_TYPE
-Base de données MongoDB => DB_TYPE=mongodb
-Base de données Postgres => DB_TYPE=postgres
+DANS LE .env, les variables d'environnement :
+   DB_TYPE
+   - DB_TYPE=mongodb => Base de données MongoDB
+   - DB_TYPE=postgres => Base de données Postgres
+
+   BACKEND_FRAMEWORK (Il faut également modifier le dockerfile du backend ENV FRAMEWORK=${nom_framework} avec ${nom_framework} le nom du framework [express OU nestjs])
+   - BACKEND_FRAMEWORK=express => Serveur express
+   - BACKEND_FRAMEWORK=nestjs => Serveur nestjs
+
+
+AJOUT D'UN REPOSITORY (/database)
+   - Il faut l'intégrer au fichier repository.config.ts (dans le dossier /database)
+
