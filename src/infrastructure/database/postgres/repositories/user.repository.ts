@@ -19,7 +19,7 @@ export class PostgresUserRepository implements IUserRepository {
   }
 
   async listUsers(): Promise<User[]> {
-    const userEntities = await this.userRepository.find();
+    const userEntities: User[] = await this.userRepository.find();
     return userEntities.map((userEntity) => UserMapper.toDomain(userEntity));
   }
 

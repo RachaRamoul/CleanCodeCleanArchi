@@ -9,6 +9,7 @@ export class UsersController {
   @Get('/welcome')
   async welcome() {
     console.log('Welcome to the users controller');
+    return 'Welcome to the users controller';
   }
 
   @Get()

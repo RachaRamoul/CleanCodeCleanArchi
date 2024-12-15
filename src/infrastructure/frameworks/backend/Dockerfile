@@ -1,7 +1,7 @@
 # Utiliser une image Node.js
 FROM node:18
 
-ENV FRAMEWORK=express
+ENV FRAMEWORK=nestjs
 # Définir le répertoire de travail pour le backend
 WORKDIR /usr/src/infrastructure
 

@@ -24,6 +24,10 @@
     },
   },
   "include": [
-    "src/infrastructure/frameworks/backend/nestjs/main.ts",
+    "../../../../../src/**/*",
+    "../../../../infrastructure/database/**/*",
+    "../../../../domain/**/*",
+    "../../../../application/**/*",
+    
   ],
 }
