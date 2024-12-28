@@ -1,5 +1,5 @@
-import { AddUserUseCase } from '../../../../../../application/usecases/add-user.usecase';
-import { ListUsersUseCase } from '../../../../../../application/usecases/list-users.usecase';
+import { AddUserUseCase } from '../../../../../../application/usecases/user/add-user.usecase';
+import { ListUsersUseCase } from '../../../../../../application/usecases/user/list-users.usecase';
 import { repositories } from '../../../../../database/config/repository.config';
 
 const { UserRepository } = repositories();

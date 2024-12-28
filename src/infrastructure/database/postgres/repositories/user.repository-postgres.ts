@@ -1,7 +1,7 @@
 import { User } from '../../../../domain/entities/user.entity';
-import { UserPostgresEntity } from '../persistence/entities/user.entity-postgres';
+import UserPostgresEntity from '../persistence/entities/user.entity-postgres';
 import { UserMapper } from '../persistence/mappers/user.mapper-postgres';
-import { AppDataSource } from '../../config/database.config';
+import { AppDataSource } from '../postgres.config';
 import { IUserRepository } from '../../../../application/repositories/user.repository';
 
 export class PostgresUserRepository implements IUserRepository {

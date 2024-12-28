@@ -1,14 +1,16 @@
 # Utiliser une image Node.js
 FROM node:18
 
-ENV FRAMEWORK=nestjs
+#Choix du framework pour le backend [express, fastify]
+ENV FRAMEWORK=express
+
 # Définir le répertoire de travail pour le backend
 WORKDIR /usr/src/infrastructure
 
 RUN echo "BACKEND_FRAMEWORK is: ${FRAMEWORK}"
 
 COPY ../../database ./database
-# je veux faire un npm install du dossier database
+# Installation des dépendances dans le dossier database
 RUN cd database && npm install
 
 WORKDIR /usr/src/infrastructure/frameworks/backend

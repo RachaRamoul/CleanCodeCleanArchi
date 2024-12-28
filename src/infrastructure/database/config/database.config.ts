@@ -1,16 +1,18 @@
-import { DataSource } from 'typeorm';
-import { getDataSourceOptions } from './typeorm.config';
+import connectMongodb from '../mongodb/mongodb.config';
+import { connectPostgres } from '../postgres/postgres.config';
+import config from './config';
 
-export const AppDataSource = new DataSource(getDataSourceOptions());
-
-export const initializeDB = async () => {
-    try {
-      await AppDataSource.initialize();
-      console.log('Entities:', AppDataSource.entityMetadatas.map((meta) => meta.name));
-      console.log('Data Source has been initialized!');
-    } catch (error) {
-      console.error('Error during Data Source initialization:', error);
-      process.exit(1);
-    }
+const initializeDatabase = async () => {
+    
+  if (config.dbType === 'mongodb') { 
+      console.log('Using MongoDB...');
+      await connectMongodb();
+  } else if (config.dbType === 'postgres') {  
+      console.log('Using PostgreSQL...');   
+      await connectPostgres();
+  } else {
+      throw new Error(`Unsupported Database type : ${config.dbType}`);
   }
-  
+};
+
+export default initializeDatabase;
