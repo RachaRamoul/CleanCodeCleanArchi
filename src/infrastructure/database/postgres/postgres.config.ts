@@ -1,15 +1,35 @@
-import { DataSourceOptions } from 'typeorm';
-require('dotenv').config();
-console.log('process.env.POSTGRES_URL :', process.env.POSTGRES_URL);
+import { DataSourceOptions, DataSource } from 'typeorm';
+import config from '../config/config';
 
-const postgresConfig: DataSourceOptions = {
-    type: 'postgres',
-    url: process.env.POSTGRES_URL || '',
-    entities: [__dirname + '/persistence/entities/*.entity-postgres.ts'],
-    migrations: [__dirname + '/migrations/*.ts'],
-    synchronize: false,
-    logging: true,
-    migrationsRun: true,
-  };
+let AppDataSource: DataSource;
+
+try {
+    const postgresConfig: DataSourceOptions = {
+      type: 'postgres',
+      url: config.postgresURL,
+      entities: [__dirname + '/persistence/entities/*.entity-postgres.ts'],
+      migrations: [__dirname + '/migrations/*.ts'],
+      synchronize: false,
+      logging: true,
+      migrationsRun: true,
+    };
+
+    if ( !postgresConfig ) throw new Error(`The database ${config.dbType} is not supported`);
   
-export default postgresConfig;
+    AppDataSource = new DataSource(postgresConfig);
+
+}catch(error){
+  throw new Error(`Error loading configuration file for database :  ${error}`);
+}
+
+const connectPostgres = async () => {
+    try {
+      await AppDataSource.initialize();
+    } catch (error) {
+      console.error('Error during Data Source initialization:', error);
+      process.exit(1);
+    }
+}
+
+export { AppDataSource, connectPostgres };
+

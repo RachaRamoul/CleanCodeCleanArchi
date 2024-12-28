@@ -1,10 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { ListUsersUseCase } from '../../../../../../application/usecases/list-users.usecase';
-import { AddUserUseCase } from '../../../../../../application/usecases/add-user.usecase';
+import { AddUserUseCase } from '../../../../../../application/usecases/user/add-user.usecase';
+import { ListUsersUseCase } from '../../../../../../application/usecases/user/list-users.usecase';
 import { repositories } from '../../../../../database/config/repository.config';
 
-@Injectable()
-export class UsersService {
+export class UserService {
   private addUserUseCase: AddUserUseCase;
   private listUsersUseCase: ListUsersUseCase;
 
@@ -15,12 +13,11 @@ export class UsersService {
     this.listUsersUseCase = new ListUsersUseCase(userRepository);
   }
 
-  async addUser(firstName: string, lastName: string) {
+  async addUser(firstName: string, lastName: string): Promise<void> {
     await this.addUserUseCase.execute(firstName, lastName);
-    return { message: 'User added' };
   }
 
-  async listUsers() {
+  async listUsers(): Promise<any[]> {
     return await this.listUsersUseCase.execute();
   }
 }
