@@ -11,8 +11,8 @@
   "devDependencies": {
     "@types/mongodb": "^4.0.6",
     "@types/pg": "^8.11.10",
-    "typescript": "^5.7.2",
+    "ts-node": "^10.9.2",
     "typeorm": "^0.3.20",
-    "ts-node": "^10.9.2"
+    "typescript": "^5.7.2"
   }
 }

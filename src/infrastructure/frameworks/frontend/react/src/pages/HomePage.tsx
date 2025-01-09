@@ -1,31 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import {API_BASE_URL} from '../../config/api.config';
-import  {User} from '../../../../../../domain/entities/user.entity'
+import { API_BASE_URL } from '../../config/api.config';
+import { Motorcycle } from '../../../../../../domain/entities/motorcycle.entity';
 
 const HomePage: React.FC = () => {
-  const [users, setUsers] = useState([]);
+  const [motorcycles, setMotorcycles] = useState<Motorcycle[]>([]); // Utilisation du type existant
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}users`)
+    fetch(`${API_BASE_URL}motorcycles`)
       .then((response) => response.json())
-      .then((data) => setUsers(data))
+      .then((data) => setMotorcycles(data))
       .catch((error) => console.error('Erreur:', error));
   }, []);
 
   return (
     <div>
-      <h1>Liste des utilisateurs</h1>
+      <h1>Liste des motos</h1>
       <ul>
-        {users.map((user: User) => (
-          <li key={user.id}>
-            {user.firstName} {user.lastName}
+        {motorcycles.map((motorcycle) => (
+          <li key={motorcycle.motorcycleId}>
+            {motorcycle.modelId} - {motorcycle.status}
           </li>
         ))}
       </ul>
-      <h1>Ajouter un utilisateur</h1>
-      <Link to="/add-user">
-        <button>Ajouter un utilisateur</button>
+      <h1>Ajouter une moto</h1>
+      <Link to="/add-motorcycle">
+        <button>Ajouter une moto</button>
       </Link>
     </div>
   );

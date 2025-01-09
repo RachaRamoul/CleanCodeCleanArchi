@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from '../pages/HomePage';
 import AddUserPage from '../pages/AddUserPage';
+import AddMotorcyclePage from '../pages/AddMotorcyclePage';
 
 const App: React.FC = () => {
   return (
@@ -9,9 +10,12 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/add-user" element={<AddUserPage />} />
+        <Route path="/add-motorcycle" element={<AddMotorcyclePage />} /> 
       </Routes>
     </Router>
   );
 };
 
 export default App;
+
+
