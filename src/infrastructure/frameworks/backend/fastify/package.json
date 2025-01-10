@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "main": "dist/fastify.server.js",
     "scripts": {
-        "start:dev": "nodemon --watch src --exec ts-node src/fastify.server.ts",
+        "start:dev": "nodemon --exec ts-node src/fastify.server.ts",
         "build": "tsc",
         "start": "node dist/server.js"
     },

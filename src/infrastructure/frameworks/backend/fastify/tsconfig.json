@@ -15,5 +15,5 @@
       "sourceMap": true
     },
     "include": ["src/**/*"],
-    "exclude": ["node_modules", "../../../database/mongodb/persistence/entities/user.entity-mongodb.ts"]
+    "exclude": ["node_modules"]
 }
