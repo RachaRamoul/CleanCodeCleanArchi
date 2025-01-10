@@ -1,9 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import router  from './routes/user.routes'
+import router  from './routes/index';
 import initializeDatabase from '../../../../database/config/database.config';
 
-const PORT = 8000;
+const PORT = 8001;
 
 const app = express();
 app.use(express.json());

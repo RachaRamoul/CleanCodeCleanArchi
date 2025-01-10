@@ -1,6 +1,6 @@
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
-import { userRoutes } from './routes/user.routes';
+import registerRoutes from './routes/index';
 import initializeDatabase from '../../../../database/config/database.config';
 
 const PORT = 8000;
@@ -10,7 +10,7 @@ const server = Fastify({ logger: true });
 
 server.register(cors, { origin: '*' });
 
-server.register(userRoutes, { prefix: '/' });
+server.register(registerRoutes, { prefix: '/' });
 
 initializeDatabase()
 .then(() => {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {API_BASE_URL} from '../../config/api.config';
+import {API_BASE_URL_EXPRESS} from '../../config/api.config';
 
 const AddUserPage: React.FC = () => {
   const [firstName, setFirstName] = useState('');
@@ -7,7 +7,7 @@ const AddUserPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await fetch(`${API_BASE_URL}users`, { 
+    await fetch(`${API_BASE_URL_EXPRESS}users`, { 
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
