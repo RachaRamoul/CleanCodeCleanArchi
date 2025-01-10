@@ -2,7 +2,7 @@
 DOCKER_COMPOSE = docker-compose exec backend sh -c
 TYPEORM = typeorm migration:
 MIGRATION_PATH = ./postgres/migrations/
-DB_CONFIG_PATH = -- -d ./config/database.config.ts 
+DB_CONFIG_PATH = -- -d ./postgres/postgres.config.ts 
 
 # Command to generate a migration
 db-generate-migration:
