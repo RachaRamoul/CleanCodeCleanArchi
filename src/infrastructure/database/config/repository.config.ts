@@ -1,22 +1,20 @@
-import {MongoUserRepository} from '../mongodb/repositories/user.repository';
-import { PostgresUserRepository } from '../postgres/repositories/user.repository';
-require('dotenv').config();
-
-const DB_TYPE = process.env.DB_TYPE;
+import {MongoUserRepository} from '../mongodb/repositories/user.repository-mongodb';
+import { PostgresUserRepository } from '../postgres/repositories/user.repository-postgres';
+import config from './config';
 
 type Repositories = {
     UserRepository: typeof PostgresUserRepository | typeof MongoUserRepository;
   };
 
 export const repositories = () : Repositories =>{
-    if(DB_TYPE == 'postgres'){
+    if(config.dbType === 'postgres'){
         return {
             UserRepository : PostgresUserRepository,
         };
-    }else if(DB_TYPE == 'mongodb'){
+    }else if(config.dbType === 'mongodb'){
         return {
             UserRepository : MongoUserRepository
         }
     }
-    throw new Error('DB_TYPE non supporté');
+    throw new Error('Database type is not supported');
 }

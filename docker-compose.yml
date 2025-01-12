@@ -8,6 +8,7 @@ services:
     container_name: backend
     ports:
       - "8000:8000" 
+      - "8001:8001"
     depends_on:
       - postgres
       - mongodb
@@ -17,9 +18,9 @@ services:
       - MONGO_URL=${MONGO_URL}
     volumes:
       - ./src/infrastructure/database:/usr/src/infrastructure/database
-      - /usr/src/infrastructure/frameworks/backend/${BACKEND_FRAMEWORK}/node_modules
-      - /usr/src/infrastructure/database/node_modules
-      - ./src/infrastructure/frameworks/backend/${BACKEND_FRAMEWORK}:/usr/src/infrastructure/frameworks/backend/${BACKEND_FRAMEWORK}
+      - /usr/src/infrastructure/frameworks/backend/database/node_modules
+      - ./src/infrastructure/frameworks/backend/express:/usr/src/infrastructure/frameworks/backend/express
+      - ./src/infrastructure/frameworks/backend/fastify:/usr/src/infrastructure/frameworks/backend/fastify
       - ./src/domain:/usr/src/domain
       - ./src/application:/usr/src/application
 
