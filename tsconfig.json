@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",               // Utilisez CommonJS pour la gestion des modules
+    "target": "es2017",                 // Cibler ES2017 pour plus de compatibilité
+    "strict": true,                     // Activer les vérifications strictes
+    "esModuleInterop": true,            // Pour la compatibilité des modules ES6 et CommonJS
+    "skipLibCheck": true,               // Ignorer les vérifications de types dans les bibliothèques
+    "outDir": "./dist",                 // Répertoire de sortie des fichiers compilés
+    "rootDir": "./src",                 // Répertoire des fichiers source
+    "emitDecoratorMetadata": true,      // Utilisé pour les décorateurs
+    "experimentalDecorators": true,     // Pour activer l'utilisation des décorateurs
+    "jsx": "react-jsx",                 // Activer le support JSX dans TypeScript
+    "moduleResolution": "node"          // Résolution des modules comme Node.js
+  },
+  
+  "include": ["src/**/*"],               // Inclure tous les fichiers dans le répertoire 'src'
+  "exclude": ["node_modules", "dist"]    // Exclure les répertoires 'node_modules' et 'dist'
+}
