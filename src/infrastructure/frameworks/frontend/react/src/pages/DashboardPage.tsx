@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import './DashboardPage.css';
+//import './DashboardPage.css';
 
 const DashboardPage: React.FC = () => {
   return (
