@@ -6,8 +6,7 @@
     "mongodb": "^5.9.2",
     "mongoose": "^8.9.2",
     "pg": "^8.13.1",
-    "reflect-metadata": "^0.2.2",
-    "typeorm": "^0.3.20"
+    "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {
     "@types/mongodb": "^4.0.6",

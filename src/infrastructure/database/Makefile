@@ -7,25 +7,25 @@ DB_CONFIG_PATH = -- -d ./postgres/postgres.config.ts
 # Command to generate a migration
 db-generate-migration:
 	@read -p "Migration name: " name; \
-	$(DOCKER_COMPOSE) "cd ../../../database && npm run ${TYPEORM}generate ${DB_CONFIG_PATH} ${MIGRATION_PATH}$$name"
+	$(DOCKER_COMPOSE) "cd ../../database && npm run ${TYPEORM}generate ${DB_CONFIG_PATH} ${MIGRATION_PATH}$$name"
 
 # Command to create a new migration
 db-create-migration:
 	@read -p "Migration name: " name; \
-	$(DOCKER_COMPOSE) "cd ../../../database && npm run ${TYPEORM}create ${MIGRATION_PATH}$$name"
+	$(DOCKER_COMPOSE) "cd ../../database && npm run ${TYPEORM}create ${MIGRATION_PATH}$$name"
 
 # Command to run migrations
 db-run-migration:
-	$(DOCKER_COMPOSE) "cd ../../../database && npm run ${TYPEORM}run ${DB_CONFIG_PATH}"
+	$(DOCKER_COMPOSE) "cd ../../database && npm run ${TYPEORM}run ${DB_CONFIG_PATH}"
 
 # Command to revert the last migration
 db-revert-migrate:
-	$(DOCKER_COMPOSE) "cd ../../../database && npm run ${TYPEORM}revert ${DB_CONFIG_PATH}"
+	$(DOCKER_COMPOSE) "cd ../../database && npm run ${TYPEORM}revert ${DB_CONFIG_PATH}"
 
 # Command to delete the database and migration files
 db-delete:
 	@echo "Deleting the database..."
-	$(DOCKER_COMPOSE) "cd ../../../database && npm run typeorm schema:drop ${DB_CONFIG_PATH}"
+	$(DOCKER_COMPOSE) "cd ../../database && npm run typeorm schema:drop ${DB_CONFIG_PATH}"
 	@echo "Removing migration files..."
 	@rm -rf $(MIGRATION_PATH)*
 

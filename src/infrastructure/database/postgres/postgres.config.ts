@@ -32,4 +32,3 @@ const connectPostgres = async () => {
 }
 
 export { AppDataSource, connectPostgres };
-
