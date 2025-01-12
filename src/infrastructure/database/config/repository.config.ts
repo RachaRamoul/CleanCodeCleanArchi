@@ -1,10 +1,8 @@
-import {MongoUserRepository} from '../mongodb/repositories/user.repository';
+import {MongoUserRepository} from '../mongodb/repositories/user.repository-mongodb';
 import {MongoMotorcycleRepository} from '../mongodb/repositories/motorcycle.repository';
 import { PostgresMotorcycleRepository } from '../postgres/repositories/motorcycle.repository-postgres';
-import { PostgresUserRepository } from '../postgres/repositories/user.repository';
-require('dotenv').config();
-
-const DB_TYPE = process.env.DB_TYPE;
+import { PostgresUserRepository } from '../postgres/repositories/user.repository-postgres';
+import config from './config';
 
 type Repositories = {
     UserRepository: typeof PostgresUserRepository | typeof MongoUserRepository;
@@ -12,16 +10,16 @@ type Repositories = {
   };
 
 export const repositories = () : Repositories =>{
-    if(DB_TYPE == 'postgres'){
+    if(config.dbType === 'postgres'){
         return {
             UserRepository : PostgresUserRepository,
             MotorcycleRepository : PostgresMotorcycleRepository,
         };
-    }else if(DB_TYPE == 'mongodb'){
+    }else if(config.dbType === 'mongodb'){
         return {
             UserRepository : MongoUserRepository,
             MotorcycleRepository : MongoMotorcycleRepository,
         }
     }
-    throw new Error('DB_TYPE non supporté');
+    throw new Error('Database type is not supported');
 }

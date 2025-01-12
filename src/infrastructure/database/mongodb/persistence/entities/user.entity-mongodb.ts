@@ -1,17 +1,14 @@
-import { Entity, Column, PrimaryGeneratedColumn, ObjectIdColumn } from 'typeorm';
-import { User } from '../../../../../domain/entities/user.entity';
+import mongoose, { Schema, Document } from 'mongoose';
 
-@Entity('users')
-export class UserMongoEntity implements User {
-  @PrimaryGeneratedColumn('uuid')
-  id!: string;
-
-  @ObjectIdColumn()
-  _id?: string;
-
-  @Column()
-  firstName!: string;
-
-  @Column()
-  lastName!: string;
+export interface IUser extends Document {
+    _id: mongoose.Types.ObjectId;
+    firstName: string;
+    lastName: string;
 }
+
+const UserSchema: Schema = new Schema<IUser>({
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+});
+
+export const UserModel = mongoose.model<IUser>('User', UserSchema);

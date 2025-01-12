@@ -1,15 +1,12 @@
 import { User } from '../../../../../domain/entities/user.entity';
-import { UserMongoEntity } from '../entities/user.entity-mongodb';
+import { IUser, UserModel } from '../entities/user.entity-mongodb';
 
 export class UserMapper {
-  static toDomain(userEntity: UserMongoEntity): User {
-    return new User(userEntity.id, userEntity.firstName, userEntity.lastName);
+  static toDomain(userEntity: IUser): User {
+    return new User(userEntity._id.toString(), userEntity.firstName, userEntity.lastName);
   }
 
-  static toModel(user: User): UserMongoEntity {
-    const userEntity = new UserMongoEntity();
-    userEntity.firstName = user.firstName;
-    userEntity.lastName = user.lastName;
-    return userEntity;
+  static toModel(user: User): IUser {
+    return new UserModel(user);
   }
 }

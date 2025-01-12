@@ -1,7 +1,7 @@
 import { Motorcycle } from '../../../../domain/entities/motorcycle.entity';
 import { MotorcyclePostgresEntity } from '../persistence/entities/motorcycle.postgres.entity';
 import { MotorcycleMapper } from '../persistence/mappers/motorcycle.mapper-postgres';
-import { AppDataSource } from '../../config/database.config';
+import { AppDataSource } from '../postgres.config';
 import { IMotorcycleRepository } from '../../../../application/repositories/motorcycle.repository';
 
 export class PostgresMotorcycleRepository implements IMotorcycleRepository {
