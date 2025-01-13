@@ -1,32 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import {API_BASE_URL_EXPRESS} from '../../config/api.config';
-import {User} from '../../../../domain/entities/user.entity';
 
-const HomePage: React.FC = () => {
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    fetch(`${API_BASE_URL_EXPRESS}users`)
-      .then((response) => response.json())
-      .then((data) => setUsers(data))
-      .catch((error) => console.error('Erreur:', error));
-  }, []);
-
+const HomePage = () => {
   return (
-    <div>
-      <h1>Liste des utilisateurs</h1>
-      <ul>
-        {users.map((user: User) => (
-          <li key={user.id}>
-            {user.firstName} {user.lastName}
-          </li>
-        ))}
-      </ul>
-      <h1>Ajouter un utilisateur</h1>
-      <Link to="/add-user">
-        <button>Ajouter un utilisateur</button>
-      </Link>
+    <div className="home">
+      <h1>Gestion de stock des pièces détachées</h1>
+      <nav className="home-links">
+        <Link to="/parts">Gérer les pièces détachées</Link>
+        <Link to="/add-part">Ajouter une pièce détachée</Link>
+      </nav>
     </div>
   );
 };
