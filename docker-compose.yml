@@ -15,10 +15,11 @@ services:
       - DB_TYPE=${DB_TYPE}
       - POSTGRES_URL=${POSTGRES_URL}
       - MONGO_URL=${MONGO_URL}
+      - BACKEND_FRAMEWORK=${BACKEND_FRAMEWORK}
     volumes:
       - ./src/infrastructure/database:/usr/src/infrastructure/database
+      - /usr/src/infrastructure/frameworks/backend/database/node_modules
       - /usr/src/infrastructure/frameworks/backend/${BACKEND_FRAMEWORK}/node_modules
-      - /usr/src/infrastructure/database/node_modules
       - ./src/infrastructure/frameworks/backend/${BACKEND_FRAMEWORK}:/usr/src/infrastructure/frameworks/backend/${BACKEND_FRAMEWORK}
       - ./src/domain:/usr/src/domain
       - ./src/application:/usr/src/application

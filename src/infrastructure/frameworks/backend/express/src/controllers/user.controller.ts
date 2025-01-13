@@ -1,21 +1,23 @@
 import { Request, Response } from 'express';
-import { AddUserUseCase } from '../../../../../../application/usecases/add-user.usecase';
-import { ListUsersUseCase } from '../../../../../../application/usecases/list-users.usecase';
-import {repositories} from '../../../../../database/config/repository.config';
+import { UserService } from '../services/user.service';
 
-const {UserRepository} = repositories();
-
-const userRepository = new UserRepository();
-const addUserUseCase = new AddUserUseCase(userRepository);
-const listUsersUseCase = new ListUsersUseCase(userRepository);
+const userService = new UserService();
 
 export const addUser = async (req: Request, res: Response) => {
-  const { firstName, lastName } = req.body;
-  await addUserUseCase.execute(firstName, lastName);
-  res.status(201).send('User added');
+  try {
+    const { firstName, lastName } = req.body;
+    await userService.addUser(firstName, lastName);
+    res.status(201).send('User added');
+  } catch (error) {
+    res.status(500).json({ message: 'Error adding user', error: error.message });
+  }
 };
 
 export const listUsers = async (req: Request, res: Response) => {
-  const users = await listUsersUseCase.execute();
-  res.json(users);
+  try {
+    const users = await userService.listUsers();
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: 'Error listing users', error: error.message });
+  }
 };

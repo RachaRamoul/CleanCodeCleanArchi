@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import userRoutes  from './routes/user.routes'
-import { initializeDB } from '../../../../database/config/database.config';
+import initializeDatabase from '../../../../database/config/database.config';
 import motorcycleRoutes from './routes/motorcycle.routes';
 
 
@@ -14,10 +14,11 @@ app.use('/users', userRoutes); // Pour les utilisateurs
 app.use('/motorcycles', motorcycleRoutes); // Pour les motos
 
 
-initializeDB().then(() => {
+initializeDatabase()
+.then(() => {
   app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server express is running on http://localhost:${PORT}`);
   });
-})
+});
 
 export default app;
