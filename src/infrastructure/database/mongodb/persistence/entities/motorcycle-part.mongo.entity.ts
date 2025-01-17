@@ -1,27 +1,22 @@
-// src/infrastructure/database/mongodb/persistence/entities/motorcycle-part.mongo.entity.ts
-import { Entity, Column, ObjectIdColumn } from 'typeorm';
-import { MotorcyclePart } from '../../../../../domain/entities/motorcycle-part.entity';
+import mongoose, { Schema, Document } from 'mongoose';
 
-@Entity('motorcycle_parts')
-export class MotorcyclePartMongoEntity implements MotorcyclePart {
-  @ObjectIdColumn()
-  _id?: string; // Identifiant unique MongoDB
-
-  @Column()
-  partId!: string;
-
-  @Column()
-  name!: string;
-
-  @Column({ nullable: true })
+export interface IMotorcyclePart extends Document {
+  _id: mongoose.Types.ObjectId;
+  partId: string;
+  name: string;
   description?: string;
-
-  @Column()
-  stockQuantity!: number;
-
-  @Column()
-  cost!: number;
-
-  @Column()
-  lowStockAlert!: boolean;
+  stockQuantity: number;
+  cost: number;
+  lowStockAlert: boolean;
 }
+
+const MotorcyclePartSchema: Schema<IMotorcyclePart> = new Schema<IMotorcyclePart>({
+  partId: { type: String, required: true, unique: true },
+  name: { type: String, required: true },
+  description: { type: String },
+  stockQuantity: { type: Number, required: true },
+  cost: { type: Number, required: true },
+  lowStockAlert: { type: Boolean, required: true },
+});
+
+export const MotorcyclePartModel = mongoose.model<IMotorcyclePart>('MotorcyclePart', MotorcyclePartSchema);

@@ -1,27 +1,39 @@
-// src/infrastructure/database/postgres/persistence/entities/motorcycle-part.postgres.entity.ts
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { MotorcyclePart } from '../../../../../domain/entities/motorcycle-part.entity';
 
 @Entity('motorcycle_parts')
 export class MotorcyclePartPostgresEntity implements MotorcyclePart {
   @PrimaryGeneratedColumn('uuid')
-  id!: string; // Identifiant unique généré pour PostgreSQL
-
-  @Column()
   partId!: string;
 
   @Column()
   name!: string;
 
-  @Column({ nullable: true })
-  description?: string;
-
-  @Column()
-  stockQuantity!: number;
-
-  @Column()
+  @Column('decimal')
   cost!: number;
 
-  @Column()
+  @Column('int')
+  stockQuantity!: number;
+
+  @Column({ type: 'boolean' })
   lowStockAlert!: boolean;
+
+  @Column({ type: 'text', default: '' })
+  description!: string;
+
+  constructor(
+    partId: string,
+    name: string,
+    cost: number,
+    stockQuantity: number,
+    lowStockAlert: boolean,
+    description: string
+  ) {
+    this.partId = partId;
+    this.name = name;
+    this.cost = cost;
+    this.stockQuantity = stockQuantity;
+    this.lowStockAlert = lowStockAlert;
+    this.description = description;
+  }
 }

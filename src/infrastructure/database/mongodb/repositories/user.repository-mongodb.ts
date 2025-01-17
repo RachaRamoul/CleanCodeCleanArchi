@@ -1,13 +1,13 @@
 import { User } from '../../../../domain/entities/user.entity';
-import { UserModel } from '../persistence/entities/user.entity-mongodb';
-import { UserMapper } from '../persistence/mappers/user.mapper-mongodb';
+import { UserModel } from '../persistence/entities/user.entity-mongodb'; 
+import { UserMapper } from '../persistence/mappers/user.mapper-mongodb'; 
 import { IUserRepository } from '../../../../application/repositories/user.repository';
 import { ObjectId } from 'mongodb';
 
 export class MongoUserRepository implements IUserRepository {
 
   async findById(id: string): Promise<User | null> {
-    const userEntity = await UserModel.findOne({ where: { _id: new ObjectId(id) } });
+    const userEntity = await UserModel.findOne({ _id: new ObjectId(id) });
     return userEntity ? UserMapper.toDomain(userEntity) : null;
   }
 

@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { Company } from '../../../../../domain/entities/company.entity';
 
 @Entity('companies')
-export class CompanyPostgresEntity implements Company {
+export default class CompanyPostgresEntity implements Company {
   @PrimaryGeneratedColumn('uuid')
   companyId!: string;
 
@@ -20,4 +20,10 @@ export class CompanyPostgresEntity implements Company {
 
   @Column()
   password!: string;
+
+  constructor(partial?: Partial<CompanyPostgresEntity>) {
+    if (partial) {
+      Object.assign(this, partial);
+    }
+  }
 }

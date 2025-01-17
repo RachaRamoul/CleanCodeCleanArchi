@@ -1,22 +1,27 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
-import { MotorcyclePartOrder } from '../../../../../domain/entities/motorcycle-part-order.entity';
-import { MotorcyclePartPostgresEntity } from './motorcycle-part.postgres.entity';  // Assume the MotorcyclePart entity is defined separately for PostgreSQL
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { MotorcyclePartPostgresEntity } from './motorcycle-part.postgres.entity';
 
 @Entity('motorcycle_part_orders')
-export class MotorcyclePartOrderPostgresEntity implements MotorcyclePartOrder {
+export class MotorcyclePartOrderPostgresEntity {
   @PrimaryGeneratedColumn('uuid')
   orderId!: string;
 
-  @OneToOne(() => MotorcyclePartPostgresEntity)
-  @JoinColumn()
+  @ManyToOne(() => MotorcyclePartPostgresEntity)
+  @JoinColumn({ name: 'motorcyclePartId' })
   motorcyclePart!: MotorcyclePartPostgresEntity;
 
-  @Column()
-  orderDate!: Date;
+  @Column('decimal')
+  cost!: number; // Reste inchangé
 
-  @Column()
-  cost!: number;
+  @Column({ type: 'timestamp' })
+  orderDate!: Date; // Doit être un `Date`
 
-  @Column()
-  deliveryDate!: Date;
+  @Column({ type: 'timestamp' })
+  deliveryDate!: Date; // Doit être un `Date`
+
+  constructor(partial?: Partial<MotorcyclePartOrderPostgresEntity>) {
+    if (partial) {
+      Object.assign(this, partial);
+    }
+  }
 }

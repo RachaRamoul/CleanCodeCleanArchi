@@ -1,26 +1,22 @@
-import { Entity, Column, PrimaryGeneratedColumn, ObjectIdColumn } from 'typeorm';
-import { Company } from '../../../../../domain/entities/company.entity';
+import mongoose, { Schema, Document } from 'mongoose';
 
-@Entity('companies')
-export class CompanyMongoEntity implements Company {
-  @PrimaryGeneratedColumn('uuid')
-  companyId!: string;
-
-  @ObjectIdColumn()
-  _id?: string;
-
-  @Column()
-  name!: string;
-
-  @Column()
-  email!: string;
-
-  @Column()
-  number!: string;
-
-  @Column()
-  siretNumber!: string;
-
-  @Column()
-  password!: string;
+export interface ICompany extends Document {
+  _id: mongoose.Types.ObjectId;
+  companyId: string;
+  name: string;
+  email: string;
+  number: string;
+  siretNumber: string;
+  password: string;
 }
+
+const CompanySchema: Schema<ICompany> = new Schema<ICompany>({
+  companyId: { type: String, required: true, unique: true },
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  number: { type: String, required: true },
+  siretNumber: { type: String, required: true },
+  password: { type: String, required: true },
+});
+
+export const CompanyModel = mongoose.model<ICompany>('Company', CompanySchema);

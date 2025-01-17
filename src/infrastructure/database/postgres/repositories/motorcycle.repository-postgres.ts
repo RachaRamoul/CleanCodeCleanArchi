@@ -1,7 +1,7 @@
 import { Repository } from "typeorm";
 import { Motorcycle } from "../../../../domain/entities/motorcycle.entity";
 import { MotorcyclePostgresEntity } from "../persistence/entities/motorcycle.entity-postgres";
-import { IMotorcycleRepository } from "../../../../application/repositories/motorcycle.repository";
+import { IMotorcycleRepository } from '../../../../application/repositories/motorcycle.repository';
 import { MotorcycleMapper } from "../persistence/mappers/motorcycle.mapper-postgres";
 
 export class MotorcycleRepositoryPostgres implements IMotorcycleRepository {

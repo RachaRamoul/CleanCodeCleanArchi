@@ -1,18 +1,12 @@
-import { MotorcyclePart } from './motorcycle-part.entity';
+import { MotorcyclePart } from '../entities/motorcycle-part.entity';
 
 export class MotorcyclePartOrder {
-  orderId: string;
-  motorcyclePart: MotorcyclePart;
-  orderDate: Date;
-  cost: number;
-  deliveryDate: Date;
-
-  constructor(orderId: string, motorcyclePart: MotorcyclePart, orderDate: Date, cost: number, deliveryDate: Date) {
-    this.orderId = orderId;
-    this.motorcyclePart = motorcyclePart;
-    this.orderDate = orderDate;
-    this.cost = cost;
-    this.deliveryDate = deliveryDate;
-  }
-
+  constructor(
+    public orderId: string,
+    public motorcyclePart: MotorcyclePart,
+    public cost: number,
+    public orderDate: Date, // Type Date
+    public deliveryDate: Date // Type Date
+  ) {}
 }
+

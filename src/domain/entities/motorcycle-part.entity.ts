@@ -1,19 +1,10 @@
 export class MotorcyclePart {
-    partId: string;
-    name: string;
-    description?: string; 
-    stockQuantity: number;
-    cost: number;
-    lowStockAlert: boolean;
-  
-    constructor(partId: string, name: string, description: string | undefined, stockQuantity: number, cost: number, lowStockAlert: boolean) {
-      this.partId = partId;
-      this.name = name;
-      this.description = description;
-      this.stockQuantity = stockQuantity;
-      this.cost = cost;
-      this.lowStockAlert = lowStockAlert;
-    }
-  
-  }
-  
+  constructor(
+    public partId: string,
+    public name: string,
+    public description: string, // Changer de string | undefined à string
+    public stockQuantity: number,
+    public cost: number,
+    public lowStockAlert: boolean
+  ) {}
+}

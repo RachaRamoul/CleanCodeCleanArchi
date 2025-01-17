@@ -3,12 +3,14 @@
     "typeorm": "ts-node ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "mongodb": "^5.9.2",
     "mongoose": "^8.9.2",
     "pg": "^8.13.1",
     "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/mongodb": "^4.0.6",
     "@types/node": "^22.10.2",
     "@types/pg": "^8.11.10",

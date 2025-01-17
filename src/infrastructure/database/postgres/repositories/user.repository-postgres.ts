@@ -1,29 +1,58 @@
-import { User } from '../../../../domain/entities/user.entity';
-import UserPostgresEntity from '../persistence/entities/user.entity-postgres';
-import { UserMapper } from '../persistence/mappers/user.mapper-postgres';
+// infrastructure/database/postgres/repositories/user.repository-postgres.ts
+
+import { Repository } from 'typeorm';
 import { AppDataSource } from '../postgres.config';
-import { IUserRepository } from '../../../../application/repositories/user.repository';
+import UserPostgresEntity from '../persistence/entities/user.entity-postgres';
 
-export class PostgresUserRepository implements IUserRepository {
-  private userRepository = AppDataSource.getRepository(UserPostgresEntity);
+export class UserRepositoryPostgres {
+  private repository: Repository<UserPostgresEntity>;
 
-  async findById(id: string): Promise<User | null> {
-    const userEntity = await this.userRepository.findOneBy({ id });
-    return userEntity ? UserMapper.toDomain(userEntity) : null;
+  constructor() {
+    this.repository = AppDataSource.getRepository(UserPostgresEntity);
   }
 
-  async save(user: User): Promise<User> {
-    const userEntity = UserMapper.toModel(user);
-    const savedUserEntity = await this.userRepository.save(userEntity);
-    return UserMapper.toDomain(savedUserEntity);
+  async create(user: UserPostgresEntity): Promise<UserPostgresEntity> {
+    return this.repository.save(user);
   }
 
-  async listUsers(): Promise<User[]> {
-    const userEntities: User[] = await this.userRepository.find();
-    return userEntities.map((userEntity) => UserMapper.toDomain(userEntity));
+  async findById(userId: string): Promise<UserPostgresEntity | null> {
+    return this.repository.findOne({
+      where: { userId },
+    });
   }
 
-  async removeUser(id: string): Promise<void> {
-    await this.userRepository.delete({ id });
+  async findByEmail(email: string): Promise<UserPostgresEntity | null> {
+    return this.repository.findOne({
+      where: { email },
+    });
+  }
+
+  async findAll(): Promise<UserPostgresEntity[]> {
+    return this.repository.find();
+  }
+
+  async update(
+    userId: string,
+    updateData: Partial<UserPostgresEntity>
+  ): Promise<void> {
+    await this.repository.update(userId, updateData);
+  }
+
+  async delete(userId: string): Promise<void> {
+    await this.repository.delete(userId);
+  }
+
+  async findByCompanyId(companyId: string): Promise<UserPostgresEntity[]> {
+    return this.repository.find({
+      where: { company_Id: companyId },
+    });
+  }
+
+  // Méthode pour vérifier si l'email est unique
+  async isEmailUnique(email: string): Promise<boolean> {
+    const user = await this.repository.findOne({
+      where: { email },
+    });
+    return !user; // Si aucun utilisateur n'est trouvé avec cet email, il est unique
   }
 }
