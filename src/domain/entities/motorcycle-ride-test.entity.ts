@@ -1,11 +1,11 @@
 export class MotorcycleRideTest {
     constructor(
-      public motorcycleRideTestId: string,
+      public id: string,
       public motorcycleId: string,
       public driverId: string,
       public date: Date,
       public testDuration: number, //in hours
-      public incidentReport: string
+      public incidentReportId: string
     ) {}
   }
   

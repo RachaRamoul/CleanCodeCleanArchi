@@ -3,8 +3,9 @@ export class Driver {
     public id: string,
     public firstName: string,
     public lastName: string,
+    public companyId: string,
+    public phoneNumber: string,
     public licenseNumber: string,
     public experienceYears: number,
-    public incidentHistory: string[] 
   ) {}
 }

@@ -4,11 +4,13 @@ import { ICompany, CompanyModel } from '../entities/company.entity-mongodb';
 export class CompanyMapper {
   static toDomain(companyEntity: ICompany): Company {
     return new Company(
-      companyEntity.companyId,  
+      companyEntity._id.toString(),  
       companyEntity.name,       
       companyEntity.email,      
-      companyEntity.number,      
+      companyEntity.number,   
       companyEntity.siretNumber,
+      companyEntity.isAdmin,  
+      companyEntity.password
     );
   }
 

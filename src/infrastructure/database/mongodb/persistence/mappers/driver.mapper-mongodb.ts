@@ -4,12 +4,13 @@ import { IDriver, DriverModel } from '../entities/driver.entity-mongodb';
 export class DriverMapper {
   static toDomain(driverEntity: IDriver): Driver {
     return new Driver(
-      driverEntity.driverId,
+      driverEntity.id,
       driverEntity.firstName,
       driverEntity.lastName,
+      driverEntity.companyId,
+      driverEntity.phoneNumber,
       driverEntity.licenseNumber,
       driverEntity.experienceYears,
-      Array.isArray(driverEntity.incidentHistory) ? driverEntity.incidentHistory : [driverEntity.incidentHistory], // Convertir en tableau si nécessaire
     );
   }
   

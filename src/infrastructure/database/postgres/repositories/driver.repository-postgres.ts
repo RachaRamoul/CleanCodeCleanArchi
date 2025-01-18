@@ -1,8 +1,9 @@
 import { Repository } from 'typeorm';
 import { AppDataSource } from '../postgres.config';
 import { DriverPostgresEntity } from '../persistence/entities/driver.entity-postgres';
+import { IDriverRepository } from '../../../../application/repositories/driver.repository';
 
-export class DriverRepositoryPostgres {
+export class DriverRepositoryPostgres implements IDriverRepository{
   private repository: Repository<DriverPostgresEntity>;
 
   constructor() {

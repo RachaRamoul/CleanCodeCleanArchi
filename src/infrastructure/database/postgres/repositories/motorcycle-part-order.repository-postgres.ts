@@ -1,8 +1,9 @@
 import { Repository } from 'typeorm';
 import { AppDataSource } from '../postgres.config';
-import { MotorcyclePartOrderPostgresEntity } from '../persistence/entities/motorcycle-part-order.postgres.entity';
+import { MotorcyclePartOrderPostgresEntity } from '../persistence/entities/motorcycle-part-order.entity-postgres';
+import { IMotorcyclePartOrderRepository } from '../../../../application/repositories/motorcycle-part-order.repository';
 
-export class MotorcyclePartOrderRepositoryPostgres {
+export class MotorcyclePartOrderRepositoryPostgres implements IMotorcyclePartOrderRepository{
   private repository: Repository<MotorcyclePartOrderPostgresEntity>;
 
   constructor() {
@@ -13,16 +14,16 @@ export class MotorcyclePartOrderRepositoryPostgres {
     return this.repository.save(order);
   }
 
-  async findById(orderId: string): Promise<MotorcyclePartOrderPostgresEntity | null> {
+  async findById(id: string): Promise<MotorcyclePartOrderPostgresEntity | null> {
     return this.repository.findOne({
-      where: { orderId },
+      where: { id },
       relations: ['motorcyclePart'], 
     });
   }
 
   async findAll(): Promise<MotorcyclePartOrderPostgresEntity[]> {
     return this.repository.find({
-      relations: ['motorcyclePart'], // Charger aussi les détails de la pièce
+      relations: ['motorcyclePart'],
     });
   }
 

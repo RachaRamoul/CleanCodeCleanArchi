@@ -1,31 +1,45 @@
 import { Repository } from 'typeorm';
 import { AppDataSource } from '../postgres.config';
 import CompanyPostgresEntity from '../persistence/entities/company.entity-postgres';
+import { ICompanyRepository } from '../../../../application/repositories/company.repository';
+import { Company } from '../../../../domain/entities/company.entity';
+import { CompanyMapper } from '../persistence/mappers/company.mapper-postgres';
 
-export class CompanyRepositoryPostgres {
+export class PostgresCompanyRepository implements ICompanyRepository{
   private repository: Repository<CompanyPostgresEntity>;
 
   constructor() {
     this.repository = AppDataSource.getRepository(CompanyPostgresEntity);
   }
 
-  async create(company: CompanyPostgresEntity): Promise<CompanyPostgresEntity> {
-    return this.repository.save(company);
+  async save(company: Company): Promise<Company> {
+    const entity = CompanyMapper.toModel(company);
+    const savedEntity = await this.repository.save(entity);
+    return CompanyMapper.toDomain(savedEntity);
   }
 
-  async findById(companyId: string): Promise<CompanyPostgresEntity | null> {
-    return this.repository.findOneBy({ companyId });
+  async findById(id: string): Promise<Company | null> {
+    const entity = await this.repository.findOneBy({ id });
+    return entity ? CompanyMapper.toDomain(entity) : null; 
   }
 
-  async findAll(): Promise<CompanyPostgresEntity[]> {
-    return this.repository.find();
+  async findAll(): Promise<Company[]> {
+    const entities = await this.repository.find();
+    return entities.map((entity) => CompanyMapper.toDomain(entity)); // Mapper chaque entité en domaine
   }
 
-  async update(companyId: string, updateData: Partial<CompanyPostgresEntity>): Promise<void> {
-    await this.repository.update(companyId, updateData);
+  async updateCompany(companyId: string, updateData: Partial<CompanyPostgresEntity>): Promise<Company | null> {
+    const updateResult = await this.repository.update(companyId, updateData);
+    if (updateResult.affected === 0) {
+      return null;
+    }
+  
+    const updatedEntity = await this.repository.findOneBy({ id: companyId });
+    return updatedEntity ? CompanyMapper.toDomain(updatedEntity) : null;
   }
 
-  async delete(companyId: string): Promise<void> {
-    await this.repository.delete(companyId);
+  async removeCompany(id: string): Promise<void> {
+    await this.repository.delete(id);
   }
 }
+

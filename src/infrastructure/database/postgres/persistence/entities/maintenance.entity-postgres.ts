@@ -4,7 +4,7 @@ import { Maintenance } from '../../../../../domain/entities/maintenance.entity';
 @Entity('maintenances')
 export class MaintenancePostgresEntity implements Maintenance {
   @PrimaryGeneratedColumn('uuid')
-  maintenanceId!: string;
+  id!: string;
 
   @Column()
   motorcycleId!: string;
@@ -24,21 +24,9 @@ export class MaintenancePostgresEntity implements Maintenance {
   @Column()
   date!: Date;
 
-  constructor(
-    maintenanceId: string,
-    motorcycleId: string,
-    partId: string,
-    maintenanceType: string,
-    recommendations: string,
-    cost: number,
-    date: Date
-  ) {
-    this.maintenanceId = maintenanceId;
-    this.motorcycleId = motorcycleId;
-    this.partId = partId;
-    this.maintenanceType = maintenanceType;
-    this.recommendations = recommendations;
-    this.cost = cost;
-    this.date = date;
+  constructor(partial?: Partial<MaintenancePostgresEntity>) {
+    if (partial) {
+      Object.assign(this, partial);
+    }
   }
 }

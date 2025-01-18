@@ -1,8 +1,9 @@
 import { Repository } from 'typeorm';
 import { AppDataSource } from '../postgres.config';
 import { MotorcyclePartPostgresEntity } from '../persistence/entities/motorcycle-part.postgres.entity';
+import { IModelRepository } from '../../../../application/repositories/model.repository';
 
-export class MotorcyclePartRepositoryPostgres {
+export class MotorcyclePartRepositoryPostgres implements IModelRepository {
   private repository: Repository<MotorcyclePartPostgresEntity>;
 
   constructor() {
@@ -13,9 +14,9 @@ export class MotorcyclePartRepositoryPostgres {
     return this.repository.save(part);
   }
 
-  async findById(partId: string): Promise<MotorcyclePartPostgresEntity | null> {
+  async findById(id: string): Promise<MotorcyclePartPostgresEntity | null> {
     return this.repository.findOne({
-      where: { partId },
+      where: { id },
     });
   }
 
@@ -34,9 +35,9 @@ export class MotorcyclePartRepositoryPostgres {
     await this.repository.delete(partId);
   }
 
-  async findLowStockParts(): Promise<MotorcyclePartPostgresEntity[]> {
-    return this.repository.find({
-      where: { lowStockAlert: true },
-    });
-  }
+  // async findLowStockParts(): Promise<MotorcyclePartPostgresEntity[]> {
+  //   return this.repository.find({
+  //     where: { lowStockAlert: true },
+  //   });
+  // }
 }

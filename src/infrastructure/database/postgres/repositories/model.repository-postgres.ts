@@ -1,8 +1,9 @@
 import { Repository } from 'typeorm';
 import { AppDataSource } from '../postgres.config';
-import ModelPostgresEntity from '../persistence/entities/model.postgres.entity';
+import ModelPostgresEntity from '../persistence/entities/model.entity-postgres';
+import { IModelRepository } from '../../../../application/repositories/model.repository';
 
-export class ModelRepositoryPostgres {
+export class ModelRepositoryPostgres implements IModelRepository{
   private repository: Repository<ModelPostgresEntity>;
 
   constructor() {
@@ -13,8 +14,8 @@ export class ModelRepositoryPostgres {
     return this.repository.save(model);
   }
 
-  async findById(modelId: string): Promise<ModelPostgresEntity | null> {
-    return this.repository.findOneBy({ modelId });
+  async findById(id: string): Promise<ModelPostgresEntity | null> {
+    return this.repository.findOneBy({ id });
   }
 
   async findAll(): Promise<ModelPostgresEntity[]> {

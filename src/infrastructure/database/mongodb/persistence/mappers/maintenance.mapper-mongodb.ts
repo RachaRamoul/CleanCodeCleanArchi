@@ -4,7 +4,7 @@ import { IMaintenance, MaintenanceModel } from '../entities/maintenance.entity-m
 export class MaintenanceMapper {
   static toDomain(maintenanceEntity: IMaintenance): Maintenance {
     return new Maintenance(
-      maintenanceEntity.maintenanceId,  
+      maintenanceEntity.id,  
       maintenanceEntity.motorcycleId,   
       maintenanceEntity.partId,         
       maintenanceEntity.maintenanceType,

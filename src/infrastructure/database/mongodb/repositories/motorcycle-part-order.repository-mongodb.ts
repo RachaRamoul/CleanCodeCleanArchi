@@ -1,5 +1,5 @@
 import { MotorcyclePartOrder } from '../../../../domain/entities/motorcycle-part-order.entity';
-import { MotorcyclePartOrderModel } from '../persistence/entities/motorcycle-part-order.mongo.entity'; 
+import { MotorcyclePartOrderModel } from '../persistence/entities/motorcycle-part-order.entity-mongodb'; 
 import { MotorcyclePartOrderMapper } from '../persistence/mappers/motorcycle-part-order.mapper-mongodb'; 
 import { IMotorcyclePartOrderRepository } from '../../../../application/repositories/motorcycle-part-order.repository';
 import { ObjectId } from 'mongodb';

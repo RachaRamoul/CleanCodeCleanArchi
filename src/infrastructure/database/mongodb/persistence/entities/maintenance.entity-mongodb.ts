@@ -2,7 +2,7 @@ import mongoose, { Schema, Document } from 'mongoose';
 
 export interface IMaintenance extends Document {
   _id: mongoose.Types.ObjectId;
-  maintenanceId: string;
+  id: string;
   motorcycleId: string;
   partId: string;
   maintenanceType: string;
@@ -12,7 +12,7 @@ export interface IMaintenance extends Document {
 }
 
 const MaintenanceSchema: Schema<IMaintenance> = new Schema<IMaintenance>({
-  maintenanceId: { type: String, required: true, unique: true },
+  id: { type: String, required: true, unique: true },
   motorcycleId: { type: String, required: true },
   partId: { type: String, required: true },
   maintenanceType: { type: String, required: true },

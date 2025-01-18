@@ -4,7 +4,7 @@ import { Model } from '../../../../../domain/entities/model.entity';
 @Entity('models')
 export default class ModelPostgresEntity implements Model {
   @PrimaryGeneratedColumn('uuid')
-  modelId!: string;
+  id!: string;
 
   @Column()
   name!: string;

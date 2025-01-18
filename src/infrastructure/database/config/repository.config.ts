@@ -1,19 +1,19 @@
-import {MongoUserRepository} from '../mongodb/repositories/user.repository-mongodb';
-import { PostgresUserRepository } from '../postgres/repositories/user.repository-postgres';
+import { PostgresCompanyRepository } from '../postgres/repositories/company.repository-postgres';
+import { MongoCompanyRepository } from '../mongodb/repositories/company.repository-mongodb';
 import config from './config';
 
 type Repositories = {
-    UserRepository: typeof PostgresUserRepository | typeof MongoUserRepository;
-  };
+    CompanyRepository: typeof PostgresCompanyRepository | typeof MongoCompanyRepository;
+};
 
 export const repositories = () : Repositories =>{
     if(config.dbType === 'postgres'){
         return {
-            UserRepository : PostgresUserRepository,
+            CompanyRepository : PostgresCompanyRepository,
         };
     }else if(config.dbType === 'mongodb'){
         return {
-            UserRepository : MongoUserRepository
+            CompanyRepository : MongoCompanyRepository
         }
     }
     throw new Error('Database type is not supported');

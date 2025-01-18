@@ -17,12 +17,22 @@ export class MongoCompanyRepository implements ICompanyRepository {
     return CompanyMapper.toDomain(savedCompanyEntity);
   }
 
-  async listCompanies(): Promise<Company[]> {
+  async findAll(): Promise<Company[]> {
     const companyEntities = await CompanyModel.find();
     return companyEntities.map((companyEntity) => CompanyMapper.toDomain(companyEntity));
   }
 
   async removeCompany(id: string): Promise<void> {
     await CompanyModel.deleteOne({ _id: new ObjectId(id) });
+  }
+
+  async updateCompany(id: string, updateData: Partial<Company>): Promise<Company | null> {
+    const updatedCompanyEntity = await CompanyModel.findOneAndUpdate(
+      { _id: new ObjectId(id) },
+      { $set: updateData },  
+      { new: true }            
+    );
+
+    return updatedCompanyEntity ? CompanyMapper.toDomain(updatedCompanyEntity) : null;
   }
 }

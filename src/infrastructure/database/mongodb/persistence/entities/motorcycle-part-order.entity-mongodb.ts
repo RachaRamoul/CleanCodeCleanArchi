@@ -2,7 +2,7 @@ import mongoose, { Schema, Document } from 'mongoose';
 
 export interface IMotorcyclePartOrder extends Document {
   _id: mongoose.Types.ObjectId;
-  orderId: string;
+  id: string;
   motorcyclePartId: string;
   orderDate: Date;
   cost: number;
@@ -10,7 +10,7 @@ export interface IMotorcyclePartOrder extends Document {
 }
 
 const MotorcyclePartOrderSchema: Schema<IMotorcyclePartOrder> = new Schema<IMotorcyclePartOrder>({
-  orderId: { type: String, required: true, unique: true },
+  id: { type: String, required: true, unique: true },
   motorcyclePartId: { type: String, required: true },
   orderDate: { type: Date, required: true },
   cost: { type: Number, required: true },

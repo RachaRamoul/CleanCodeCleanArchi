@@ -1,8 +1,9 @@
 import { Repository } from 'typeorm';
 import { AppDataSource } from '../postgres.config';
 import { IncidentReportPostgresEntity } from '../persistence/entities/incident-report.entity-postgres';
+import { IIncidentReportRepository } from '../../../../application/repositories/incident-report.repository';
 
-export class IncidentReportRepositoryPostgres {
+export class IncidentReportRepositoryPostgres implements IIncidentReportRepository{
   private repository: Repository<IncidentReportPostgresEntity>;
 
   constructor() {
@@ -13,8 +14,8 @@ export class IncidentReportRepositoryPostgres {
     return this.repository.save(incidentReport);
   }
 
-  async findById(incidentReportId: string): Promise<IncidentReportPostgresEntity | null> {
-    return this.repository.findOneBy({ incidentReportId });
+  async findById(id: string): Promise<IncidentReportPostgresEntity | null> {
+    return this.repository.findOneBy({ id });
   }
 
   async findAll(): Promise<IncidentReportPostgresEntity[]> {

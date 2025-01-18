@@ -20,4 +20,10 @@ export class MotorcyclePostgresEntity implements Motorcycle {
 
   @Column()
   companyId!: string;
+
+  constructor(partial?: Partial<MotorcyclePostgresEntity>) {
+    if (partial) {
+      Object.assign(this, partial);
+    }
+  }
 }

@@ -1,12 +1,12 @@
 // infrastructure/database/mongodb/persistence/mappers/model.mapper-mongodb.ts
 
 import { Model } from '../../../../../domain/entities/model.entity';
-import { IModel, ModelModel } from '../entities/model.mongo.entity';
+import { IModel, ModelModel } from '../entities/model.entity-mongodb';
 
 export class ModelMapper {
   static toDomain(modelEntity: IModel): Model {
     return new Model(
-      modelEntity.modelId,                
+      modelEntity.id,                
       modelEntity.name,                   
       modelEntity.manufacturer,           
       modelEntity.maintenanceFrequency,   
@@ -14,11 +14,6 @@ export class ModelMapper {
   }
 
   static toModel(model: Model): IModel {
-    return new ModelModel({
-      modelId: model.modelId,
-      name: model.name,
-      manufacturer: model.manufacturer, 
-      maintenanceFrequency: model.maintenanceFrequency,
-    });
+    return new ModelModel(model);
   }
 }

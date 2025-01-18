@@ -1,4 +1,4 @@
-import ModelPostgresEntity from '../entities/model.postgres.entity';
+import ModelPostgresEntity from '../entities/model.entity-postgres';
 import { Model } from "../../../../../domain/entities/model.entity";
 
 export class ModelMapper {

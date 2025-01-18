@@ -1,5 +1,5 @@
 import { Model } from '../../../../domain/entities/model.entity';
-import { ModelModel } from '../persistence/entities/model.mongo.entity'; 
+import { ModelModel } from '../persistence/entities/model.entity-mongodb'; 
 import { ModelMapper } from '../persistence/mappers/model.mapper-mongodb'; 
 import { IModelRepository } from '../../../../application/repositories/model.repository';
 import { ObjectId } from 'mongodb';

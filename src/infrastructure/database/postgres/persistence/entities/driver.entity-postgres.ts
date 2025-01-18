@@ -13,13 +13,16 @@ export class DriverPostgresEntity implements Driver {
   lastName!: string;
 
   @Column()
+  companyId!: string;
+  
+  @Column()
+  phoneNumber!: string;   
+
+  @Column()
   licenseNumber!: string;  
 
   @Column()
   experienceYears!: number;  
-
-  @Column("text", { array: true })
-  incidentHistory!: string[];  
 
   constructor(partial?: Partial<DriverPostgresEntity>) {
     if (partial) {

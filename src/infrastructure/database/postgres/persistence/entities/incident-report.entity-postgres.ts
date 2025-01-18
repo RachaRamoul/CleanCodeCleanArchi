@@ -4,7 +4,10 @@ import { IncidentReport } from '../../../../../domain/entities/incident-report.e
 @Entity('incident_reports')
 export class IncidentReportPostgresEntity implements IncidentReport {
   @PrimaryGeneratedColumn('uuid')
-  incidentReportId!: string;
+  id!: string;
+
+  @Column()
+  driverId!: string;   
 
   @Column()
   incidentType!: string;
@@ -12,18 +15,15 @@ export class IncidentReportPostgresEntity implements IncidentReport {
   @Column()
   description!: string;
 
+  @Column({ default: false })
+  isMotorcycleRideTest!: boolean;
+
   @Column()
   date!: Date;
 
-  constructor(
-    incidentReportId: string,
-    incidentType: string,
-    description: string,
-    date: Date
-  ) {
-    this.incidentReportId = incidentReportId;
-    this.incidentType = incidentType;
-    this.description = description;
-    this.date = date;
+  constructor(partial?: Partial<IncidentReportPostgresEntity>) {
+    if (partial) {
+      Object.assign(this, partial);
+    }
   }
 }

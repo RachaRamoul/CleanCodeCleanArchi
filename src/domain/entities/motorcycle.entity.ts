@@ -1,6 +1,6 @@
 export class Motorcycle {
   constructor(
-    public motorcycleId: string,
+    public id: string,
     public modelId: string,
     public mileage: number,
     public status: 'AVAILABLE' | 'IN_MAINTENANCE' | 'RENTED' | 'DECOMMISSIONED',

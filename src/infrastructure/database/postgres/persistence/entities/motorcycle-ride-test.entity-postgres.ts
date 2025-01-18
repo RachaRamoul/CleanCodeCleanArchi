@@ -4,7 +4,7 @@ import { MotorcycleRideTest } from '../../../../../domain/entities/motorcycle-ri
 @Entity('motorcycle_ride_tests')
 export default class MotorcycleRideTestPostgresEntity implements MotorcycleRideTest {
   @PrimaryGeneratedColumn('uuid')
-  motorcycleRideTestId!: string;  
+  id!: string;  
 
   @Column()
   motorcycleId!: string; 
@@ -19,7 +19,7 @@ export default class MotorcycleRideTestPostgresEntity implements MotorcycleRideT
   testDuration!: number; 
 
   @Column()
-  incidentReport!: string; 
+  incidentReportId!: string; 
 
   constructor(partial?: Partial<MotorcycleRideTestPostgresEntity>) {
     if (partial) {

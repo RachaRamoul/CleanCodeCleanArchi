@@ -1,8 +1,9 @@
 import { Repository } from 'typeorm';
 import { AppDataSource } from '../postgres.config';
 import MotorcycleRideTestPostgresEntity from '../persistence/entities/motorcycle-ride-test.entity-postgres';
+import { IMotorcycleRideTestRepository } from '../../../../application/repositories/motorcycle-ride-test.repository';
 
-export class MotorcycleRideTestRepositoryPostgres {
+export class MotorcycleRideTestRepositoryPostgres implements IMotorcycleRideTestRepository{
   private repository: Repository<MotorcycleRideTestPostgresEntity>;
 
   constructor() {
@@ -15,7 +16,7 @@ export class MotorcycleRideTestRepositoryPostgres {
 
   async findById(rideTestId: string): Promise<MotorcycleRideTestPostgresEntity | null> {
     return this.repository.findOne({
-      where: { motorcycleRideTestId: rideTestId },
+      where: { id: rideTestId },
     });
   }
 

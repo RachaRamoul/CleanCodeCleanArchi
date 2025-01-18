@@ -4,7 +4,7 @@ import { MotorcyclePart } from '../../../../../domain/entities/motorcycle-part.e
 @Entity('motorcycle_parts')
 export class MotorcyclePartPostgresEntity implements MotorcyclePart {
   @PrimaryGeneratedColumn('uuid')
-  partId!: string;
+  id!: string;
 
   @Column()
   name!: string;
@@ -15,25 +15,15 @@ export class MotorcyclePartPostgresEntity implements MotorcyclePart {
   @Column('int')
   stockQuantity!: number;
 
-  @Column({ type: 'boolean' })
-  lowStockAlert!: boolean;
+  @Column({ type: 'int' })
+  lowStockAlert!: number;
 
-  @Column({ type: 'text', default: '' })
+  @Column({ default: '' })
   description!: string;
 
-  constructor(
-    partId: string,
-    name: string,
-    cost: number,
-    stockQuantity: number,
-    lowStockAlert: boolean,
-    description: string
-  ) {
-    this.partId = partId;
-    this.name = name;
-    this.cost = cost;
-    this.stockQuantity = stockQuantity;
-    this.lowStockAlert = lowStockAlert;
-    this.description = description;
+  constructor(partial?: Partial<MotorcyclePartPostgresEntity>) {
+    if (partial) {
+      Object.assign(this, partial);
+    }
   }
 }

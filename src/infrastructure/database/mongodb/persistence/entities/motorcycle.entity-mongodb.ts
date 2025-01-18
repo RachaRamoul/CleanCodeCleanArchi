@@ -1,10 +1,10 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import { IModel } from './model.mongo.entity';  
+import { IModel } from './model.entity-mongodb';  
 import { ICompany } from './company.entity-mongodb'; 
 
 export interface IMotorcycle extends Document {
   _id: mongoose.Types.ObjectId;
-  motorcycleId: string;
+  id: string;
   modelId: mongoose.Types.ObjectId;  
   mileage: number;
   status: 'AVAILABLE' | 'IN_MAINTENANCE' | 'RENTED' | 'DECOMMISSIONED';
@@ -12,7 +12,7 @@ export interface IMotorcycle extends Document {
 }
 
 const MotorcycleSchema: Schema<IMotorcycle> = new Schema<IMotorcycle>({
-  motorcycleId: { type: String, required: true, unique: true },
+  id: { type: String, required: true, unique: true },
   modelId: { type: mongoose.Schema.Types.ObjectId, ref: 'Model', required: true },
   mileage: { type: Number, required: true },
   status: {

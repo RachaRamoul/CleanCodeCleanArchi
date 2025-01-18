@@ -1,10 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { Company } from '../../../../../domain/entities/company.entity';
+import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert } from 'typeorm';
+import bcrypt from 'bcrypt';
+
 
 @Entity('companies')
 export default class CompanyPostgresEntity implements Company {
   @PrimaryGeneratedColumn('uuid')
-  companyId!: string;
+  id!: string;
 
   @Column()
   name!: string;
@@ -17,6 +19,19 @@ export default class CompanyPostgresEntity implements Company {
 
   @Column()
   siretNumber!: string;
+
+  @Column({ default: false })
+  isAdmin!: boolean;
+
+  @Column()
+  password!: string;
+
+  @BeforeInsert()
+  async hashPassword() {
+    if (this.password) {
+      this.password = await bcrypt.hash(this.password, 10);
+    }
+  }
 
   constructor(partial?: Partial<CompanyPostgresEntity>) {
     if (partial) {

@@ -1,4 +1,4 @@
-import { MotorcyclePartOrderPostgresEntity } from "../entities/motorcycle-part-order.postgres.entity";
+import { MotorcyclePartOrderPostgresEntity } from "../entities/motorcycle-part-order.entity-postgres";
 import { MotorcyclePartOrder } from "../../../../../domain/entities/motorcycle-part-order.entity";
 
 export class MotorcyclePartOrderMapper {

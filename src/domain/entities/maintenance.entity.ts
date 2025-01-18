@@ -1,6 +1,6 @@
 export class Maintenance {
   constructor(
-    public maintenanceId: string,
+    public id: string,
     public motorcycleId: string,
     public partId: string,
     public maintenanceType: string,
