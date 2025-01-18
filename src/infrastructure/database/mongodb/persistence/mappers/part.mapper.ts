@@ -4,12 +4,12 @@ import { IPart, PartModel } from '../entities/part.entity-mongodb';
 export class PartMapper {
   static toDomain(partEntity: IPart): Part {
     return new Part(
-      partEntity.partId,       // partId
-      partEntity.name,         // name
-      partEntity.description,  // description
-      partEntity.stockQuantity,// stockQuantity
-      partEntity.cost,         // cost
-      partEntity.lowStockAlert // lowStockAlert
+      partEntity.partId,       
+      partEntity.name,         
+      partEntity.description, 
+      partEntity.stockQuantity,
+      partEntity.cost,         
+      partEntity.lowStockAlert 
     );
   }
 

@@ -11,13 +11,13 @@ export class MotorcyclePartOrderPostgresEntity {
   motorcyclePart!: MotorcyclePartPostgresEntity;
 
   @Column('decimal')
-  cost!: number; // Reste inchangé
+  cost!: number; 
 
   @Column({ type: 'timestamp' })
-  orderDate!: Date; // Doit être un `Date`
+  orderDate!: Date; 
 
   @Column({ type: 'timestamp' })
-  deliveryDate!: Date; // Doit être un `Date`
+  deliveryDate!: Date; 
 
   constructor(partial?: Partial<MotorcyclePartOrderPostgresEntity>) {
     if (partial) {

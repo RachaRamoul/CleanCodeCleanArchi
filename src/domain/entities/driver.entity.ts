@@ -5,6 +5,6 @@ export class Driver {
     public lastName: string,
     public licenseNumber: string,
     public experienceYears: number,
-    public incidentHistory: string[]  // Incident history en tableau de chaînes
+    public incidentHistory: string[] 
   ) {}
 }

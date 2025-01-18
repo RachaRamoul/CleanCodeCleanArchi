@@ -20,7 +20,7 @@ export class CreateCompany1737197271667 implements MigrationInterface {
           {
             name: "email",
             type: "varchar",
-            isUnique: true, // Email unique
+            isUnique: true, 
           },
           {
             name: "number",

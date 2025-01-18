@@ -15,7 +15,7 @@ export class CreateUser1737196997090 implements MigrationInterface {
           },
           {
             name: "company_Id",
-            type: "uuid", // UUID pour référencer une entreprise
+            type: "uuid", 
           },
           {
             name: "nom",
@@ -28,7 +28,7 @@ export class CreateUser1737196997090 implements MigrationInterface {
           {
             name: "email",
             type: "varchar",
-            isUnique: true, // Contrainte d'unicité pour l'email
+            isUnique: true, 
           },
           {
             name: "password",

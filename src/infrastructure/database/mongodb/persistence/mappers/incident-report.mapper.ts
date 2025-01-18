@@ -4,10 +4,10 @@ import { IIncidentReport, IncidentReportModel } from '../entities/incident-repor
 export class IncidentReportMapper {
   static toDomain(incidentReportEntity: IIncidentReport): IncidentReport {
     return new IncidentReport(
-      incidentReportEntity.incidentReportId,  // incidentReportId
-      incidentReportEntity.incidentType,      // incidentType
-      incidentReportEntity.description,       // description
-      incidentReportEntity.date               // date
+      incidentReportEntity.incidentReportId,  
+      incidentReportEntity.incidentType,      
+      incidentReportEntity.description,       
+      incidentReportEntity.date               
     );
   }
 

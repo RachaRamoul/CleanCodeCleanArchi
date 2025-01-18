@@ -2,23 +2,20 @@ import { User } from '../../../../../domain/entities/user.entity';
 import { IUser, UserModel } from '../entities/user.entity-mongodb';
 
 export class UserMapper {
-  // Conversion d'un utilisateur depuis la base de données (Mongoose) vers le domaine
   static toDomain(userEntity: IUser): User {
     return new User(
-      userEntity.companyId,      // companyId
-      userEntity.firstName,      // firstName
-      userEntity.lastName,       // lastName
-      userEntity.email,          // email
-      userEntity.phone,          // phone
-      userEntity.siretNumber,    // siretNumber
-      userEntity.type,            // type (Livreur, Location, etc.)
+      userEntity.companyId,      
+      userEntity.firstName,      
+      userEntity.lastName,      
+      userEntity.email,         
+      userEntity.phone,          
+      userEntity.siretNumber,    
+      userEntity.type,            
       userEntity.password
     );
   }
 
-  // Conversion d'un utilisateur du domaine vers un modèle Mongoose (mais sans instancier UserModel directement)
   static toModel(user: User): IUser {
-    // Nous utilisons simplement un objet Mongoose au lieu de créer une nouvelle instance de UserModel
     return {
       companyId: user.company_Id,
       firstName: user.nom,
@@ -27,7 +24,7 @@ export class UserMapper {
       phone: user.telephone,
       siretNumber: user.numeroSiret,
       type: user.type,
-      password: user.password // Assurez-vous de transmettre le mot de passe (haché) ici si nécessaire
+      password: user.password 
     } as IUser;
   }
 }

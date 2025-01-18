@@ -4,11 +4,11 @@ import { IPartOrder, PartOrderModel } from '../entities/part-order.entity-mongod
 export class PartOrderMapper {
   static toDomain(partOrderEntity: IPartOrder): PartOrder {
     return new PartOrder(
-      partOrderEntity.orderId,       // orderId
-      partOrderEntity.motorcyclePartId, // motorcyclePartId
-      partOrderEntity.orderDate,     // orderDate
-      partOrderEntity.cost,          // cost
-      partOrderEntity.deliveryDate  // deliveryDate
+      partOrderEntity.orderId,       
+      partOrderEntity.motorcyclePartId, 
+      partOrderEntity.orderDate,     
+      partOrderEntity.cost,          
+      partOrderEntity.deliveryDate  
     );
   }
 

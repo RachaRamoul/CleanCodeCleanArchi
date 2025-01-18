@@ -1,4 +1,3 @@
-// src/infrastructure/database/postgres/persistence/entities/motorcycle.postgres.entity.ts
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { Motorcycle } from '../../../../../domain/entities/motorcycle.entity'
 

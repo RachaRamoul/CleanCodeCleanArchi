@@ -32,7 +32,7 @@ export class CreateDriver1737197546422 implements MigrationInterface {
           {
             name: "incidentHistory",
             type: "text",
-            isArray: true, // Définit que cette colonne contient un tableau de chaînes de caractères
+            isArray: true, 
           },
         ],
       })

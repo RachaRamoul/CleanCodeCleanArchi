@@ -5,8 +5,8 @@ export class MotorcyclePartOrder {
     public orderId: string,
     public motorcyclePart: MotorcyclePart,
     public cost: number,
-    public orderDate: Date, // Type Date
-    public deliveryDate: Date // Type Date
+    public orderDate: Date, 
+    public deliveryDate: Date 
   ) {}
 }
 

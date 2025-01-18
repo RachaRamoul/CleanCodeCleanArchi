@@ -8,34 +8,33 @@ export default class UserPostgresEntity implements User {
   userId!: string;
 
   @Column()
-  company_Id!: string;    // Référence à l'entreprise
+  company_Id!: string;    
 
   @Column()
-  nom!: string;           // Nom de l'utilisateur
+  nom!: string;           
 
   @Column()
-  prenom!: string;        // Prénom de l'utilisateur
+  prenom!: string;        
 
   @Column()
   email!: string;
 
   @Column()
-  password!: string;      // Mot de passe de l'utilisateur
+  password!: string;      
 
   @Column()
-  telephone!: string;     // Numéro de téléphone de l'utilisateur
+  telephone!: string;    
 
   @Column()
-  numeroSiret!: string;   // Numéro SIRET de l'utilisateur
+  numeroSiret!: string;   
 
   @Column()
-  type!: string;          // Type de l'utilisateur (Livreur, Location, etc.)
-
-  // Hook avant l'insertion pour hacher le mot de passe
+  type!: string;          
+  
   @BeforeInsert()
   async hashPassword() {
     if (this.password) {
-      this.password = await bcrypt.hash(this.password, 10); // Hachage du mot de passe
+      this.password = await bcrypt.hash(this.password, 10);
     }
   }
 

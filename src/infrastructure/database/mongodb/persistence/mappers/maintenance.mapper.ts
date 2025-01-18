@@ -4,13 +4,13 @@ import { IMaintenance, MaintenanceModel } from '../entities/maintenance.entity-m
 export class MaintenanceMapper {
   static toDomain(maintenanceEntity: IMaintenance): Maintenance {
     return new Maintenance(
-      maintenanceEntity.maintenanceId,  // maintenanceId
-      maintenanceEntity.motorcycleId,   // motorcycleId
-      maintenanceEntity.partId,         // partId
-      maintenanceEntity.maintenanceType,// maintenanceType
-      maintenanceEntity.recommendations,// recommendations
-      maintenanceEntity.cost,           // cost
-      maintenanceEntity.date            // date
+      maintenanceEntity.maintenanceId,  
+      maintenanceEntity.motorcycleId,   
+      maintenanceEntity.partId,         
+      maintenanceEntity.maintenanceType,
+      maintenanceEntity.recommendations,
+      maintenanceEntity.cost,           
+      maintenanceEntity.date            
     );
   }
 

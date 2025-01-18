@@ -4,12 +4,12 @@ import { IMotorcycleRideTest, MotorcycleRideTestModel } from '../entities/motorc
 export class MotorcycleRideTestMapper {
   static toDomain(motorcycleRideTestEntity: IMotorcycleRideTest): MotorcycleRideTest {
     return new MotorcycleRideTest(
-      motorcycleRideTestEntity.motorcycleRideTestId,  // motorcycleRideTestId
-      motorcycleRideTestEntity.motorcycleId,          // motorcycleId
-      motorcycleRideTestEntity.driverId,              // driverId
-      motorcycleRideTestEntity.date,                  // date
-      motorcycleRideTestEntity.testDuration,          // testDuration (in hours)
-      motorcycleRideTestEntity.incidentReport         // incidentReport
+      motorcycleRideTestEntity.motorcycleRideTestId,  
+      motorcycleRideTestEntity.motorcycleId,          
+      motorcycleRideTestEntity.driverId,              
+      motorcycleRideTestEntity.date,                  
+      motorcycleRideTestEntity.testDuration,          
+      motorcycleRideTestEntity.incidentReport        
     );
   }
 

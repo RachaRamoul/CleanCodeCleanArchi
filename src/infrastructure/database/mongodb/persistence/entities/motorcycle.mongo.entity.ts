@@ -1,14 +1,14 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import { IModel } from './model.mongo.entity';  // Importer l'entité Model
-import { ICompany } from './company.entity-mongodb';  // Importer l'entité Company
+import { IModel } from './model.mongo.entity';  
+import { ICompany } from './company.entity-mongodb'; 
 
 export interface IMotorcycle extends Document {
   _id: mongoose.Types.ObjectId;
   motorcycleId: string;
-  modelId: mongoose.Types.ObjectId;  // Référence à l'ID de 'Model'
+  modelId: mongoose.Types.ObjectId;  
   mileage: number;
   status: 'AVAILABLE' | 'IN_MAINTENANCE' | 'RENTED' | 'DECOMMISSIONED';
-  companyId: mongoose.Types.ObjectId;  // Référence à l'ID de 'Company'
+  companyId: mongoose.Types.ObjectId; 
 }
 
 const MotorcycleSchema: Schema<IMotorcycle> = new Schema<IMotorcycle>({

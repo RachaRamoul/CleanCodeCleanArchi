@@ -16,7 +16,7 @@ export class MotorcyclePartOrderRepositoryPostgres {
   async findById(orderId: string): Promise<MotorcyclePartOrderPostgresEntity | null> {
     return this.repository.findOne({
       where: { orderId },
-      relations: ['motorcyclePart'], // Charger aussi les détails de la pièce
+      relations: ['motorcyclePart'], 
     });
   }
 

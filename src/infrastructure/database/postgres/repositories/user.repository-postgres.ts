@@ -1,5 +1,3 @@
-// infrastructure/database/postgres/repositories/user.repository-postgres.ts
-
 import { Repository } from 'typeorm';
 import { AppDataSource } from '../postgres.config';
 import UserPostgresEntity from '../persistence/entities/user.entity-postgres';

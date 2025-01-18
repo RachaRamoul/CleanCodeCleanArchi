@@ -1,8 +1,7 @@
-import { ModelPostgresEntity } from '../entities/model.postgres.entity';
+import ModelPostgresEntity from '../entities/model.postgres.entity';
 import { Model } from "../../../../../domain/entities/model.entity";
 
 export class ModelMapper {
-  // Convertir l'entité PostgreSQL en entité du domaine
   static toDomain(modelEntity: ModelPostgresEntity): Model {
     return new Model(
       modelEntity.modelId,
@@ -12,7 +11,6 @@ export class ModelMapper {
     );
   }
 
-  // Convertir l'entité du domaine en entité PostgreSQL
   static toPersistence(domain: Model): ModelPostgresEntity {
     return new ModelPostgresEntity({
       modelId: domain.modelId,

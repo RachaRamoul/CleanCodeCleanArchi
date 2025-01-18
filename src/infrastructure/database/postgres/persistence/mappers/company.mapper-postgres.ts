@@ -4,11 +4,11 @@ import CompanyPostgresEntity from '../entities/company.entity-postgres';
 export class CompanyMapper {
   static toDomain(companyEntity: CompanyPostgresEntity): Company {
     return new Company(
-      companyEntity.companyId,   // companyId (UUID)
-      companyEntity.name,        // Nom de l'entreprise
-      companyEntity.email,       // Email de l'entreprise
-      companyEntity.number,      // Numéro de téléphone de l'entreprise
-      companyEntity.siretNumber, // Numéro SIRET
+      companyEntity.companyId,  
+      companyEntity.name,        
+      companyEntity.email,       
+      companyEntity.number,      
+      companyEntity.siretNumber, 
     );
   }
 

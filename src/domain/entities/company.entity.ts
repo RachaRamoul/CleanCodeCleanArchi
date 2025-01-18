@@ -5,6 +5,5 @@ export class Company {
     public email: string,
     public number: string,
     public siretNumber: string,
-    public password: string
   ) {}
 }

@@ -13,13 +13,13 @@ export class DriverPostgresEntity implements Driver {
   lastName!: string;
 
   @Column()
-  licenseNumber!: string;  // Ajout de la propriété manquante
+  licenseNumber!: string;  
 
   @Column()
-  experienceYears!: number;  // Ajout de la propriété manquante
+  experienceYears!: number;  
 
   @Column("text", { array: true })
-  incidentHistory!: string[];  // Ajout de la propriété manquante
+  incidentHistory!: string[];  
 
   constructor(partial?: Partial<DriverPostgresEntity>) {
     if (partial) {

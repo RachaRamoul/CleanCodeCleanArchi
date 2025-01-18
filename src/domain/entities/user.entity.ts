@@ -6,7 +6,7 @@ export class User {
     public email: string,
     public telephone: string,
     public numeroSiret: string,
-    public type: string,  // (Livreur, Location, etc.)
-    public password: string // Mot de passe ajouté ici
+    public type: string, 
+    public password: string
   ) {}
 }

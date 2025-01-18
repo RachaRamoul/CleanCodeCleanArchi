@@ -4,22 +4,22 @@ import { MotorcycleRideTest } from '../../../../../domain/entities/motorcycle-ri
 @Entity('motorcycle_ride_tests')
 export default class MotorcycleRideTestPostgresEntity implements MotorcycleRideTest {
   @PrimaryGeneratedColumn('uuid')
-  motorcycleRideTestId!: string;  // Correspond à motorcycleRideTestId dans le domaine
+  motorcycleRideTestId!: string;  
 
   @Column()
-  motorcycleId!: string; // Référence à Motorcycle
+  motorcycleId!: string; 
 
   @Column()
-  driverId!: string; // Ajout du driverId
+  driverId!: string; 
 
   @Column()
   date!: Date;
 
   @Column()
-  testDuration!: number; // Ajout de la durée du test (en heures)
+  testDuration!: number; 
 
   @Column()
-  incidentReport!: string; // Ajout du rapport d'incident
+  incidentReport!: string; 
 
   constructor(partial?: Partial<MotorcycleRideTestPostgresEntity>) {
     if (partial) {
