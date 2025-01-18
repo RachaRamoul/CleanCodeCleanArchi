@@ -8,10 +8,12 @@
     "start:dev": "nodemon --exec ts-node src/express.server.ts"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.7",
+    "uuid": "^11.0.5"
   },
   "author": "",
   "license": "ISC",

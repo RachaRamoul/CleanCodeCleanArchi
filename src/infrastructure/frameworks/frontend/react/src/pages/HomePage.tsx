@@ -1,32 +1,62 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import {API_BASE_URL_EXPRESS} from '../../config/api.config';
-import {User} from '../../../../domain/entities/user.entity';
+import React, { useState } from 'react';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import './HomePage.css';
 
 const HomePage: React.FC = () => {
-  const [users, setUsers] = useState([]);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  useEffect(() => {
-    fetch(`${API_BASE_URL_EXPRESS}users`)
-      .then((response) => response.json())
-      .then((data) => setUsers(data))
-      .catch((error) => console.error('Erreur:', error));
-  }, []);
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Email:', email);
+    console.log('Password:', password);
+    // Logique de connexion (API, validation, etc.)
+  };
 
   return (
-    <div>
-      <h1>Liste des utilisateurs</h1>
-      <ul>
-        {users.map((user: User) => (
-          <li key={user.id}>
-            {user.firstName} {user.lastName}
-          </li>
-        ))}
-      </ul>
-      <h1>Ajouter un utilisateur</h1>
-      <Link to="/add-user">
-        <button>Ajouter un utilisateur</button>
-      </Link>
+    <div className="home-page">
+      <Header />
+
+      <main className="home-main">
+        <form onSubmit={handleLogin} className="home-form">
+          <h2>Connexion</h2>
+
+          <div className="form-group">
+            <label htmlFor="email">Email :</label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Entrez votre email"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="password">Mot de passe :</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Entrez votre mot de passe"
+              required
+            />
+          </div>
+
+          <button type="submit" className="home-button">
+            Se connecter
+          </button>
+
+          <div className="home-links">
+            <a href="/signup">Créer un compte</a> | <a href="/forgot-password">Mot de passe oublié ?</a>
+          </div>
+        </form>
+      </main>
+
+      <Footer />
     </div>
   );
 };

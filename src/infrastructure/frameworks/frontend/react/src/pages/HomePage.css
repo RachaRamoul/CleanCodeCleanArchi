@@ -1,0 +1,91 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+  
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+  
+.home-page {
+    background: url('../assets/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    flex-direction: column;
+    margin-top: 80px;
+}
+  
+.home-form {
+    background: rgba(255, 255, 255, 0.6);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: calc(100% - 2rem);
+    max-width: 400px;
+    text-align: center;
+}
+  
+.home-form h2 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    color: #282c34;
+}
+  
+.form-group {
+    margin-bottom: 1rem;
+}
+  
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+  
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+  
+.home-button {
+    background-color: #282c34;
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+  
+.home-button:hover {
+    background-color: #61dafb;
+}
+  
+.home-links {
+    margin-top: 1rem;
+    text-align: center;
+}
+  
+.home-links a {
+    text-decoration: none;
+    color: #61dafb;
+    font-size: 0.9rem;
+}
+  
+.home-links a:hover {
+    text-decoration: underline;
+}
