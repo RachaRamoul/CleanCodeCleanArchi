@@ -7,9 +7,8 @@ export class CompanyMapper {
       companyEntity.companyId,  // companyId
       companyEntity.name,       // name
       companyEntity.email,      // email
-      companyEntity.phone,      // phone
+      companyEntity.number,      // phone
       companyEntity.siretNumber,// siretNumber
-      companyEntity.password    // password
     );
   }
 

@@ -16,7 +16,6 @@ const CompanySchema: Schema<ICompany> = new Schema<ICompany>({
   email: { type: String, required: true },
   number: { type: String, required: true },
   siretNumber: { type: String, required: true },
-  password: { type: String, required: true },
 });
 
 export const CompanyModel = mongoose.model<ICompany>('Company', CompanySchema);

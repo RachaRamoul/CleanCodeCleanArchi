@@ -18,9 +18,6 @@ export default class CompanyPostgresEntity implements Company {
   @Column()
   siretNumber!: string;
 
-  @Column()
-  password!: string;
-
   constructor(partial?: Partial<CompanyPostgresEntity>) {
     if (partial) {
       Object.assign(this, partial);

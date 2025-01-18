@@ -9,7 +9,6 @@ export class CompanyMapper {
       companyEntity.email,       // Email de l'entreprise
       companyEntity.number,      // Numéro de téléphone de l'entreprise
       companyEntity.siretNumber, // Numéro SIRET
-      companyEntity.password     // Mot de passe
     );
   }
 
@@ -20,7 +19,6 @@ export class CompanyMapper {
       email: company.email,
       number: company.number,
       siretNumber: company.siretNumber,
-      password: company.password
     });
   }
 }
