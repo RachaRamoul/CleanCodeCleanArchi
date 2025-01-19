@@ -4,19 +4,16 @@ import { IncidentReport } from "../../../../../domain/entities/incident-report.e
 export class IncidentReportMapper {
   static toDomain(incidentReportEntity: IncidentReportPostgresEntity): IncidentReport {
     return new IncidentReport(
-      incidentReportEntity.incidentReportId,
+      incidentReportEntity.id,
+      incidentReportEntity.driverId,
       incidentReportEntity.incidentType,
       incidentReportEntity.description,
+      incidentReportEntity.isMotorcycleRideTest,
       incidentReportEntity.date
     );
   }
 
-  static toPersistence(domain: IncidentReport): IncidentReportPostgresEntity {
-    return new IncidentReportPostgresEntity(
-      domain.incidentReportId,
-      domain.incidentType,
-      domain.description,
-      domain.date
-    );
+  static toModel(incidentReport: IncidentReport): IncidentReportPostgresEntity {
+    return new IncidentReportPostgresEntity(incidentReport);
   }
 }

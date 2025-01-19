@@ -4,7 +4,7 @@ import { MotorcycleRideTest } from '../../../../../domain/entities/motorcycle-ri
 export class MotorcycleRideTestMapper {
   static toDomain(entity: MotorcycleRideTestPostgresEntity): MotorcycleRideTest {
     return new MotorcycleRideTest(
-      entity.motorcycleRideTestId,
+      entity.id,
       entity.motorcycleId,
       entity.driverId,
       entity.date,
@@ -13,14 +13,7 @@ export class MotorcycleRideTestMapper {
     );
   }
 
-  static toPersistence(domain: MotorcycleRideTest): MotorcycleRideTestPostgresEntity {
-    return new MotorcycleRideTestPostgresEntity({
-      motorcycleRideTestId: domain.motorcycleRideTestId,
-      motorcycleId: domain.motorcycleId,
-      driverId: domain.driverId,
-      date: domain.date,
-      testDuration: domain.testDuration,
-      incidentReport: domain.incidentReport
-    });
+  static toModel(motorcycleRideTest: MotorcycleRideTest): MotorcycleRideTestPostgresEntity {
+    return new MotorcycleRideTestPostgresEntity(motorcycleRideTest);
   }
 }

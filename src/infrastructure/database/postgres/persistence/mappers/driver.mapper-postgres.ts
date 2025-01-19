@@ -7,20 +7,14 @@ export class DriverMapper {
       driverEntity.id,
       driverEntity.firstName,
       driverEntity.lastName,
+      driverEntity.companyId,
+      driverEntity.phoneNumber,
       driverEntity.licenseNumber,
       driverEntity.experienceYears,
-      driverEntity.incidentHistory
     );
   }
 
   static toModel(driver: Driver): Partial<DriverPostgresEntity> {
-    return {
-      id: driver.id,
-      firstName: driver.firstName,
-      lastName: driver.lastName,
-      licenseNumber: driver.licenseNumber,
-      experienceYears: driver.experienceYears,
-      incidentHistory: driver.incidentHistory,
-    };
+    return new DriverPostgresEntity(driver);
   }
 }

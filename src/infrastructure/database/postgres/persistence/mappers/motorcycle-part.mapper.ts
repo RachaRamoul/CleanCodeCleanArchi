@@ -4,7 +4,7 @@ import { MotorcyclePart } from "../../../../../domain/entities/motorcycle-part.e
 export class MotorcyclePartMapper {
   static toDomain(entity: MotorcyclePartPostgresEntity): MotorcyclePart {
     return new MotorcyclePart(
-      entity.partId,
+      entity.id,
       entity.name,
       entity.description, 
       entity.stockQuantity,
@@ -13,14 +13,7 @@ export class MotorcyclePartMapper {
     );
   }
 
-  static toPersistence(domain: MotorcyclePart): MotorcyclePartPostgresEntity {
-    return new MotorcyclePartPostgresEntity(
-      domain.partId,
-      domain.name,
-      Number(domain.cost),
-      domain.stockQuantity,
-      domain.lowStockAlert,
-      domain.description 
-    );
+  static toModel(motorcyclePart: MotorcyclePart): MotorcyclePartPostgresEntity {
+    return new MotorcyclePartPostgresEntity(motorcyclePart);
   }
 }

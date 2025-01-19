@@ -12,13 +12,7 @@ export class MotorcycleMapper {
     );
   }
 
-  static toPersistence(domain: Motorcycle): Partial<MotorcyclePostgresEntity> {
-    return {
-      id: domain.motorcycleId,
-      modelId: domain.modelId,
-      mileage: domain.mileage,
-      status: domain.status,
-      companyId: domain.companyId,
-    };
+  static toModel(motorcycle: Motorcycle): Partial<MotorcyclePostgresEntity> {
+    return new MotorcyclePostgresEntity(motorcycle);
   }
 }

@@ -4,7 +4,7 @@ import { Maintenance } from "../../../../../domain/entities/maintenance.entity";
 export class MaintenanceMapper {
   static toDomain(maintenanceEntity: MaintenancePostgresEntity): Maintenance {
     return new Maintenance(
-      maintenanceEntity.maintenanceId,
+      maintenanceEntity.id,
       maintenanceEntity.motorcycleId,
       maintenanceEntity.partId,
       maintenanceEntity.maintenanceType,
@@ -14,15 +14,7 @@ export class MaintenanceMapper {
     );
   }
 
-  static toPersistence(domain: Maintenance): MaintenancePostgresEntity {
-    return new MaintenancePostgresEntity(
-      domain.maintenanceId,
-      domain.motorcycleId,
-      domain.partId,
-      domain.maintenanceType,
-      domain.recommendations,
-      domain.cost,
-      domain.date
-    );
+  static toModel(maintenance: Maintenance): MaintenancePostgresEntity {
+    return new MaintenancePostgresEntity(maintenance);
   }
 }

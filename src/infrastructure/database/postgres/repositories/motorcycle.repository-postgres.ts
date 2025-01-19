@@ -13,7 +13,7 @@ export class MotorcycleRepositoryPostgres implements IMotorcycleRepository {
 
   async save(motorcycle: Motorcycle): Promise<Motorcycle> {
     const motorcycleEntity = this.ormRepository.create(
-      MotorcycleMapper.toPersistence(motorcycle)
+      MotorcycleMapper.toModel(motorcycle)
     );
 
     const result = await this.ormRepository.save(motorcycleEntity);
