@@ -33,7 +33,6 @@ export class MaintenanceRepositoryPostgres implements IMaintenanceRepository{
     await this.repository.delete(maintenanceId);
   }
 
-  // Optionally, add more specific queries, e.g., find by motorcycleId
   async findByMotorcycleId(motorcycleId: string): Promise<MaintenancePostgresEntity[]> {
     return this.repository.find({ where: { motorcycleId } });
   }

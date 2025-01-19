@@ -7,9 +7,6 @@ export class MotorcyclePostgresEntity implements Motorcycle {
   id!: string;
 
   @Column()
-  motorcycleId!: string;
-
-  @Column()
   modelId!: string;
 
   @Column()

@@ -1,20 +1,18 @@
-/* Full-width header banner */
 .header {
-    background-color: #000; /* Black background */
-    width: 100%; /* Full width */
-    height: 70px; /* Banner height */
-    display: flex; /* Flexbox for positioning */
-    align-items: center; /* Vertically align content */
-    padding: 0 20px; /* Add padding for spacing */
-    box-sizing: border-box; /* Ensure padding doesn't affect width */
-    position: fixed; /* Fix header to the top */
-    top: 0; /* Stick to the top of the page */
-    z-index: 1000; /* Ensure it stays above other content */
+    background-color: #000;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0; 
+    z-index: 1000; 
 }
   
-  /* Logo styling */
 .header-logo {
-    height: 40px; /* Adjust logo size */
-    width: auto; /* Maintain aspect ratio */
+    height: 40px;
+    width: auto;
 }
   

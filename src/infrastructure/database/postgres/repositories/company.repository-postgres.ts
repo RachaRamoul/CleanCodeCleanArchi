@@ -25,7 +25,7 @@ export class PostgresCompanyRepository implements ICompanyRepository{
 
   async findAll(): Promise<Company[]> {
     const entities = await this.repository.find();
-    return entities.map((entity) => CompanyMapper.toDomain(entity)); // Mapper chaque entité en domaine
+    return entities.map((entity) => CompanyMapper.toDomain(entity));
   }
 
   async updateCompany(companyId: string, updateData: Partial<CompanyPostgresEntity>): Promise<Company | null> {

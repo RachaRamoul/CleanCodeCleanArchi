@@ -11,7 +11,6 @@ const HomePage: React.FC = () => {
     e.preventDefault();
     console.log('Email:', email);
     console.log('Password:', password);
-    // Logique de connexion (API, validation, etc.)
   };
 
   return (

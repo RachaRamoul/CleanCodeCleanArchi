@@ -1,5 +1,3 @@
-// infrastructure/database/mongodb/persistence/mappers/model.mapper-mongodb.ts
-
 import { Model } from '../../../../../domain/entities/model.entity';
 import { IModel, ModelModel } from '../entities/model.entity-mongodb';
 
