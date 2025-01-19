@@ -1,7 +1,7 @@
 import { Repository } from "typeorm";
 import { Motorcycle } from "../../../../domain/entities/motorcycle.entity";
 import { MotorcyclePostgresEntity } from "../persistence/entities/motorcycle.entity-postgres";
-import { IMotorcycleRepository } from '../../../../application/repositories/motorcycle.repository';
+import { IMotorcycleRepository } from "../../../../application/repositories/motorcycle.repository";
 import { MotorcycleMapper } from "../persistence/mappers/motorcycle.mapper-postgres";
 
 export class MotorcycleRepositoryPostgres implements IMotorcycleRepository {
@@ -23,13 +23,11 @@ export class MotorcycleRepositoryPostgres implements IMotorcycleRepository {
 
   async findAll(): Promise<Motorcycle[]> {
     const motorcycles = await this.ormRepository.find();
-    return motorcycles.map((moto) => ({
-      id: moto.id,
-      motorcycleId: moto.motorcycleId,
-      modelId: moto.modelId,
-      mileage: moto.mileage,
-      status: moto.status,
-      companyId: moto.companyId,
-    }));
+    return motorcycles.map((moto) => MotorcycleMapper.toDomain(moto));
+  }
+
+  async findById(id: string): Promise<Motorcycle | null> {
+    const motorcycle = await this.ormRepository.findOneBy({ id });
+    return motorcycle ? MotorcycleMapper.toDomain(motorcycle) : null;
   }
 }

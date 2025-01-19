@@ -3,7 +3,6 @@ import { createMotorcycle, getAllMotorcycles } from '../controllers/motorcycle.c
 
 const router = express.Router();
 
-// Routes pour les motos
 router.post('/', createMotorcycle);
 router.get('/', getAllMotorcycles);
 
