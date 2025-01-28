@@ -23,7 +23,7 @@ export default class CompanyPostgresEntity implements Company {
   @Column({ default: false })
   isAdmin!: boolean;
 
-  @Column()
+  @Column({ select: false })
   password!: string;
 
   @BeforeInsert()

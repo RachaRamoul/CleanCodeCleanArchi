@@ -3,17 +3,17 @@ import { MongoCompanyRepository } from '../mongodb/repositories/company.reposito
 import config from './config';
 
 type Repositories = {
-    CompanyRepository: typeof PostgresCompanyRepository | typeof MongoCompanyRepository;
+    CompanyRepository: PostgresCompanyRepository | MongoCompanyRepository;
 };
 
 export const repositories = () : Repositories =>{
     if(config.dbType === 'postgres'){
         return {
-            CompanyRepository : PostgresCompanyRepository,
+            CompanyRepository : new PostgresCompanyRepository(),
         };
     }else if(config.dbType === 'mongodb'){
         return {
-            CompanyRepository : MongoCompanyRepository
+            CompanyRepository : new MongoCompanyRepository(),
         }
     }
     throw new Error('Database type is not supported');

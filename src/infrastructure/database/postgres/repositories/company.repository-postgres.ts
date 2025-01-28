@@ -1,9 +1,9 @@
 import { Repository } from 'typeorm';
 import { AppDataSource } from '../postgres.config';
 import CompanyPostgresEntity from '../persistence/entities/company.entity-postgres';
-import { ICompanyRepository } from '../../../../application/repositories/company.repository';
 import { Company } from '../../../../domain/entities/company.entity';
 import { CompanyMapper } from '../persistence/mappers/company.mapper-postgres';
+import { ICompanyRepository } from '../../../../application/repositories/company.repository';
 
 export class PostgresCompanyRepository implements ICompanyRepository{
   private repository: Repository<CompanyPostgresEntity>;
@@ -11,34 +11,41 @@ export class PostgresCompanyRepository implements ICompanyRepository{
   constructor() {
     this.repository = AppDataSource.getRepository(CompanyPostgresEntity);
   }
-
-  async save(company: Company): Promise<Company> {
-    const entity = CompanyMapper.toModel(company);
-    const savedEntity = await this.repository.save(entity);
-    return CompanyMapper.toDomain(savedEntity);
+  
+  async findById(id: string): Promise<Company | null> {
+    const companyEntity = await this.repository.findOneBy({ id });
+    return companyEntity ? CompanyMapper.toDomain(companyEntity) : null; 
   }
 
-  async findById(id: string): Promise<Company | null> {
-    const entity = await this.repository.findOneBy({ id });
-    return entity ? CompanyMapper.toDomain(entity) : null; 
+  async findByEmail(email: string, includePassword: boolean = false): Promise<Company | null> {
+    const queryBuilder = this.repository.createQueryBuilder('company').where('company.email = :email', { email });
+    
+    if(includePassword) {
+      queryBuilder.addSelect('company.password');
+    }
+    const companyEntity = await queryBuilder.getOne();
+    
+    return companyEntity ? CompanyMapper.toDomain(companyEntity) : null;
+  }
+
+  async save(company: Company): Promise<Company> {
+    const companyEntity = CompanyMapper.toModel(company);
+    const savedCompanyEntity = await this.repository.save(companyEntity);
+    return CompanyMapper.toDomain(savedCompanyEntity);
   }
 
   async findAll(): Promise<Company[]> {
-    const entities = await this.repository.find();
-    return entities.map((entity) => CompanyMapper.toDomain(entity));
+    const companies = await this.repository.find();
+    return companies.map((company) => CompanyMapper.toDomain(company));
   }
 
-  async updateCompany(companyId: string, updateData: Partial<CompanyPostgresEntity>): Promise<Company | null> {
-    const updateResult = await this.repository.update(companyId, updateData);
-    if (updateResult.affected === 0) {
-      return null;
-    }
-  
-    const updatedEntity = await this.repository.findOneBy({ id: companyId });
-    return updatedEntity ? CompanyMapper.toDomain(updatedEntity) : null;
+  async update(company: CompanyPostgresEntity): Promise<Company> {
+    const companyEntity = CompanyMapper.toModel(company);
+    const updatedCompanyEntity = await this.repository.save(companyEntity);
+    return CompanyMapper.toDomain(updatedCompanyEntity);
   }
 
-  async removeCompany(id: string): Promise<void> {
+  async remove(id: string): Promise<void> {
     await this.repository.delete(id);
   }
 }

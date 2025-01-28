@@ -1,8 +1,8 @@
+require('dotenv').config();
 import express from 'express';
 import cors from 'cors';
 import router  from './routes/index';
 import initializeDatabase from '../../../../database/config/database.config';
-import motorcycleRoutes from './routes/motorcycle.routes';
 
 
 const PORT = 8001;

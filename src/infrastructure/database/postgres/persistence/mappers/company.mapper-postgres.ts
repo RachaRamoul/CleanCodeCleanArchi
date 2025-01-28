@@ -14,7 +14,20 @@ export class CompanyMapper {
     );
   }
 
-  static toModel(company: Company): Partial<CompanyPostgresEntity> {
-    return new CompanyPostgresEntity(company);
+  static toModel(company: Company): CompanyPostgresEntity {
+    const companyEntity = new CompanyPostgresEntity();
+  
+    companyEntity.name = company.name;
+    companyEntity.email = company.email;
+    companyEntity.number = company.number;
+    companyEntity.siretNumber = company.siretNumber;
+    companyEntity.isAdmin = company.isAdmin;
+    companyEntity.password = company.password;
+  
+    if (company.id) {
+      companyEntity.id = company.id;
+    }
+  
+    return companyEntity; 
   }
 }

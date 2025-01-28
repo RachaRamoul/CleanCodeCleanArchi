@@ -2,7 +2,7 @@
 FROM node:18
 
 # Définir le répertoire de travail pour le frontend
-WORKDIR /usr/src/infrastruture/frameworks/frontend/react
+WORKDIR /usr/src/infrastructure/frameworks/frontend/react
 
 # Copier package.json et installer les dépendances du frontend
 COPY package*.json ./
@@ -15,4 +15,4 @@ COPY . .
 EXPOSE 3000
 
 # Lancer Vite en mode développement
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "dev", "--", "--host"]

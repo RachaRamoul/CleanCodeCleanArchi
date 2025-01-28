@@ -12,7 +12,7 @@ html, body {
     box-sizing: border-box;
 }
   
-.home-page {
+.auth-page {
     background: url('../assets/background.jpg') no-repeat center center fixed;
     background-size: cover;
     display: flex;
@@ -24,7 +24,7 @@ html, body {
     margin-top: 80px;
 }
   
-.home-form {
+.auth-form {
     background: rgba(255, 255, 255, 0.6);
     padding: 2rem;
     border-radius: 8px;
@@ -34,7 +34,7 @@ html, body {
     text-align: center;
 }
   
-.home-form h2 {
+.auth-form h2 {
     margin-top: 0;
     margin-bottom: 1.5rem;
     font-size: 1.8rem;
@@ -59,7 +59,7 @@ html, body {
     font-size: 1rem;
 }
   
-.home-button {
+.auth-button {
     background-color: #282c34;
     color: white;
     border: none;
@@ -71,21 +71,27 @@ html, body {
     transition: background-color 0.3s ease;
 }
   
-.home-button:hover {
+.auth-button:hover {
     background-color: #61dafb;
 }
   
-.home-links {
+.auth-links {
     margin-top: 1rem;
     text-align: center;
 }
   
-.home-links a {
+.auth-links a {
     text-decoration: none;
     color: #61dafb;
     font-size: 0.9rem;
 }
   
-.home-links a:hover {
+.auth-links a:hover {
     text-decoration: underline;
+}
+
+.error-message {
+    color: rgb(170, 17, 17);
+    font-weight: bold;
+    margin-bottom: 1rem;
 }
