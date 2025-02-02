@@ -7,12 +7,10 @@ export class AddMotorcycleUseCase {
   async execute(
     modelId: string,
     mileage: number,
-    status: 'AVAILABLE' | 'IN_MAINTENANCE' | 'RENTED' | 'DECOMMISSIONED',
+    status: "AVAILABLE" | "IN_MAINTENANCE" | "RENTED" | "DECOMMISSIONED",
     companyId: string
-  ): Promise<void> {
-    const id = null;
+  ): Promise<Motorcycle> {
     const motorcycle = new Motorcycle(undefined, modelId, mileage, status, companyId);
-
-    await this.repository.save(motorcycle);
+    return await this.repository.save(motorcycle);
   }
 }
