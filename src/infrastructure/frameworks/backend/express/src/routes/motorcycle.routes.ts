@@ -1,9 +1,10 @@
 import express from 'express';
-import { createMotorcycle, getAllMotorcycles } from '../controllers/motorcycle.controller';
+import { createMotorcycle, getAllMotorcycles, deleteMotorcycle } from '../controllers/motorcycle.controller';
 
 const router = express.Router();
 
 router.post('/', createMotorcycle);
 router.get('/', getAllMotorcycles);
+router.delete('/:id', deleteMotorcycle);
 
 export default router;
