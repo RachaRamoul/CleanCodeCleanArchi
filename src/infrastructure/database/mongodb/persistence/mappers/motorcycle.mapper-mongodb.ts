@@ -1,30 +1,25 @@
 import { Motorcycle } from '../../../../../domain/entities/motorcycle.entity';
 import { IMotorcycle, MotorcycleModel } from '../entities/motorcycle.entity-mongodb';
-import { ModelModel } from '../entities/model.entity-mongodb';  
-import { CompanyModel } from '../entities/company.entity-mongodb';  
-import mongoose from 'mongoose'; 
+import mongoose from 'mongoose';
 
 export class MotorcycleMapper {
-  static async toDomain(motorcycleEntity: IMotorcycle): Promise<Motorcycle> {
-    const modelEntity = await ModelModel.findById(motorcycleEntity.modelId);  
-    const companyEntity = await CompanyModel.findById(motorcycleEntity.companyId);  
-    
-    if (!modelEntity) {
-      throw new Error("Model not found.");
-    }else if(!companyEntity){
-      throw new Error("Company not found.");
-    }
-
+  static toDomain(motorcycleEntity: IMotorcycle): Motorcycle {
     return new Motorcycle(
-      motorcycleEntity.id,   
-      (modelEntity._id as mongoose.Types.ObjectId).toString(), 
-      motorcycleEntity.mileage,        
-      motorcycleEntity.status,         
-      (companyEntity._id as mongoose.Types.ObjectId).toString()  
+      motorcycleEntity._id.toString(),
+      motorcycleEntity.modelId.toString(),
+      motorcycleEntity.mileage,
+      motorcycleEntity.status,
+      motorcycleEntity.companyId.toString()
     );
   }
 
-  static toModel(motorcycle: Motorcycle): IMotorcycle {
-    return new MotorcycleModel(motorcycle);
+  static toModel(motorcycle: Motorcycle): Partial<IMotorcycle> {
+    return {
+      _id: motorcycle.id ? new mongoose.Types.ObjectId(motorcycle.id) : new mongoose.Types.ObjectId(), // ✅ Gère `_id`
+      modelId: new mongoose.Types.ObjectId(motorcycle.modelId),
+      mileage: motorcycle.mileage,
+      status: motorcycle.status,
+      companyId: new mongoose.Types.ObjectId(motorcycle.companyId),
+    };
   }
 }
