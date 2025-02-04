@@ -1,24 +1,43 @@
-import { AppDataSource } from "../../../../../../infrastructure/database/postgres/postgres.config";
-import { MotorcyclePostgresEntity } from "../../../../../../infrastructure/database/postgres/persistence/entities/motorcycle.entity-postgres";
-import { MotorcycleRepositoryPostgres } from "../../../../../../infrastructure/database/postgres/repositories/motorcycle.repository-postgres";
-import { ListMotorcyclesUseCase } from "../../../../../../application/usecases/motorcycle/list-motorcycles.usecase";
+import { Motorcycle } from "../../../../../../domain/entities/motorcycle.entity";
 import { AddMotorcycleUseCase } from "../../../../../../application/usecases/motorcycle/add-motorcycle.usecase";
+import { RemoveMotorcycleUseCase } from "../../../../../../application/usecases/motorcycle/remove-motorcycle.usecase";
+import { GetMotorcycleByIdUseCase } from "../../../../../../application/usecases/motorcycle/get-motorcycle-by-id.usecase";
+import { UpdateMotorcycleUseCase } from "../../../../../../application/usecases/motorcycle/update-motorcycle.usecase";
+import { ListMotorcyclesUseCase } from "../../../../../../application/usecases/motorcycle/list-motorcycles.usecase";
+import { repositories } from "../../../../../database/config/repository.config";
 
-const repository = new MotorcycleRepositoryPostgres(
-  AppDataSource.getRepository(MotorcyclePostgresEntity)
-);
+const { MotorcycleRepository } = repositories();
 
-export const listMotorcycles = async () => {
-  const useCase = new ListMotorcyclesUseCase(repository);
-  return await useCase.execute();
-};
+export class MotorcycleService {
+  constructor(private motorcycleRepository = MotorcycleRepository) {}
 
-export const addMotorcycle = async (data: {
-  modelId: string;
-  mileage: number;
-  status: "AVAILABLE" | "IN_MAINTENANCE" | "RENTED" | "DECOMMISSIONED";
-  companyId: string;
-}) => {
-  const useCase = new AddMotorcycleUseCase(repository);
-  return await useCase.execute(data.modelId, data.mileage, data.status, data.companyId);
-};
+  async getMotorcycleById(id: string): Promise<Motorcycle | null> {
+    const getMotorcycleByIdUseCase = new GetMotorcycleByIdUseCase(this.motorcycleRepository);
+    return await getMotorcycleByIdUseCase.execute(id);
+  }
+
+  async addMotorcycle(
+    modelId: string,
+    mileage: number,
+    status: "AVAILABLE" | "IN_MAINTENANCE" | "RENTED" | "DECOMMISSIONED",
+    companyId: string
+  ): Promise<Motorcycle> {
+    const addMotorcycleUseCase = new AddMotorcycleUseCase(this.motorcycleRepository);
+    return await addMotorcycleUseCase.execute(modelId, mileage, status, companyId);
+  }
+
+  async listMotorcycles(): Promise<Motorcycle[]> {
+    const listMotorcyclesUseCase = new ListMotorcyclesUseCase(this.motorcycleRepository);
+    return await listMotorcyclesUseCase.execute();
+  }
+
+  async updateMotorcycle(id: string, updateData: Partial<Motorcycle>): Promise<Motorcycle> {
+    const updateMotorcycleUseCase = new UpdateMotorcycleUseCase(this.motorcycleRepository);
+    return await updateMotorcycleUseCase.execute(id, updateData);
+  }
+
+  async deleteMotorcycle(id: string): Promise<void> {
+    const removeMotorcycleUseCase = new RemoveMotorcycleUseCase(this.motorcycleRepository);
+    await removeMotorcycleUseCase.execute(id);
+  }
+}
