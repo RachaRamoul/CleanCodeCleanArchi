@@ -6,6 +6,7 @@ export class CreateCompany1737215239341 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE TABLE "motorcycles" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "modelId" character varying NOT NULL, "mileage" integer NOT NULL, "status" character varying NOT NULL, "companyId" character varying NOT NULL, CONSTRAINT "PK_6e34aca06f3000916257494a4aa" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "motorcycle_part_orders" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "motorcyclePartId" character varying NOT NULL, "cost" numeric NOT NULL, "orderDate" TIMESTAMP NOT NULL, "deliveryDate" TIMESTAMP NOT NULL, CONSTRAINT "PK_aeb88bfe5d808ba00c290c96ed9" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE TABLE "motorcycle_parts" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying NOT NULL, "description" text NOT NULL, "stockQuantity" integer NOT NULL, "cost" numeric NOT NULL, "lowStockAlert" integer NOT NULL, CONSTRAINT "PK_motorcycle_parts_id" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "motorcycle_ride_tests" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "motorcycleId" character varying NOT NULL, "driverId" character varying NOT NULL, "date" TIMESTAMP NOT NULL, "testDuration" integer NOT NULL, "incidentReportId" character varying NOT NULL, CONSTRAINT "PK_f8a5c3a8dde94883ad96462cbea" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "models" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying NOT NULL, "manufacturer" character varying NOT NULL, "maintenanceFrequency" integer NOT NULL, CONSTRAINT "PK_ef9ed7160ea69013636466bf2d5" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "maintenances" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "motorcycleId" character varying NOT NULL, "partId" character varying NOT NULL, "maintenanceType" character varying NOT NULL, "recommendations" character varying NOT NULL, "cost" numeric NOT NULL, "date" TIMESTAMP NOT NULL, CONSTRAINT "PK_62403473bd524a42d58589aa78b" PRIMARY KEY ("id"))`);
@@ -22,7 +23,7 @@ export class CreateCompany1737215239341 implements MigrationInterface {
         await queryRunner.query(`DROP TABLE "models"`);
         await queryRunner.query(`DROP TABLE "motorcycle_ride_tests"`);
         await queryRunner.query(`DROP TABLE "motorcycle_part_orders"`);
+        await queryRunner.query(`DROP TABLE "motorcycle_parts"`);
         await queryRunner.query(`DROP TABLE "motorcycles"`);
     }
-
 }

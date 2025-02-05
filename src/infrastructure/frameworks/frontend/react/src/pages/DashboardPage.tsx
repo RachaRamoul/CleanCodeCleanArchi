@@ -48,7 +48,7 @@ const DashboardPage: React.FC = () => {
             <p>Planifiez et suivez les entretiens préventifs et curatifs.</p>
           </Link>
 
-          <Link to="/parts" className="dashboard-box">
+          <Link to="/motorcycle-parts" className="dashboard-box">
             <h2>⚙️ Suivi des Pièces Détachées</h2>
             <p>Gérez l'inventaire des pièces détachées et leur disponibilité.</p>
           </Link>
