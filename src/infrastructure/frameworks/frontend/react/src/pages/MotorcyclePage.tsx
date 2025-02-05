@@ -77,7 +77,6 @@ const MotorcyclePage: React.FC = () => {
           <button className="add" onClick={() => setShowForm(true)}>➕ Ajouter une moto</button>
         </div>
         
-        {/* Motorcycle Table */}
         <div className="table-container">
           {errorMessage && <p className="error-message">{errorMessage}</p>}
           {loading ? (
@@ -111,7 +110,6 @@ const MotorcyclePage: React.FC = () => {
           )}
         </div>
 
-        {/* Add Motorcycle Form in Modal */}
         {showForm && (
           <div className="modal-overlay">
             <div className="modal-content">
