@@ -22,7 +22,6 @@ export class CreateCompany1737215239341 implements MigrationInterface {
         await queryRunner.query(`DROP TABLE "models"`);
         await queryRunner.query(`DROP TABLE "motorcycle_ride_tests"`);
         await queryRunner.query(`DROP TABLE "motorcycle_part_orders"`);
-        await queryRunner.query(`DROP TABLE "motorcycles"`);
+        await queryRunner.query(`DROP TABLE "motorcycle_parts"`);
     }
-
 }
