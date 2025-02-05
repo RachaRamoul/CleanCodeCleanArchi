@@ -12,14 +12,15 @@ export class MotorcyclePartRepositoryPostgres implements IMotorcyclePartReposito
     this.repository = AppDataSource.getRepository(MotorcyclePartPostgresEntity);
   }
 
-  async getById(id: string): Promise<MotorcyclePart | null> {
+  async findById(id: string): Promise<MotorcyclePart | null> {
     const part = await this.repository.findOneBy({ id });
     return part ? MotorcyclePartMapper.toDomain(part) : null;
   }
 
-  async add(motorcyclePart: MotorcyclePart): Promise<void> {
+  async add(motorcyclePart: MotorcyclePart): Promise<MotorcyclePart> {
     const entity = MotorcyclePartMapper.toModel(motorcyclePart);
-    await this.repository.save(entity);
+    const savedMotorcyclePartEntity = await this.repository.save(entity);
+    return MotorcyclePartMapper.toDomain(savedMotorcyclePartEntity);
   }
 
   async getAll(): Promise<MotorcyclePart[]> {

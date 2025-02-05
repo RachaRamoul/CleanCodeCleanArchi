@@ -5,6 +5,6 @@ export class GetMotorcyclePartUseCase {
   constructor(private motorcyclePartRepository: IMotorcyclePartRepository) {}
 
   async execute(id: string): Promise<MotorcyclePart | null> {
-    return this.motorcyclePartRepository.getById(id);
+    return this.motorcyclePartRepository.findById(id);
   }
 }
