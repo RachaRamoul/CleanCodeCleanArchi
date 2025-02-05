@@ -9,17 +9,17 @@ export class MotorcyclePartPostgresEntity implements MotorcyclePart {
   @Column()
   name!: string;
 
+  @Column()
+  description!: string;
+
+  @Column()
+  stockQuantity!: number;
+
   @Column('decimal')
   cost!: number;
 
-  @Column('int')
-  stockQuantity!: number;
-
-  @Column({ type: 'int' })
+  @Column()
   lowStockAlert!: number;
-
-  @Column({ default: '' })
-  description!: string;
 
   constructor(partial?: Partial<MotorcyclePartPostgresEntity>) {
     if (partial) {

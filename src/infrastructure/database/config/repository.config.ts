@@ -4,11 +4,14 @@ import { MongoCompanyRepository } from '../mongodb/repositories/company.reposito
 import { MotorcycleRepositoryPostgres } from '../postgres/repositories/motorcycle.repository-postgres';
 import { MotorcycleRepositoryMongoDB } from '../mongodb/repositories/motorcycle.repository-mongodb';
 
+import { MotorcyclePartRepositoryPostgres } from '../postgres/repositories/motorcycle-part.repository-postgres';
+
 import config from './config';
 
 type Repositories = {
     CompanyRepository: PostgresCompanyRepository | MongoCompanyRepository;
     MotorcycleRepository: MotorcycleRepositoryPostgres | MotorcycleRepositoryMongoDB;
+    MotorcyclePartRepository: MotorcyclePartRepositoryPostgres;
 };
 
 export const repositories = (): Repositories => {
@@ -16,11 +19,13 @@ export const repositories = (): Repositories => {
         return {
             CompanyRepository: new PostgresCompanyRepository(),
             MotorcycleRepository: new MotorcycleRepositoryPostgres(),
+            MotorcyclePartRepository: new MotorcyclePartRepositoryPostgres(),
         };
     } else if (config.dbType === 'mongodb') {
         return {
             CompanyRepository: new MongoCompanyRepository(),
             MotorcycleRepository: new MotorcycleRepositoryMongoDB(),
+            MotorcyclePartRepository: new MotorcyclePartRepositoryPostgres(),
         };
     }
     throw new Error('Database type is not supported');

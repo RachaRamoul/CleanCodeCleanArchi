@@ -1,43 +1,37 @@
-import { Repository } from 'typeorm';
+import { Repository } from "typeorm";
 import { AppDataSource } from '../postgres.config';
-import { MotorcyclePartPostgresEntity } from '../persistence/entities/motorcycle-part.postgres.entity';
-import { IModelRepository } from '../../../../application/repositories/model.repository';
+import { MotorcyclePart } from "../../../../domain/entities/motorcycle-part.entity";
+import { MotorcyclePartPostgresEntity } from "../persistence/entities/motorcycle-part.entity-postgres";
+import { IMotorcyclePartRepository } from "../../../../application/repositories/motorcycle-part.repository";
+import { MotorcyclePartMapper } from "../persistence/mappers/motorcycle-part.mapper-postgres";
 
-export class MotorcyclePartRepositoryPostgres implements IModelRepository {
+export class MotorcyclePartRepositoryPostgres implements IMotorcyclePartRepository {
   private repository: Repository<MotorcyclePartPostgresEntity>;
 
   constructor() {
     this.repository = AppDataSource.getRepository(MotorcyclePartPostgresEntity);
   }
 
-  async create(part: MotorcyclePartPostgresEntity): Promise<MotorcyclePartPostgresEntity> {
-    return this.repository.save(part);
+  async getById(id: string): Promise<MotorcyclePart | null> {
+    const part = await this.repository.findOneBy({ id });
+    return part ? MotorcyclePartMapper.toDomain(part) : null;
   }
 
-  async findById(id: string): Promise<MotorcyclePartPostgresEntity | null> {
-    return this.repository.findOne({
-      where: { id },
-    });
+  async add(motorcyclePart: MotorcyclePart): Promise<void> {
+    const entity = MotorcyclePartMapper.toModel(motorcyclePart);
+    await this.repository.save(entity);
   }
 
-  async findAll(): Promise<MotorcyclePartPostgresEntity[]> {
-    return this.repository.find();
+  async getAll(): Promise<MotorcyclePart[]> {
+    const parts = await this.repository.find();
+    return parts.map(MotorcyclePartMapper.toDomain);
   }
 
-  async update(
-    partId: string,
-    updateData: Partial<MotorcyclePartPostgresEntity>
-  ): Promise<void> {
-    await this.repository.update(partId, updateData);
+  async update(motorcyclePart: MotorcyclePart): Promise<void> {
+    await this.repository.update(motorcyclePart.id, motorcyclePart);
   }
 
-  async delete(partId: string): Promise<void> {
-    await this.repository.delete(partId);
+  async delete(id: string): Promise<void> {
+    await this.repository.delete(id);
   }
-
-  // async findLowStockParts(): Promise<MotorcyclePartPostgresEntity[]> {
-  //   return this.repository.find({
-  //     where: { lowStockAlert: true },
-  //   });
-  // }
 }
