@@ -1,5 +1,4 @@
-import apiClient from './apiClient';
-import { API_BASE_URL_EXPRESS } from '../../config/api.config';
+import expressApiClient from './expressApiClient';
 import { getCompanyIdFromToken } from '../utils/tokenUtils';
 import { Company } from '../../../../../../domain/entities/company.entity';
 
@@ -13,7 +12,7 @@ export const companyService = {
         try {
           const companyId: string | null = await getCompanyIdFromToken();
 
-          const response = await apiClient.get(`${API_BASE_URL_EXPRESS}api/company/${companyId}`, {
+          const response = await expressApiClient.get(`api/company/${companyId}`, {
             params: {
               fields: filter,
             },

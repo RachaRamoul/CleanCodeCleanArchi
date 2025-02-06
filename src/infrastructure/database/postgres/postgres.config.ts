@@ -31,4 +31,13 @@ const connectPostgres = async () => {
     }
 }
 
-export { AppDataSource, connectPostgres };
+const closePostgres = async () => {
+  try {
+      await AppDataSource.destroy();
+      console.log('PostgreSQL connection closed');
+  } catch (error) {
+      console.error('Error closing PostgreSQL connection:', error);
+  }
+};
+
+export { AppDataSource, connectPostgres, closePostgres };

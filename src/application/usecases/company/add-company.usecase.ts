@@ -17,7 +17,7 @@ export class AddCompanyUseCase {
     if(existingCompany){
         throw new Error('A company with this email already exists.');
     }
-    const company = new Company(undefined, name, email, number, siretNumber, isAdmin, password);
+    const company = new Company('', name, email, number, siretNumber, isAdmin, password);
 
     return await this.companyRepository.save(company);
   }

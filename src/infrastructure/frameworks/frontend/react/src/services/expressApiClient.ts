@@ -3,14 +3,14 @@ import { authService } from './authService';
 import { API_BASE_URL_EXPRESS } from '../../config/api.config';
 import { getToken } from '../utils/localStorage';
 
-const apiClient = axios.create({
+const expressApiClient = axios.create({
   baseURL: API_BASE_URL_EXPRESS,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-apiClient.interceptors.request.use(
+expressApiClient.interceptors.request.use(
   (config) => {
     const token = getToken();
     if (token) {
@@ -22,7 +22,7 @@ apiClient.interceptors.request.use(
 );
 
 //commenter ligne 25 a 38 si la deconnexion apres 1h pose probleme
-apiClient.interceptors.response.use(
+expressApiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
@@ -37,4 +37,4 @@ apiClient.interceptors.response.use(
   }
 );
 
-export default apiClient;
+export default expressApiClient;

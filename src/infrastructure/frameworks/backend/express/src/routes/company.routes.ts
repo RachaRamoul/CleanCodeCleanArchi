@@ -3,7 +3,7 @@ import { createCompany, getAllCompanies, getFilteredCompanyById } from '../contr
 import { isAdmin, isAuthenticated } from '../middlewares/auth.middleware';
 
 const router = express.Router();
-//enlever les middleware isAuthenticated et isAdmin pour enlever la sécu backend si besoin mais remettre par la suite
+
 router.post('/', isAuthenticated, isAdmin, createCompany);
 router.get('/all', isAuthenticated, getAllCompanies);
 router.get('/:id', isAuthenticated, getFilteredCompanyById);

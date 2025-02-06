@@ -2,7 +2,7 @@ import Fastify from 'fastify';
 import fastifyJwt from 'fastify-jwt';
 import cors from '@fastify/cors';
 import registerRoutes from './routes/index';
-import initializeDatabase from '../../../../database/config/database.config';
+import { initializeDatabase } from '../../../../database/config/database.config';
 import { authDecorator } from './middlewares/auth.decorator';
 
 const PORT = 8000;

@@ -1,12 +1,11 @@
-import { API_BASE_URL_EXPRESS } from '../../config/api.config';
 import { removeToken, getToken } from '../utils/localStorage';
-import apiClient  from '../services/apiClient';
+import expressApiClient  from './expressApiClient';
 import axios from 'axios';
 
 export const authService = {
     login: async ( email: string, password: string): Promise<string> => {
       try {
-        const response = await apiClient.post(`${API_BASE_URL_EXPRESS}api/auth`, { email, password });
+        const response = await expressApiClient.post(`api/auth`, { email, password });
         return response.data.token;
       } catch (error: unknown) {
 
@@ -41,8 +40,10 @@ export const authService = {
       if(!token) return false;
 
       try{
-        const response = await apiClient.post(`${API_BASE_URL_EXPRESS}api/auth/validateToken`);
-        return response.data.decodedToken;
+        const response = await expressApiClient.post(`api/auth/validateToken`);
+        if(!response.data.decoded) return false;
+        
+        return true;
 
       }catch(error: unknown){
         console.error('An error occurred while verifying authentication', error);

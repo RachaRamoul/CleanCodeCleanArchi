@@ -6,13 +6,14 @@ import {
   updateMotorcyclePart,
   deleteMotorcyclePart
 } from '../controllers/motorcycle-part.controller';
+import { isAuthenticated } from '../middlewares/auth.middleware';
 
 const router = express.Router();
 
-router.post('/', createMotorcyclePart);
-router.get('/', getAllMotorcycleParts);
-router.get('/:id', getMotorcyclePartById);
-router.put('/:id', updateMotorcyclePart);
-router.delete('/:id', deleteMotorcyclePart);
+router.post('/', isAuthenticated, createMotorcyclePart);
+router.get('/', isAuthenticated,getAllMotorcycleParts);
+router.get('/:id', isAuthenticated, getMotorcyclePartById);
+router.put('/:id', isAuthenticated, updateMotorcyclePart);
+router.delete('/:id', isAuthenticated, deleteMotorcyclePart);
 
 export default router;

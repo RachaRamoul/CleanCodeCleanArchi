@@ -28,7 +28,7 @@ export class AuthService {
         const token: string = jwt.sign(
             { id: company.id, isAdmin: company.isAdmin },
             this.jwtSecret,
-            { expiresIn: '1h' } 
+            { expiresIn: '48h' } 
         );
         
         return token;

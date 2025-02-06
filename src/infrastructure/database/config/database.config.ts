@@ -1,8 +1,8 @@
-import connectMongodb from '../mongodb/mongodb.config';
-import { connectPostgres } from '../postgres/postgres.config';
+import {connectMongodb, closeMongodb} from '../mongodb/mongodb.config';
+import { connectPostgres, closePostgres } from '../postgres/postgres.config';
 import config from './config';
 
-const initializeDatabase = async () => {
+export const initializeDatabase = async () => {
     
   if (config.dbType === 'mongodb') { 
       console.log('Using MongoDB...');
@@ -15,4 +15,15 @@ const initializeDatabase = async () => {
   }
 };
 
-export default initializeDatabase;
+export const closeDatabase = async () => {
+
+    if (config.dbType === 'mongodb') { 
+      console.log('Closing MongoDB connection...');
+      await closeMongodb();
+    } else if (config.dbType === 'postgres') {  
+      console.log('Closing PostgreSQL connection...');
+      await closePostgres();
+    } else {
+      throw new Error(`Unsupported Database type: ${config.dbType}`);
+    }
+};

@@ -24,7 +24,7 @@ export class CompanyMapper {
     companyEntity.isAdmin = company.isAdmin;
     companyEntity.password = company.password;
   
-    if (company.id) {
+    if (company.id.length !== 0) {
       companyEntity.id = company.id;
     }
   
