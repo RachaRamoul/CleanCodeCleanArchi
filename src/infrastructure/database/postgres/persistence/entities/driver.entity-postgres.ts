@@ -1,8 +1,7 @@
-import { Driver } from '../../../../../domain/entities/driver.entity';
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('drivers')
-export class DriverPostgresEntity implements Driver {
+export class DriverPostgresEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 

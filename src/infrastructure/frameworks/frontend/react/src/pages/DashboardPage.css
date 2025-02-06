@@ -2,20 +2,19 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    margin-top: 250px;
     overflow: auto;
+    padding-top: 70px;
 }
 
 .dashboard-main {
     text-align: center;
+    margin-top: 4vh;
     padding: 20px;
-    flex-grow: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     overflow: auto;
-    flex: 1;
 }
 .dashboard-main h1 {
     font-size: 24px;
@@ -25,12 +24,12 @@
 }
 
 .dashboard-menu {
+    margin-top: 5vh;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    grid-template-columns: repeat(3, 1fr); 
     gap: 20px;
     justify-content: center;
     align-items: center;
-    width: 90%;
     max-width: 1200px; 
 }
 
@@ -86,4 +85,10 @@
 
 .logout-button:hover {
     background: #a71d2a;
+}
+
+html, body, #root {
+    margin: 0;
+    padding: 0;
+    width: 100%;
 }

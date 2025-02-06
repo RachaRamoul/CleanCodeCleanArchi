@@ -1,10 +1,9 @@
-import { Company } from '../../../../../domain/entities/company.entity';
 import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert } from 'typeorm';
 import bcrypt from 'bcrypt';
 
 
 @Entity('companies')
-export default class CompanyPostgresEntity implements Company {
+export default class CompanyPostgresEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 

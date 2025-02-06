@@ -1,8 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { MotorcyclePart } from '../../../../../domain/entities/motorcycle-part.entity';
 
 @Entity('motorcycle_parts')
-export class MotorcyclePartPostgresEntity implements MotorcyclePart {
+export class MotorcyclePartPostgresEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 

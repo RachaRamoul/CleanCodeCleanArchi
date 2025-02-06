@@ -13,6 +13,7 @@ async function runAllFixtures() {
     console.log("All fixtures were executed successfully!");
   } catch (error) {
     console.error("Error executing fixtures:", error);
+    process.exit(1);
   } finally {
     await closeDatabase();
 }

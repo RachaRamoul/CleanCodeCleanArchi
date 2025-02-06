@@ -4,6 +4,7 @@ import { CompanyMapper } from '../persistence/mappers/company.mapper-mongodb';
 import { ICompanyRepository } from '../../../../application/repositories/company.repository';
 import { ObjectId } from 'mongodb';
 import { Types } from 'mongoose';
+import Email from '../../../../domain/value-objects/email.vo';
 
 export class MongoCompanyRepository implements ICompanyRepository {
 
@@ -16,10 +17,10 @@ export class MongoCompanyRepository implements ICompanyRepository {
     return companyEntity ? CompanyMapper.toDomain(companyEntity) : null;
   }
 
-  async findByEmail(email: string, includePassword: boolean = false): Promise<Company | null> {
+  async findByEmail(email: Email, includePassword: boolean = false): Promise<Company | null> {
     const companyEntity = includePassword 
-      ? await CompanyModel.findOne({ email }).select('+password')
-      : await CompanyModel.findOne({ email });
+      ? await CompanyModel.findOne({ email: email.value }).select('+password')
+      : await CompanyModel.findOne({ email: email.value});
 
     return companyEntity ? CompanyMapper.toDomain(companyEntity) : null;
   }

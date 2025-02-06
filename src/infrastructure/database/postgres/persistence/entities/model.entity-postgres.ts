@@ -1,8 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { Model } from '../../../../../domain/entities/model.entity';
 
 @Entity('models')
-export default class ModelPostgresEntity implements Model {
+export default class ModelPostgresEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
