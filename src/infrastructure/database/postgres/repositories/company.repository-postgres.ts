@@ -4,6 +4,7 @@ import CompanyPostgresEntity from '../persistence/entities/company.entity-postgr
 import { Company } from '../../../../domain/entities/company.entity';
 import { CompanyMapper } from '../persistence/mappers/company.mapper-postgres';
 import { ICompanyRepository } from '../../../../application/repositories/company.repository';
+import Email from '../../../../domain/value-objects/email.vo';
 
 export class PostgresCompanyRepository implements ICompanyRepository{
   private repository: Repository<CompanyPostgresEntity>;
@@ -17,8 +18,8 @@ export class PostgresCompanyRepository implements ICompanyRepository{
     return companyEntity ? CompanyMapper.toDomain(companyEntity) : null; 
   }
 
-  async findByEmail(email: string, includePassword: boolean = false): Promise<Company | null> {
-    const queryBuilder = this.repository.createQueryBuilder('company').where('company.email = :email', { email });
+  async findByEmail(email: Email, includePassword: boolean = false): Promise<Company | null> {
+    const queryBuilder = this.repository.createQueryBuilder('company').where('company.email = :email', { email: email.value });
     
     if(includePassword) {
       queryBuilder.addSelect('company.password');
@@ -39,7 +40,7 @@ export class PostgresCompanyRepository implements ICompanyRepository{
     return companies.map((company) => CompanyMapper.toDomain(company));
   }
 
-  async update(company: CompanyPostgresEntity): Promise<Company> {
+  async update(company: Company): Promise<Company> {
     const companyEntity = CompanyMapper.toModel(company);
     const updatedCompanyEntity = await this.repository.save(companyEntity);
     return CompanyMapper.toDomain(updatedCompanyEntity);

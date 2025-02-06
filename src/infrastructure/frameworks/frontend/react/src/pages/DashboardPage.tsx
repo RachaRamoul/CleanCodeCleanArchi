@@ -4,7 +4,6 @@ import Header from '../components/Header';
 import SubHeader from '../components/SubHeader';
 import Footer from '../components/Footer';
 import { companyService } from '../services/companyService';
-import { authService } from '../services/authService';
 import './DashboardPage.css';
 
 const DashboardPage: React.FC = () => {
@@ -20,7 +19,7 @@ const DashboardPage: React.FC = () => {
       const company = await companyService.getCompanyByfilter(filter);
       console.log('Company fetched:', company);
 
-      if (company && company.name) {
+      if (company && company.name && typeof company.name === 'string') {
         setCompanyName(company.name);
       }
     } catch (error) {
@@ -34,9 +33,6 @@ const DashboardPage: React.FC = () => {
       <SubHeader title="Dashboard" />
       <main className="dashboard-main">
         <h1>Bienvenue {companyName} sur la plateforme Triumph</h1>
-        <button onClick={authService.logout} className="logout-button">
-          🔒 Se Déconnecter
-        </button>
         <div className="dashboard-menu">
           <Link to="/motorcycle" className="dashboard-box">
             <h2>🚲 Gérer les Motos</h2>

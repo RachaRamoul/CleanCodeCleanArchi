@@ -1,6 +1,7 @@
-import { Company } from '@domain/entities/company.entity';
+import { Company } from '../../../../../../domain/entities/company.entity';
 import { AuthenticateCompanyUseCase } from '../../../../../../application/usecases/company/authenticate-company.usecase';
 import { repositories } from '../../../../../database/config/repository.config';
+import Email from '../../../../../../domain/value-objects/email.vo';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 
@@ -13,7 +14,9 @@ export class AuthService {
     async authenticate(email: string, password: string): Promise<string> {
         const authenticateCompanyUseCase = new AuthenticateCompanyUseCase(this.companyRepository);
 
-        const company = await authenticateCompanyUseCase.execute(email);
+        const emailObject: Email = new Email(email);
+
+        const company = await authenticateCompanyUseCase.execute(emailObject);
 
         const isPasswordValid = await bcrypt.compare(password, company.password);
         if (!isPasswordValid) {

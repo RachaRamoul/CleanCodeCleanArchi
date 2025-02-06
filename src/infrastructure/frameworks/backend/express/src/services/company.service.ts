@@ -1,10 +1,14 @@
-import { Company } from '@domain/entities/company.entity';
+import { Company } from '../../../../../../domain/entities/company.entity';
 import { AddCompanyUseCase } from '../../../../../../application/usecases/company/add-company.usecase';
 import { RemoveCompanyUseCase } from '../../../../../../application/usecases/company/remove-company.usecase';
 import { GetCompanyDetailsUseCase } from '../../../../../../application/usecases/company/get-company-details.usecase';
 import { UpdateCompanyProfileUseCase } from '../../../../../../application/usecases/company/update-company-profile.usecase';
 import { ListCompaniesUseCase } from '../../../../../../application/usecases/company/list-company.usecase';
 import { repositories } from '../../../../../database/config/repository.config';
+import Email from '../../../../../../domain/value-objects/email.vo';
+import SiretNumber from '../../../../../../domain/value-objects/siret-number.vo';
+import Name from '../../../../../../domain/value-objects/name.vo';
+import PasswordValidatorService from '../../../../../../application/services/password-validator.service';
 
 const { CompanyRepository } = repositories();
 
@@ -41,8 +45,22 @@ export class CompanyService {
         isAdmin: boolean = false, 
         password: string): Promise<Company> {
 
+        const nameObject: Name = new Name(name);
+        const emailObject: Email = new Email(email);
+        const siretNumberObject: SiretNumber = new SiretNumber(siretNumber);
+
+        if (!PasswordValidatorService.isValid(password)) {
+            throw new Error(`Invalid password. The password must meet the following criteria:
+                                - Minimum length of 8 characters
+                                - At least one uppercase letter (A-Z)
+                                - At least one lowercase letter (a-z)
+                                - At least one number (0-9)
+                                - At least one special character (!@#$%^&*(),.?":{}|<>)`);
+        }
+        
         const addCompanyUseCase = new AddCompanyUseCase(this.companyRepository);
-        return await addCompanyUseCase.execute(name, email, number, siretNumber, isAdmin, password);
+
+        return await addCompanyUseCase.execute(nameObject, emailObject, number, siretNumberObject, isAdmin, password);
     }
 
     async listCompanies(): Promise<Company[]> {

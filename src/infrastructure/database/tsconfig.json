@@ -6,8 +6,13 @@
       "esModuleInterop": true,
       "skipLibCheck": true,
       "outDir": "./dist",
-      "rootDir": ".",
+      "rootDir": "../../../src/",
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
     },
+    "include": 
+    [
+      "../../domain/**/*",
+      "../../application/**/*"
+    ]
 }

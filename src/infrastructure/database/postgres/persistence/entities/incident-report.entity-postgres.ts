@@ -1,8 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { IncidentReport } from '../../../../../domain/entities/incident-report.entity';
 
 @Entity('incident_reports')
-export class IncidentReportPostgresEntity implements IncidentReport {
+export class IncidentReportPostgresEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
