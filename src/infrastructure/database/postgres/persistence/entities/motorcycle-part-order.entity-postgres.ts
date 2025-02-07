@@ -19,16 +19,7 @@ export class MotorcyclePartOrderPostgresEntity {
 
   constructor(partial?: Partial<MotorcyclePartOrderPostgresEntity>) {
     if (partial) {
-      super(
-        partial.id || '', 
-        partial.motorcyclePartId || '', 
-        partial.cost || 0, 
-        partial.orderDate || new Date(), 
-        partial.deliveryDate || new Date()
-      ); 
       Object.assign(this, partial);
-    } else {
-      super('', '', 0, new Date(), new Date());
     }
   }
 }

@@ -18,6 +18,14 @@ export class CompanyMapper {
   }
 
   static toModel(company: Company): ICompany {
-    return new CompanyModel(company);
+    return new CompanyModel({
+      name: company.name.value,
+      email: company.email.value,
+      number: company.number,
+      siretNumber: company.siretNumber.value,
+      isAdmin: company.isAdmin,
+      password: company.password,
+    });
   }
 }
+

@@ -31,9 +31,7 @@ CompanySchema.pre<ICompany>('save', async function (next) {
   if (!company.isModified('password')) {
     return next();
   }
-  if (company.password.length < 6) {
-    return next(new Error('Password must be at least 8 characters long.'));
-  }
+  
   try {
     const hashedPassword = await bcrypt.hash(company.password, 10);
     company.password = hashedPassword; 
