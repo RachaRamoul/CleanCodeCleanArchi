@@ -11,7 +11,7 @@ export class DriverRepositoryMongoDB implements IDriverRepository {
     return driverEntity ? DriverMapper.toDomain(driverEntity) : null;
   }
 
-  async findByCompanyId(companyId: string): Promise<Driver[] | null> {
+  async findByCompanyId(companyId: string): Promise<Driver[]> {
     const driverEntities = await DriverModel.find({ companyId: new ObjectId(companyId) }).exec();
 
     if (!driverEntities) {

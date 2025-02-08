@@ -17,7 +17,7 @@ export class DriverRepositoryPostgres implements IDriverRepository {
     return driverEntity ? DriverMapper.toDomain(driverEntity) : null; 
   }
 
-  async findByCompanyId(companyId: string): Promise<Driver[] | null> {
+  async findByCompanyId(companyId: string): Promise<Driver[]> {
     const queryBuilder = this.repository
       .createQueryBuilder('driver')
       .innerJoinAndSelect('driver.company', 'company')
@@ -26,7 +26,7 @@ export class DriverRepositoryPostgres implements IDriverRepository {
     const drivers = await queryBuilder.getMany();
 
     if (!drivers) {
-      return null;
+      throw new Error(`No drivers found for company with ID: ${companyId}`);
     }
     
     return drivers.map((driver) => DriverMapper.toDomain(driver));
