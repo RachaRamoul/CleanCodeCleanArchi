@@ -7,23 +7,50 @@
 
 ## Setup
 
-1. Lancer le projet
+
+1. Installer les dépendances du frontend
+
+   ```bash
+   cd src/infrastructure/frameworks/frontend/react/
+   npm install 
+   ```
+
+2. Installer les dépendances du backend
+
+   ```bash
+   cd src/infrastructure/frameworks/backend/express/
+   npm install 
+   cd ../fastify/
+   npm install
+   ```
+
+3. Installer les dépendances du database
+
+   ```bash
+   cd src/infrastructure/database/
+   npm install 
+   ```
+
+4. Lancer le projet
 
    ```bash
    docker-compose up --build
    ```
 
-2. Installer les dépendances du frontend
+
+5. Lancer les migrations
 
    ```bash
-   docker-compose run -it frontend /bin/sh
-   npm install 
+   cd src/infrastructure/database/
+   make db-run-migration 
    ```
 
-3. Lancer les migrations
+6. Lancer les fixtures
 
    ```bash
-   make db-run-migration 
+   docker compose run -it --entrypoint /bin/sh backend 
+   cd ../../database
+   make run-fixtures 
    ```
 
 ## A savoir

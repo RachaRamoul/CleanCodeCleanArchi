@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import SubHeader from '../components/SubHeader';
 import { motorcycleService } from '../services/motorcycleService';
 import { Motorcycle } from '../../../../../../domain/entities/motorcycle.entity';
@@ -70,7 +68,6 @@ const MotorcyclePage: React.FC = () => {
 
   return (
     <div className="motorcycle-page">
-      <Header />
       <SubHeader title="Gestion des motos" />
       <main className="main-content">
         <div className="button-container">
@@ -147,7 +144,6 @@ const MotorcyclePage: React.FC = () => {
           </div>
         )}
       </main>
-      <Footer />
     </div>
   );
 };
