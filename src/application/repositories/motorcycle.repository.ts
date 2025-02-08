@@ -1,4 +1,5 @@
 import { Motorcycle } from "../../domain/entities/motorcycle.entity";
+import Mileage from "../../domain/value-objects/mileage.vo";
 
 export interface IMotorcycleRepository {
   findById(id: string): Promise<Motorcycle | null>;

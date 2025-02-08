@@ -8,12 +8,18 @@ import "./MotorcyclePage.css";
 
 const MotorcyclePage: React.FC = () => {
   const [motorcycles, setMotorcycles] = useState<Motorcycle[]>([]);
-  const [newMotorcycle, setNewMotorcycle] = useState<Partial<Motorcycle>>({
+  const [newMotorcycle, setNewMotorcycle] = useState<{
+    modelId: string;
+    mileage: number;
+    status: Motorcycle['status'];
+    companyId: string;
+  }>({
     modelId: '',
     mileage: 0,
     status: 'AVAILABLE',
     companyId: '',
   });
+
   const [showForm, setShowForm] = useState(false);
   const [selectedMotorcycle, setSelectedMotorcycle] = useState<Motorcycle | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -38,7 +44,10 @@ const MotorcyclePage: React.FC = () => {
 
   const handleAddMotorcycle = async () => {
     try {
-      await motorcycleService.addMotorcycle(newMotorcycle);
+      await motorcycleService.addMotorcycle({
+        ...newMotorcycle,
+        mileage: newMotorcycle.mileage,
+      });
       fetchMotorcycles();
       setNewMotorcycle({ modelId: '', mileage: 0, status: 'AVAILABLE', companyId: '' });
       setShowForm(false);
@@ -47,6 +56,7 @@ const MotorcyclePage: React.FC = () => {
       setErrorMessage("Impossible d'ajouter la moto.");
     }
   };
+
   const handleDeleteMotorcycle = async (id: string) => {  
     if (window.confirm("Voulez-vous vraiment supprimer cette moto ?")) {
       try {
@@ -57,8 +67,8 @@ const MotorcyclePage: React.FC = () => {
       }
     }
   };
-  
-  const handleViewDetails = async (id: number) => {
+
+  const handleViewDetails = async (id: string) => {
     try {
       const data = await motorcycleService.getMotorcycleById(id);
       setSelectedMotorcycle(data);
@@ -76,7 +86,7 @@ const MotorcyclePage: React.FC = () => {
         <div className="button-container">
           <button className="add" onClick={() => setShowForm(true)}>➕ Ajouter une moto</button>
         </div>
-        
+
         <div className="table-container">
           {errorMessage && <p className="error-message">{errorMessage}</p>}
           {loading ? (
@@ -100,7 +110,7 @@ const MotorcyclePage: React.FC = () => {
                     <td>{moto.mileage} km</td>
                     <td>{moto.status}</td>
                     <td>
-                      <button className="details" onClick={() => handleViewDetails(Number(moto.id))}>Détails</button>
+                      <button className="details" onClick={() => handleViewDetails(moto.id)}>Détails</button>
                       <button className="delete" onClick={() => handleDeleteMotorcycle(moto.id)}>🗑 Supprimer</button>
                     </td>
                   </tr>

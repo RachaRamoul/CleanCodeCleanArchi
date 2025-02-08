@@ -15,7 +15,10 @@ export const motorcycleService = {
 
   addMotorcycle: async (motorcycle: Partial<Motorcycle>): Promise<void> => {
     try {
-      await expressApiClient.post(MOTORCYCLES_API_URL, motorcycle);
+      await expressApiClient.post(MOTORCYCLES_API_URL, {
+        ...motorcycle,
+        mileage: typeof motorcycle.mileage === "object" ? motorcycle.mileage.value : motorcycle.mileage, // ✅ Ensure it's a number
+      });
     } catch (error) {
       console.error("Erreur lors de l'ajout de la moto :", error);
       throw error;
@@ -24,16 +27,16 @@ export const motorcycleService = {
 
   deleteMotorcycle: async (id: string): Promise<void> => {
     try {
-      await expressApiClient.delete(`${MOTORCYCLES_API_URL}${id}`);
+      await expressApiClient.delete(`${MOTORCYCLES_API_URL}/${id}`);
     } catch (error) {
       console.error("Erreur lors de la suppression de la moto :", error);
       throw error;
     }
   },
   
-  getMotorcycleById: async (id: number): Promise<Motorcycle | null> => {
+  getMotorcycleById: async (id: string): Promise<Motorcycle | null> => {
     try {
-      const response = await expressApiClient.get(`${MOTORCYCLES_API_URL}${id}`);
+      const response = await expressApiClient.get(`${MOTORCYCLES_API_URL}/${id}`);
       return response.data;
     } catch (error) {
       console.error("Erreur lors de la récupération des détails de la moto :", error);

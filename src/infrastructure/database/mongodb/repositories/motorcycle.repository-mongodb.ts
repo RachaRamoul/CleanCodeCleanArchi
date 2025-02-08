@@ -3,6 +3,7 @@ import { MotorcycleModel } from "../persistence/entities/motorcycle.entity-mongo
 import { MotorcycleMapper } from "../persistence/mappers/motorcycle.mapper-mongodb";
 import { IMotorcycleRepository } from "../../../../application/repositories/motorcycle.repository";
 import mongoose from "mongoose";
+import Mileage from "../../../../domain/value-objects/mileage.vo";
 
 export class MotorcycleRepositoryMongoDB implements IMotorcycleRepository {
   async findById(id: string): Promise<Motorcycle | null> {
@@ -36,10 +37,13 @@ export class MotorcycleRepositoryMongoDB implements IMotorcycleRepository {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       throw new Error(`Invalid ObjectId format: ${id}`);
     }
+    if (updateData.mileage && typeof updateData.mileage === "number") {
+      updateData.mileage = new Mileage(updateData.mileage);
+    }
 
     const updatedMotorcycleEntity = await MotorcycleModel.findByIdAndUpdate(
       id,
-      { $set: updateData },
+      { $set: MotorcycleMapper.toModel(updateData as Motorcycle) },
       { new: true }
     );
 
