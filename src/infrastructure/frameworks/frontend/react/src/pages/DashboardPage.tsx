@@ -1,16 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';  
-import Header from '../components/Header';
 import SubHeader from '../components/SubHeader';
-import Footer from '../components/Footer';
 import { companyService } from '../services/companyService';
 import './DashboardPage.css';
+import { LinkData } from '../types/linkData';
+import { isAdminFromToken } from '../utils/tokenUtils';
+import { adminLinksData, companyLinksData } from '../data/menuLinksData';
+import Card from '../components/Card';
+// import MotorcycleIcon from '@mui/icons-material/TwoWheeler';
+// import BuildIcon from '@mui/icons-material/Build';
+// import SettingsIcon from '@mui/icons-material/Settings';
+// import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
+// import BarChartIcon from '@mui/icons-material/BarChart';
+
+// const iconMap: { [key: string]: JSX.Element } = {
+//   motorcycle: <MotorcycleIcon style={{ fontSize: 40, color: '#ffffff' }} />,
+//   maintenance: <BuildIcon style={{ fontSize: 40, color: '#ffffff' }} />,
+//   parts: <SettingsIcon style={{ fontSize: 40, color: '#ffffff' }} />,
+//   testRides: <DirectionsBikeIcon style={{ fontSize: 40, color: '#ffffff' }} />,
+//   reports: <BarChartIcon style={{ fontSize: 40, color: '#ffffff' }} />
+// };
+
 
 const DashboardPage: React.FC = () => {
   const [companyName, setCompanyName] = useState<string>('Unknown');
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
   useEffect(() => {
     getCompanyName();
+    getCompanyRole();
   }, []);
 
   const getCompanyName = async () => {
@@ -27,40 +44,42 @@ const DashboardPage: React.FC = () => {
     }
   };
 
+  const getCompanyRole = () => {
+    const admin: boolean | null = isAdminFromToken();
+    if(admin){
+      setIsAdmin(true);
+    }else{
+      setIsAdmin(false);
+    } 
+  };
+
+  const getRelevantLinks = (): LinkData[] => {
+    return isAdmin ? adminLinksData : companyLinksData;
+  };
+
+  const renderCards = () => {
+    const linksToDisplay = getRelevantLinks();
+    return linksToDisplay
+      .map((link: LinkData, index: number) => (
+        <Card
+          key={index}
+          navigateTo={link.navigateTo}
+          title={link.title}
+          description={link.description}
+        />
+      ));
+  };
+  
+  
   return (
     <div className="dashboard-page">
-      <Header />
       <SubHeader title="Dashboard" />
       <main className="dashboard-main">
         <h1>Bienvenue {companyName} sur la plateforme Triumph</h1>
         <div className="dashboard-menu">
-          <Link to="/motorcycle" className="dashboard-box">
-            <h2>🚲 Gérer les Motos</h2>
-            <p>Ajouter, supprimer et gérer les informations des motos.</p>
-          </Link>
-
-          <Link to="/maintenance" className="dashboard-box">
-            <h2>🛠 Gestion des Entretiens</h2>
-            <p>Planifiez et suivez les entretiens préventifs et curatifs.</p>
-          </Link>
-
-          <Link to="/motorcycle-parts" className="dashboard-box">
-            <h2>⚙️ Suivi des Pièces Détachées</h2>
-            <p>Gérez l'inventaire des pièces détachées et leur disponibilité.</p>
-          </Link>
-
-          <Link to="/test-rides" className="dashboard-box">
-            <h2>🏍 Historique des Essais</h2>
-            <p>Suivez les conducteurs et gérez les essais de motos.</p>
-          </Link>
-
-          <Link to="/reports" className="dashboard-box">
-            <h2>📊 Rapports et Incidents</h2>
-            <p>Consultez les rapports d’incidents et les statistiques.</p>
-          </Link>
+          {renderCards()}
         </div>
       </main>
-      <Footer />
     </div>
   );
 };

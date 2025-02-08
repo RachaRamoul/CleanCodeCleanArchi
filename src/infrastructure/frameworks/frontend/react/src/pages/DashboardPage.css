@@ -1,4 +1,4 @@
-.dashboard-page {
+ .dashboard-page {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -7,85 +7,47 @@
 }
 
 .dashboard-main {
-    text-align: center;
-    margin-top: 4vh;
-    padding: 20px;
     display: flex;
+    text-align: center;
+    padding: 20px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow: auto;
+    max-height: 67vh;
+    flex-grow: 1;
 }
+
 .dashboard-main h1 {
     font-size: 24px;
     font-weight: bold;
     text-align: center;
     margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .dashboard-menu {
-    margin-top: 5vh;
+    overflow: auto;
     display: grid;
+    margin-top: 5vh;
     grid-template-columns: repeat(3, 1fr); 
+    max-height: calc(100vh - 250px);
     gap: 20px;
     justify-content: center;
     align-items: center;
     max-width: 1200px; 
 }
 
-.dashboard-box {
-    background: white;
-    border-radius: 12px;
-    padding: 20px;
-    text-decoration: none;
-    color: black;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
-    text-align: center;
-    display: flex; 
-    flex-direction: column;  
-    justify-content: space-between; 
-    align-items: center;
-    height: 220px;
-    min-width: 200px;
+.dashboard-menu::-webkit-scrollbar {
+    width: 8px;
+}
+.dashboard-menu::-webkit-scrollbar-thumb {
+    background-color: #927d7d;
+    border-radius: 10px;
+}
+.dashboard-menu::-webkit-scrollbar-thumb:hover {
+    background-color: #8f111f;
 }
 
-.dashboard-box h2 {
-    margin-bottom: 10px;
-    font-size: 20px;
-}
-
-.dashboard-box p {
-    font-size: 14px;
-    color: #666;
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-.dashboard-box:hover {
-    transform: translateY(-5px);
-    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
-}
-
-.logout-button {
-    margin-top: 30px;
-    padding: 12px 20px;
-    background: #dc3545;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.logout-button:hover {
-    background: #a71d2a;
-}
 
 html, body, #root {
     margin: 0;
