@@ -15,7 +15,7 @@ export default class MotorcycleRideTestPostgresEntity {
   date!: Date;
 
   @Column()
-  testDuration!: number; 
+  testDurationInHours!: number; 
 
   @Column()
   incidentReportId!: string; 

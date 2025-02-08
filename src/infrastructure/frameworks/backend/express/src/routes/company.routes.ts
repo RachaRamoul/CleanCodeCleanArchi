@@ -5,7 +5,9 @@ import { isAdmin, isAuthenticated } from '../middlewares/auth.middleware';
 const router = express.Router();
 
 router.post('/', isAuthenticated, isAdmin, createCompany);
+
 router.get('/all', isAuthenticated, getAllCompanies);
+
 router.get('/:id', isAuthenticated, getFilteredCompanyById);
 
 export default router;

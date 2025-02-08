@@ -6,7 +6,7 @@ export interface IMotorcycleRideTest extends Document {
   motorcycleId: mongoose.Types.ObjectId;
   driverId: mongoose.Types.ObjectId;
   date: Date;
-  testDuration: number;
+  testDurationInHours: number;
   incidentReportId: mongoose.Types.ObjectId;
 }
 
@@ -15,7 +15,7 @@ const MotorcycleRideTestSchema: Schema<IMotorcycleRideTest> = new Schema<IMotorc
   motorcycleId: { type: mongoose.Schema.Types.ObjectId, ref: 'Motorcycle', required: true },
   driverId: { type: mongoose.Schema.Types.ObjectId, ref: 'Driver', required: true },
   date: { type: Date, required: true },
-  testDuration: { type: Number, required: true },
+  testDurationInHours: { type: Number, required: true },
   incidentReportId: { type: mongoose.Schema.Types.ObjectId, ref: 'IncidentReport', required: true },
 });
 

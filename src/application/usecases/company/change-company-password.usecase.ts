@@ -20,6 +20,6 @@ export class ChangeCompanyPasswordUseCase {
 
     company.password = newPassword;
 
-    await this.companyRepository.update(company);
+    await this.companyRepository.save(company);
   }
 }

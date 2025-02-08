@@ -8,7 +8,6 @@ import { repositories } from '../../../../../database/config/repository.config';
 import Email from '../../../../../../domain/value-objects/email.vo';
 import SiretNumber from '../../../../../../domain/value-objects/siret-number.vo';
 import Name from '../../../../../../domain/value-objects/name.vo';
-import PasswordValidatorService from '../../../../../../application/services/password-validator.service';
 
 export class CompanyService {
     
@@ -42,15 +41,6 @@ export class CompanyService {
         const nameObject: Name = new Name(name);
         const emailObject: Email = new Email(email);
         const siretNumberObject: SiretNumber = new SiretNumber(siretNumber);
-
-        if (!PasswordValidatorService.isValid(password)) {
-            throw new Error(`Invalid password. The password must meet the following criteria:
-                                - Minimum length of 8 characters
-                                - At least one uppercase letter (A-Z)
-                                - At least one lowercase letter (a-z)
-                                - At least one number (0-9)
-                                - At least one special character (!@#$%^&*(),.?":{}|<>)`);
-        }
         
         const addCompanyUseCase = new AddCompanyUseCase(this.companyRepository);
 
