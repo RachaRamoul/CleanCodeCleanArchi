@@ -3,7 +3,7 @@ import Email from "../../../domain/value-objects/email.vo";
 import Name from "../../../domain/value-objects/name.vo";
 import { Company } from "../../../domain/entities/company.entity";
 import { ICompanyRepository } from "../../repositories/company.repository";
-import NumberValidatorService  from "../../services/number-validator.service";
+import PhoneNumberValidatorService  from "../../services/phone-number-validator.service";
 
 export class AddCompanyUseCase {
   constructor(private companyRepository: ICompanyRepository) {}
@@ -17,7 +17,7 @@ export class AddCompanyUseCase {
     password: string,
   ): Promise<Company> {
 
-    if (!NumberValidatorService.isValid(number)) {
+    if (!PhoneNumberValidatorService.isValid(number)) {
         throw new Error("Invalid number: Must only contain 10 digits.");
     }
     

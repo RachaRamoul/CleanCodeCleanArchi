@@ -1,7 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-
+import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne } from 'typeorm';
+import CompanyPostgresEntity from './company.entity-postgres';
 @Entity('drivers')
-export class DriverPostgresEntity {
+export default class DriverPostgresEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
@@ -11,8 +11,9 @@ export class DriverPostgresEntity {
   @Column()
   lastName!: string;
 
-  @Column()
-  companyId!: string;
+  @ManyToOne(() => CompanyPostgresEntity, { eager: true })
+  @JoinColumn({ name: 'company_id' })
+  company!: CompanyPostgresEntity;
   
   @Column()
   phoneNumber!: string;   

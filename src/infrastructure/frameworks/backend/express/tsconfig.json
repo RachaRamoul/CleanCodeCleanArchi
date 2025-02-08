@@ -8,11 +8,11 @@
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "baseUrl": "../../../../",
+    "baseUrl": ".",
     "paths": {
       "@src/*": ["src/*"],
-      "@domain/*": ["domain/*"],
-      "@application/*": ["application/*"],
+      "@domain/*": ["../../../../domain/*"],
+      "@application/*": ["../../../../application/*"],
     },
     "sourceMap": true
   },

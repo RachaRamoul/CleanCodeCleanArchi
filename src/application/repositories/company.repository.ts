@@ -6,6 +6,5 @@ export interface ICompanyRepository {
   findByEmail(email: Email, includePassword?: boolean): Promise<Company | null>;
   save(company: Company): Promise<Company>;
   findAll(): Promise<Company[]>;
-  update(Company: Company): Promise<Company>;
   remove(id: string): Promise<void>;
 }
