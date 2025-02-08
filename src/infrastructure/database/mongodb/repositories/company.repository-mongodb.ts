@@ -5,8 +5,9 @@ import { ICompanyRepository } from '../../../../application/repositories/company
 import { ObjectId } from 'mongodb';
 import { Types } from 'mongoose';
 import Email from '../../../../domain/value-objects/email.vo';
+import { DriverMapper } from '../../postgres/persistence/mappers/driver.mapper-postgres';
 
-export class MongoCompanyRepository implements ICompanyRepository {
+export class CompanyRepositoryMongoDB implements ICompanyRepository {
 
   async findById(id: string): Promise<Company | null> {
     if (!ObjectId.isValid(id)) {

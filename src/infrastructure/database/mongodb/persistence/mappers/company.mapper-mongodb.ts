@@ -3,6 +3,7 @@ import SiretNumber from '../../../../../domain/value-objects/siret-number.vo';
 import Email from '../../../../../domain/value-objects/email.vo';
 import Name from '../../../../../domain/value-objects/name.vo';
 import { ICompany, CompanyModel } from '../entities/company.entity-mongodb';
+import mongoose from 'mongoose';
 
 export class CompanyMapper {
   static toDomain(companyEntity: ICompany): Company {
@@ -18,7 +19,10 @@ export class CompanyMapper {
   }
 
   static toModel(company: Company): ICompany {
+    const objectId = company.id ? new mongoose.Types.ObjectId(company.id) : undefined;
+
     return new CompanyModel({
+      _id: objectId,
       name: company.name.value,
       email: company.email.value,
       number: company.number,

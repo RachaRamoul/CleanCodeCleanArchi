@@ -5,9 +5,7 @@ import { ICompanyRepository } from "../../repositories/company.repository";
 export class AuthenticateCompanyUseCase {
   constructor(private companyRepository: ICompanyRepository) {}
 
-  async execute(
-    email: Email,
-  ): Promise<Company> {
+  async execute(email: Email): Promise<Company> {
     
     const includePassword = true;
 

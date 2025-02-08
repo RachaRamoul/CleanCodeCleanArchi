@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify';
-
+import driverRoutes from './driver.routes';
 
 export default async function registerRoutes (app: FastifyInstance): Promise<void> {
-    //EXEMPLE : app.register(userRoutes, { prefix: '/user' }); 
+    app.register(driverRoutes, { prefix: '/driver' }); 
 };

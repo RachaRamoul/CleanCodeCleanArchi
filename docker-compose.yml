@@ -20,8 +20,8 @@ services:
     volumes:
       - ./src/infrastructure/database/mongodb:/usr/src/infrastructure/database/mongodb
       - ./src/infrastructure/database/postgres:/usr/src/infrastructure/database/postgres
-      - ./src/infrastructure/database/config:/usr/infrastructure/database/config
-      - ./src/infrastructure/database/fixtures:/usr/infrastructure/database/fixtures
+      - ./src/infrastructure/database/config:/usr/src/infrastructure/database/config
+      - ./src/infrastructure/database/fixtures:/usr/src/infrastructure/database/fixtures
       - ./src/infrastructure/frameworks/backend/express:/usr/src/infrastructure/frameworks/backend/express
       - ./src/infrastructure/frameworks/backend/fastify:/usr/src/infrastructure/frameworks/backend/fastify
       - ./src/domain:/usr/src/domain

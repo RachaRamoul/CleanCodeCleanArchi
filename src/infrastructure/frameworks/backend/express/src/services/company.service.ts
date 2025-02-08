@@ -10,19 +10,13 @@ import SiretNumber from '../../../../../../domain/value-objects/siret-number.vo'
 import Name from '../../../../../../domain/value-objects/name.vo';
 import PasswordValidatorService from '../../../../../../application/services/password-validator.service';
 
-const { CompanyRepository } = repositories();
-
 export class CompanyService {
     
-    constructor(private companyRepository = CompanyRepository){}
+    constructor(private companyRepository = repositories().CompanyRepository){}
 
-    async getCompanyById(id: string,  fields?: string[]): Promise<Partial<Company> | null> {
+    async getCompanyById(id: string,  fields?: string[]): Promise<Partial<Company>> {
         const getCompanyDetailsUseCase = new GetCompanyDetailsUseCase(this.companyRepository);
         const company = await getCompanyDetailsUseCase.execute(id);
-
-        if (!company) {
-            return null;
-        }
     
         if (fields) {
             const filteredCompany = {};
@@ -68,9 +62,9 @@ export class CompanyService {
         return await listCompaniesUseCase.execute();
     }
 
-    async updateCompany(id: string, updateData: Partial<Company>): Promise<Company> {
+    async updateCompany(id: string, companyUpdateData: Partial<Company>): Promise<Company> {
         const updateCompanyProfileUseCase = new UpdateCompanyProfileUseCase(this.companyRepository);
-        return await updateCompanyProfileUseCase.execute(id, updateData);
+        return await updateCompanyProfileUseCase.execute(id, companyUpdateData);
     }
 
     async deleteCompany(id: string): Promise<void> {

@@ -3,7 +3,6 @@ import fastifyJwt from 'fastify-jwt';
 import cors from '@fastify/cors';
 import registerRoutes from './routes/index';
 import { initializeDatabase } from '../../../../database/config/database.config';
-import { authDecorator } from './middlewares/auth.decorator';
 
 const PORT = 8000;
 const hostname = '0.0.0.0';
@@ -15,9 +14,7 @@ server.register(cors, { origin: '*' });
 
 server.register(fastifyJwt, {secret: jwtSecret});
 
-authDecorator(server);
-
-server.register(registerRoutes, { prefix: '/' });
+server.register(registerRoutes, { prefix: '/api' });
 
 initializeDatabase()
 .then(() => {

@@ -1,5 +1,4 @@
-export default class NumberValidatorService {
- 
+export default class PhoneNumberValidatorService {
     public static isValid(number: string): boolean {
         const minLength = 10;
         const maxLength = 10;

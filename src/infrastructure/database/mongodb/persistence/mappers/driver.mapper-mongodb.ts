@@ -1,13 +1,24 @@
 import { Driver } from '../../../../../domain/entities/driver.entity';
+import Name from '../../../../../domain/value-objects/name.vo';
 import { IDriver, DriverModel } from '../entities/driver.entity-mongodb';
+import { CompanyMapper } from './company.mapper-mongodb';
+import { CompanyModel } from '../entities/company.entity-mongodb';
+import mongoose from 'mongoose';
 
 export class DriverMapper {
-  static toDomain(driverEntity: IDriver): Driver {
+  static async toDomain(driverEntity: IDriver): Promise<Driver> {
+    const companyEntity = await CompanyModel.findById(driverEntity.companyId).exec();
+
+    if(!companyEntity){
+      throw new Error('Company not found');
+    }
+    const company = CompanyMapper.toDomain(companyEntity);
+
     return new Driver(
       driverEntity.id,
-      driverEntity.firstName,
-      driverEntity.lastName,
-      driverEntity.companyId,
+      new Name(driverEntity.firstName),
+      new Name(driverEntity.lastName),
+      company,
       driverEntity.phoneNumber,
       driverEntity.licenseNumber,
       driverEntity.experienceYears,
@@ -16,6 +27,16 @@ export class DriverMapper {
   
 
   static toModel(driver: Driver): IDriver {
-    return new DriverModel(driver);
+    const objectId = driver.id ? new mongoose.Types.ObjectId(driver.id) : undefined;
+    
+    return new DriverModel({
+      _id: objectId,
+      firstName: driver.firstName,
+      lastName: driver.lastName,
+      companyId: new mongoose.Types.ObjectId(driver.company.id),
+      phoneNumber: driver.phoneNumber,
+      licenseNumber: driver.licenseNumber,
+      experienceYears: driver.experienceYears,
+    });
   }
 }

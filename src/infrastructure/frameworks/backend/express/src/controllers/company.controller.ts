@@ -1,10 +1,7 @@
 import { Request, Response } from 'express';
 import { CompanyService } from '../services/company.service';
-import { repositories } from '../../../../../database/config/repository.config';
 
-const { CompanyRepository } = repositories();
-const companyService = new CompanyService(CompanyRepository);
-
+const companyService = new CompanyService();
 
 export const getFilteredCompanyById = async (req: Request, res: Response) => {
   try {

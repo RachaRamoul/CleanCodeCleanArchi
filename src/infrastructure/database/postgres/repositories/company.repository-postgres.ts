@@ -6,7 +6,7 @@ import { CompanyMapper } from '../persistence/mappers/company.mapper-postgres';
 import { ICompanyRepository } from '../../../../application/repositories/company.repository';
 import Email from '../../../../domain/value-objects/email.vo';
 
-export class PostgresCompanyRepository implements ICompanyRepository{
+export class CompanyRepositoryPostgres implements ICompanyRepository{
   private repository: Repository<CompanyPostgresEntity>;
 
   constructor() {
@@ -38,12 +38,6 @@ export class PostgresCompanyRepository implements ICompanyRepository{
   async findAll(): Promise<Company[]> {
     const companies = await this.repository.find();
     return companies.map((company) => CompanyMapper.toDomain(company));
-  }
-
-  async update(company: Company): Promise<Company> {
-    const companyEntity = CompanyMapper.toModel(company);
-    const updatedCompanyEntity = await this.repository.save(companyEntity);
-    return CompanyMapper.toDomain(updatedCompanyEntity);
   }
 
   async remove(id: string): Promise<void> {

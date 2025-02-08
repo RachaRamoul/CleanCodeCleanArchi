@@ -1,8 +1,10 @@
 import { Driver } from '../../domain/entities/driver.entity';
 
 export interface IDriverRepository {
-  findById(id: string): Promise<Driver | null>;
   save(driver: Driver): Promise<Driver>;
-  listDrivers(): Promise<Driver[]>;
-  removeDriver(id: string): Promise<void>;
+  findById(id: string): Promise<Driver | null>;
+  findAll(): Promise<Driver[]>;
+  findByCompanyId(companyId: string): Promise<Driver[] | null>;
+  findByLicenseNumber(licenseNumber: string): Promise<Driver | null>;
+  remove(id: string): Promise<void>;
 }
