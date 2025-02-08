@@ -10,6 +10,9 @@ import { MotorcyclePartRepositoryMongoDB } from '../mongodb/repositories/motorcy
 import { DriverRepositoryPostgres } from '../postgres/repositories/driver.repository-postgres';
 import { DriverRepositoryMongoDB } from '../mongodb/repositories/driver.repository-mongodb';
 
+import { MotorcycleModelRepositoryPostgres } from '../postgres/repositories/motorcycle-model.repository-postgres';
+import { MotorcycleModelRepositoryMongoDB } from '../mongodb/repositories/motorcycle-model.repository-mongodb';
+
 import config from './config';
 
 type Repositories = {
@@ -17,7 +20,7 @@ type Repositories = {
     MotorcycleRepository: MotorcycleRepositoryPostgres | MotorcycleRepositoryMongoDB;
     MotorcyclePartRepository: MotorcyclePartRepositoryPostgres | MotorcyclePartRepositoryMongoDB;
     DriverRepository: DriverRepositoryPostgres |  DriverRepositoryMongoDB;
-
+    MotorcycleModelRepository: MotorcycleModelRepositoryPostgres | MotorcycleModelRepositoryMongoDB;
 };
 
 export const repositories = (): Repositories => {
@@ -27,6 +30,7 @@ export const repositories = (): Repositories => {
             MotorcycleRepository: new MotorcycleRepositoryPostgres(),
             MotorcyclePartRepository: new MotorcyclePartRepositoryPostgres(),
             DriverRepository: new DriverRepositoryPostgres(),
+            MotorcycleModelRepository: new MotorcycleModelRepositoryPostgres(),
         };
     } else if (config.dbType === 'mongodb') {
         return {
@@ -34,6 +38,7 @@ export const repositories = (): Repositories => {
             MotorcycleRepository: new MotorcycleRepositoryMongoDB(),
             MotorcyclePartRepository: new MotorcyclePartRepositoryMongoDB(),
             DriverRepository: new DriverRepositoryMongoDB(),
+            MotorcycleModelRepository: new MotorcycleModelRepositoryMongoDB(),
         };
     }
     throw new Error('Database type is not supported');

@@ -22,7 +22,7 @@ export class DriverRepositoryMongoDB implements IDriverRepository {
 
   async findAll(): Promise<Driver[]> {
     const driverEntities = await DriverModel.find();
-    return await Promise.all(driverEntities.map((driverEntity) => DriverMapper.toDomain(driverEntity)));
+    return Promise.all(driverEntities.map((driverEntity) => DriverMapper.toDomain(driverEntity)));
   }
 
   async save(driver: Driver): Promise<Driver> {

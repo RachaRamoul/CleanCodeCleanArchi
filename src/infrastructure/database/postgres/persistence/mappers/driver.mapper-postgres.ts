@@ -1,8 +1,8 @@
-import { Company } from '../../../../../domain/entities/company.entity';
 import { Driver } from '../../../../../domain/entities/driver.entity';
 import Name from '../../../../../domain/value-objects/name.vo';
 import DriverPostgresEntity from '../entities/driver.entity-postgres';
 import { CompanyMapper } from './company.mapper-postgres';
+
 export class DriverMapper {
   static toDomain(driverEntity: DriverPostgresEntity): Driver {
     const companyDomain = CompanyMapper.toDomain(driverEntity.company);

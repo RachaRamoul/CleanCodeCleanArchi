@@ -8,7 +8,7 @@ export class MotorcycleRideTestMapper {
       entity.motorcycleId,
       entity.driverId,
       entity.date,
-      entity.testDuration,
+      entity.testDurationInHours,
       entity.incidentReport
     );
   }
