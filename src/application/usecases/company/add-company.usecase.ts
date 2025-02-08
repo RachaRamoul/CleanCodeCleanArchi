@@ -4,6 +4,7 @@ import Name from "../../../domain/value-objects/name.vo";
 import { Company } from "../../../domain/entities/company.entity";
 import { ICompanyRepository } from "../../repositories/company.repository";
 import PhoneNumberValidatorService  from "../../services/phone-number-validator.service";
+import PasswordValidatorService from "../../services/password-validator.service";
 
 export class AddCompanyUseCase {
   constructor(private companyRepository: ICompanyRepository) {}
@@ -19,6 +20,15 @@ export class AddCompanyUseCase {
 
     if (!PhoneNumberValidatorService.isValid(number)) {
         throw new Error("Invalid number: Must only contain 10 digits.");
+    }
+
+    if (!PasswordValidatorService.isValid(password)) {
+        throw new Error(`Invalid password. The password must meet the following criteria:
+                            - Minimum length of 8 characters
+                            - At least one uppercase letter (A-Z)
+                            - At least one lowercase letter (a-z)
+                            - At least one number (0-9)
+                            - At least one special character (!@#$%^&*(),.?":{}|<>)`);
     }
     
     const existingCompany = await this.companyRepository.findByEmail(email);

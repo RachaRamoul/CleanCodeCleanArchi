@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('models')
-export default class ModelPostgresEntity {
+export default class MotorcycleModelPostgresEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
@@ -9,12 +9,9 @@ export default class ModelPostgresEntity {
   name!: string;
 
   @Column()
-  manufacturer!: string;
+  maintenanceFrequencyInKilometers!: number;
 
-  @Column()
-  maintenanceFrequency!: number;
-
-  constructor(partial?: Partial<ModelPostgresEntity>) {
+  constructor(partial?: Partial<MotorcycleModelPostgresEntity>) {
     if (partial) {
       Object.assign(this, partial);
     }

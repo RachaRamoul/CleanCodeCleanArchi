@@ -7,24 +7,24 @@ import MotorcyclePartPage from '../pages/MotorcyclePartsPage';
 import UnauthorizedPage from '../pages/UnauthorizedPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import ProtectedRoute from './ProtectedRoute';
+import Layout from './Layout';
 
 const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        {/* <Route path="/" element={<AuthPage />} />
         <Route path="/unauthorized" element={<UnauthorizedPage />} />
         <Route path="/notFound" element={<NotFoundPage />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/motorcycle" element={<MotorcyclePage />} />
-        <Route path="/motorcycle-parts" element={<MotorcyclePartPage />} /> */}
-
-        <Route path="/" element={<AuthPage />} />
-        <Route path="/unauthorized" element={<UnauthorizedPage />} />
-        <Route path="/notFound" element={<NotFoundPage />} />
-        <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
-        <Route path="/motorcycle" element={<ProtectedRoute ><MotorcyclePage /></ProtectedRoute>} />
-        <Route path="/motorcycle-parts" element={<ProtectedRoute><MotorcyclePartPage/></ProtectedRoute>} />
+        
+        <Route element={<Layout />}>
+          <Route path="/" element={<AuthPage />} />
+          <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+          <Route path="/motorcycle" element={<ProtectedRoute ><MotorcyclePage /></ProtectedRoute>} />
+          <Route path="/motorcycle-parts" element={<ProtectedRoute><MotorcyclePartPage/></ProtectedRoute>} /> 
+          <Route path="/model"/>
+          <Route path="/driver" />
+          <Route path="/company" /> 
+        </Route>
       </Routes>
     </Router>
   );

@@ -24,7 +24,7 @@ export class MotorcycleRideTestMapper {
       (motorcycleEntity._id as mongoose.Types.ObjectId).toString(),          
       (driverEntity._id as mongoose.Types.ObjectId).toString(),          
       motorcycleRideTestEntity.date,                  
-      motorcycleRideTestEntity.testDuration,          
+      motorcycleRideTestEntity.testDurationInHours,          
       (incidentReportEntity._id as mongoose.Types.ObjectId).toString(),          
     );
   }

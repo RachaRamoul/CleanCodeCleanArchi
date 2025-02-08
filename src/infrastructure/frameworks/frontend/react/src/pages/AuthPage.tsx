@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import './AuthPage.css';
 import { authService } from '../services/authService';
 import { saveToken } from '../utils/localStorage';
@@ -35,8 +33,6 @@ const AuthPage: React.FC = () => {
 
   return (
     <div className="auth-page">
-      <Header />
-
       <main className="auth-main">
         <form onSubmit={handleLogin} className="auth-form">
           <h2>Connexion</h2>
@@ -74,8 +70,6 @@ const AuthPage: React.FC = () => {
           </div>
         </form>
       </main>
-
-      <Footer />
     </div>
   );
 };

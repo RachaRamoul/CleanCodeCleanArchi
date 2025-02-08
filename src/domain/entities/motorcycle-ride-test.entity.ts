@@ -5,7 +5,7 @@ export class MotorcycleRideTest {
       public companyId: string,
       public driverId: string,
       public date: Date,
-      public testDuration: number, //in hours
+      public testDurationInHours: number,
       public incidentReportId: string
     ) {}
   }
