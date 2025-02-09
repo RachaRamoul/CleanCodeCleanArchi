@@ -21,7 +21,6 @@ fastifyApiClient.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-//commenter ligne 25 a 38 si la deconnexion apres 1h pose probleme
 fastifyApiClient.interceptors.response.use(
   (response) => response,
   (error) => {

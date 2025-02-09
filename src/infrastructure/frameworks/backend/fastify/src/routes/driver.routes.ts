@@ -5,7 +5,7 @@ import { authenticate } from '../middlewares/auth.decorator';
 const driverController = new DriverController();
 
 export default async function driverRoutes(app: FastifyInstance) {
-// INFO :   { onRequest: [authenticate] } permet de sécuriser les acces aux routes
+
     app.post('/', { onRequest: [authenticate] }, (req, reply) => driverController.addDriver(req, reply));
     
     app.get('/:id', { onRequest: [authenticate] }, (req, reply) => driverController.getDriverById(req, reply));

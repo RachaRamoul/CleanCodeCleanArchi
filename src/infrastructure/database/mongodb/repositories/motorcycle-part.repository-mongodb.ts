@@ -23,7 +23,7 @@ export class MotorcyclePartRepositoryMongoDB implements IMotorcyclePartRepositor
     return motorcyclePartEntities.map((motorcyclePartEntity) => MotorcyclePartMapper.toDomain(motorcyclePartEntity));
   }
 
-  async update(motorcyclePart: MotorcyclePart): Promise<void> {
+  async update(motorcyclePart: MotorcyclePart): Promise<MotorcyclePart> {
       const updatedMotorcyclePartEntity = await MotorcyclePartModel.findOneAndUpdate(
           { _id: new Types.ObjectId(motorcyclePart.id) },
           { $set: motorcyclePart },  
@@ -34,7 +34,7 @@ export class MotorcyclePartRepositoryMongoDB implements IMotorcyclePartRepositor
           throw new Error('motorcycle Part not found for update');
         }
     
-        //return MotorcyclePartMapper.toDomain(updatedMotorcyclePartEntity);
+        return MotorcyclePartMapper.toDomain(updatedMotorcyclePartEntity);
   }
 
   async delete(id: string): Promise<void> {

@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Alert, IconButton, Backdrop } from '@mui/material';
 import SubHeader from '../components/SubHeader';
 import { motorcycleModelService } from '../services/motorcycleModelService';
 import { MotorcycleModel } from '../../../../../../domain/entities/motorcycle-model.entity';
-import "./MotorcyclePage.css";
 import { PartialModel } from '../types/modelPartial';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import './MotorcyclePage.css';
+import Loading from '../components/Loading';
+import BackButton from '../components/BackButton';
 
 const MotorcycleModelPage: React.FC = () => {
   const [motorcycleModels, setMotorcycleModels] = useState<MotorcycleModel[]>([]);
@@ -64,55 +69,89 @@ const MotorcycleModelPage: React.FC = () => {
   };
 
   return (
-    <div className="motorcycle-page">
+    <div className='motorcycle-page'>
       <SubHeader title="Gestion des modèles de motos" />
-      <main className="main-content">
-        <div className="button-container">
-          <button className="add" onClick={() => setShowAddForm(true)}>➕ Ajouter un modèle</button>
-        </div>
+      {errorMessage && (
+        <Box sx={{ padding: '20px' }}>
+          <Alert severity="error">{errorMessage}</Alert>
+        </Box>
+      )}
 
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
+      <TableContainer sx={{ marginTop: '20vh', width:'80%', marginLeft:'auto', marginRight:'auto'}} >
+        {loadingModels ? (
+            <Loading />
+        ) : (
 
-        <div className="table-container">
-          {loadingModels ? (
-            <p>Chargement des modèles...</p>
-          ) : (
-            <table className="wider-table">
-              <thead>
-                <tr>
-                  <th>Nom</th>
-                  <th>Fréquence de maintenance (km)</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {motorcycleModels.map((model) => (
-                  <tr key={model.id}>
-                    <td>{model.name.value}</td>
-                    <td>{model.maintenanceFrequencyInKilometers} km</td>
-                    <td>
-                      <button className="delete" onClick={() => handleDeleteModel(model.id)}>🗑 Supprimer</button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </div>
-
-        {showAddForm && (
-          <div className="modal-overlay">
-            <div className="modal-content">
-              <h2>Ajouter un modèle</h2>
-              {formError && <p className="error-message">{formError}</p>}
-              <input type="text" name="name" placeholder="Nom du modèle" value={newModel.name} onChange={handleInputChange} />
-              <input type="number" name="maintenanceFrequencyInKilometers" placeholder="Fréquence de maintenance (km)" value={newModel.maintenanceFrequencyInKilometers} onChange={handleInputChange} />
-              <button onClick={handleAddModel}>Ajouter</button>
-              <button className="cancel" onClick={() => setShowAddForm(false)}>Annuler</button>
-            </div>
-          </div>
+          <>
+              <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    sx={{ marginBottom: '20px', padding: '0 20px' }}
+              >
+              <BackButton navigateTo='/dashboard' />
+              <Button variant="contained" startIcon={<AddIcon />} onClick={() => setShowAddForm(true)}>
+                Ajouter un modèle
+              </Button>
+            </Box>
+            <Table>
+                <TableHead>
+                  <TableRow sx={{ backgroundColor: '#a92328' }}>
+                    <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Nom</TableCell>
+                    <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Fréquence de maintenance (km)</TableCell>
+                    <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Actions</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {motorcycleModels.map((model) => (
+                    <TableRow sx={{ backgroundColor: 'white' }} key={model.id}>
+                      <TableCell>{model.name.value}</TableCell>
+                      <TableCell>{model.maintenanceFrequencyInKilometers} km</TableCell>
+                      <TableCell>
+                        <IconButton color="error" onClick={() => handleDeleteModel(model.id)}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table></>
         )}
-      </main>
+      </TableContainer>
+
+      <Dialog 
+          open={showAddForm} 
+          onClose={() => setShowAddForm(false)} 
+          BackdropComponent={(props) => (
+            <Backdrop {...props} style={{ backgroundColor: 'white' }} />
+          )}
+      >
+        <DialogTitle>Ajouter un modèle de moto</DialogTitle>
+        <DialogContent>
+          {formError && <Alert severity="error" sx={{ marginBottom: '10px' }}>{formError}</Alert>}
+          <TextField
+            label="Nom du modèle"
+            name="name"
+            fullWidth
+            margin="dense"
+            value={newModel.name}
+            onChange={handleInputChange}
+          />
+          <TextField
+            label="Fréquence de maintenance (en km)"
+            name="maintenanceFrequencyInKilometers"
+            type="number"
+            fullWidth
+            margin="dense"
+            value={newModel.maintenanceFrequencyInKilometers}
+            onChange={handleInputChange}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleAddModel} variant="contained" color="primary">Ajouter</Button>
+          <Button onClick={() => setShowAddForm(false)} color="secondary">Annuler</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
