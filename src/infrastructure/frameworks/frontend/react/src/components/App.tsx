@@ -8,6 +8,7 @@ import UnauthorizedPage from '../pages/UnauthorizedPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import ProtectedRoute from './ProtectedRoute';
 import Layout from './Layout';
+import MotorcycleModelPage from '../pages/MotorcycleModelPage';
 
 const App: React.FC = () => {
   return (
@@ -21,7 +22,7 @@ const App: React.FC = () => {
           <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
           <Route path="/motorcycle" element={<ProtectedRoute ><MotorcyclePage /></ProtectedRoute>} />
           <Route path="/motorcycle-parts" element={<ProtectedRoute><MotorcyclePartPage/></ProtectedRoute>} /> 
-          <Route path="/model"/>
+          <Route path="/model" element={<ProtectedRoute ><MotorcycleModelPage /></ProtectedRoute>}/>
           <Route path="/driver" />
           <Route path="/company" /> 
         </Route>
