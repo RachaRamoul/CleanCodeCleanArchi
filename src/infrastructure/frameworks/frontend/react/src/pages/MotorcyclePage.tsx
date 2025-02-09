@@ -26,8 +26,8 @@ const MotorcyclePage: React.FC = () => {
   const [showEditForm, setShowEditForm] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [loadingMotorcycles, setLoadingMotorcycles] = useState<boolean>(true);
-  const [, setLoadingModels] = useState<boolean>(true);
-  const [, setLoadingCompanies] = useState<boolean>(true);
+  const [loadingModels , setLoadingModels] = useState<boolean>(true);
+  const [loadingCompanies, setLoadingCompanies] = useState<boolean>(true);
   const [formError, setFormError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -35,6 +35,13 @@ const MotorcyclePage: React.FC = () => {
     loadMotorcycleModels();
     loadCompanies();
   }, []);
+  
+  const statusLabels: Record<string, string> = {
+    AVAILABLE: "Disponible",
+    IN_MAINTENANCE: "En maintenance",
+    RENTED: "Louée",
+    DECOMMISSIONED: "Hors service",
+  };
 
   const loadMotorcycles = async () => {
     setLoadingMotorcycles(true);
@@ -124,12 +131,6 @@ const MotorcyclePage: React.FC = () => {
       console.error("Erreur lors de la suppression de la moto:", error);
       setErrorMessage("Erreur lors de la suppression de la moto.");
     }
-  };
-  const statusLabels: Record<string, string> = {
-    AVAILABLE: "Disponible",
-    IN_MAINTENANCE: "En maintenance",
-    RENTED: "Louée",
-    DECOMMISSIONED: "Hors service",
   };
   
   return (

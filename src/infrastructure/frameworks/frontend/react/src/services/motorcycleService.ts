@@ -17,7 +17,7 @@ export const motorcycleService = {
     try {
       await expressApiClient.post(MOTORCYCLES_API_URL, {
         ...motorcycle,
-        mileage: typeof motorcycle.mileage === "object" ? motorcycle.mileage.value : motorcycle.mileage, // ✅ Ensure it's a number
+        mileage: typeof motorcycle.mileage === "object" ? motorcycle.mileage.value : motorcycle.mileage,
       });
     } catch (error) {
       console.error("Erreur lors de l'ajout de la moto :", error);
@@ -29,7 +29,7 @@ export const motorcycleService = {
     try {
       await expressApiClient.put(`${MOTORCYCLES_API_URL}/${id}`, {
         ...updateData,
-        mileage: typeof updateData.mileage === "object" ? updateData.mileage.value : updateData.mileage, // ✅ Ensure it's a number
+        mileage: typeof updateData.mileage === "object" ? updateData.mileage.value : updateData.mileage,
       });
     } catch (error) {
       console.error("Erreur lors de la mise à jour de la moto :", error);
