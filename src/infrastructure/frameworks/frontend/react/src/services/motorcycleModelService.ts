@@ -1,11 +1,7 @@
 import expressApiClient from './expressApiClient';
 import { MOTORCYCLE_MODELS_API_URL } from '../../config/api.config';
+import { MotorcycleModel } from '../../../../../../domain/entities/motorcycle-model.entity';
 
-export interface MotorcycleModel {
-  id: string;
-  name: string;
-  maintenanceFrequencyInKilometers: number;
-}
 
 export const motorcycleModelService = {
   listMotorcycleModels: async (): Promise<MotorcycleModel[]> => {

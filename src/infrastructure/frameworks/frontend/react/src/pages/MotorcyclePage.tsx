@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import SubHeader from '../components/SubHeader';
 import { motorcycleService } from '../services/motorcycleService';
-import { motorcycleModelService, MotorcycleModel } from '../services/motorcycleModelService';
+import { motorcycleModelService } from '../services/motorcycleModelService';
+import { companyService} from '../services/companyService';
 import { Motorcycle } from '../../../../../../domain/entities/motorcycle.entity';
+import { MotorcycleModel } from '../../../../../../domain/entities/motorcycle-model.entity';
+import { Company } from '../../../../../../domain/entities/company.entity';
 import "./MotorcyclePage.css";
 
 const MotorcyclePage: React.FC = () => {
   const [motorcycles, setMotorcycles] = useState<Motorcycle[]>([]);
   const [motorcycleModels, setMotorcycleModels] = useState<MotorcycleModel[]>([]);
+  const [companies, setCompanies] = useState<Company[]>([]);
+
   const [newMotorcycle, setNewMotorcycle] = useState({
     modelId: '',
     mileage: 0,
@@ -21,12 +26,14 @@ const MotorcyclePage: React.FC = () => {
   const [showEditForm, setShowEditForm] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [loadingMotorcycles, setLoadingMotorcycles] = useState<boolean>(true);
-  const [loadingModels, setLoadingModels] = useState<boolean>(true);
+  const [, setLoadingModels] = useState<boolean>(true);
+  const [, setLoadingCompanies] = useState<boolean>(true);
   const [formError, setFormError] = useState<string | null>(null);
 
   useEffect(() => {
     loadMotorcycles();
     loadMotorcycleModels();
+    loadCompanies();
   }, []);
 
   const loadMotorcycles = async () => {
@@ -53,6 +60,19 @@ const MotorcyclePage: React.FC = () => {
       setErrorMessage("Erreur lors du chargement des modèles de motos.");
     } finally {
       setLoadingModels(false);
+    }
+  };
+
+  const loadCompanies = async () => {
+    setLoadingCompanies(true);
+    try {
+      const data = await companyService.listCompanies();
+      setCompanies(data);
+    } catch (error) {
+      console.error('Error fetching companies:', error);
+      setErrorMessage("Erreur lors du chargement des entreprises.");
+    } finally {
+      setLoadingCompanies(false);
     }
   };
 
@@ -105,7 +125,13 @@ const MotorcyclePage: React.FC = () => {
       setErrorMessage("Erreur lors de la suppression de la moto.");
     }
   };
-
+  const statusLabels: Record<string, string> = {
+    AVAILABLE: "Disponible",
+    IN_MAINTENANCE: "En maintenance",
+    RENTED: "Louée",
+    DECOMMISSIONED: "Hors service",
+  };
+  
   return (
     <div className="motorcycle-page">
       <SubHeader title="Gestion des motos" />
@@ -123,22 +149,25 @@ const MotorcyclePage: React.FC = () => {
             <table className="wider-table">
               <thead>
                 <tr>
-                  <th>ID</th>
                   <th>Modèle</th>
                   <th>Kilométrage</th>
                   <th>Statut</th>
+                  <th>Entreprise</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {motorcycles.map((moto) => (
                   <tr key={moto.id}>
-                    <td>{moto.id}</td>
-                    <td>{motorcycleModels.find((model) => model.id === moto.modelId)?.name || "Modèle inconnu"}</td>
-                    <td>{moto.mileage} km</td>
-                    <td>{moto.status}</td>
+                    <td>{motorcycleModels.find((model) => model.id === moto.modelId)?.name.toString() || "Modèle inconnu"}</td>
+                    <td>{moto.mileage.toString()} km</td>
+                    <td>{statusLabels[moto.status] || "Statut inconnu"}</td>
                     <td>
-                      <button className="edit" onClick={() => { setEditMotorcycle({ id: moto.id, mileage: moto.mileage, status: moto.status }); setShowEditForm(true); }}>✏ Modifier</button>
+                      { companies.find((company) => company.id === moto.companyId)?.name.toString() || 
+                      "Entreprise inconnue"}
+                    </td>
+                    <td>
+                      <button className="edit" onClick={() => { setEditMotorcycle({ id: moto.id, mileage: Number(moto.mileage), status: moto.status }); setShowEditForm(true); }}>✏ Modifier</button>
                       <button className="delete" onClick={() => handleDeleteMotorcycle(moto.id)}>🗑 Supprimer</button>
                     </td>
                   </tr>
@@ -153,17 +182,32 @@ const MotorcyclePage: React.FC = () => {
             <div className="modal-content">
               <h2>Ajouter une nouvelle moto</h2>
               {formError && <p className="error-message">{formError}</p>}
-
+              
               <select name="modelId" value={newMotorcycle.modelId} onChange={handleInputChange}>
                 <option value="">Sélectionner un modèle</option>
                 {motorcycleModels.map((model) => (
-                  <option key={model.id} value={model.id}>{model.name}</option>
+                  <option key={model.id} value={model.id}>{model.name.toString()}</option>
+                ))}
+              </select>
+
+              <select
+                value={newMotorcycle.status}
+                onChange={(e) => setNewMotorcycle({ ...newMotorcycle, status: e.target.value as Motorcycle['status'] })}
+              >
+                <option value="AVAILABLE">Disponible</option>
+                <option value="IN_MAINTENANCE">En maintenance</option>
+                <option value="RENTED">Louée</option>
+                <option value="DECOMMISSIONED">Hors service</option>
+              </select>
+
+              <select name="companyId" value={newMotorcycle.companyId} onChange={handleInputChange}>
+                <option value="">Sélectionner une entreprise</option>
+                {companies.map((company) => (
+                  <option key={company.id} value={company.id}>{company.name?.value || company.name.toString()}</option>
                 ))}
               </select>
 
               <input type="number" name="mileage" placeholder="Kilométrage" value={newMotorcycle.mileage} onChange={handleInputChange} />
-              
-              <input type="text" name="companyId" placeholder="ID de la compagnie" value={newMotorcycle.companyId} onChange={handleInputChange} />
 
               <button onClick={handleAddMotorcycle}>Ajouter</button>
               <button className="cancel" onClick={() => setShowAddForm(false)}>Annuler</button>
