@@ -2,8 +2,7 @@ import express from 'express';
 import { 
   addMotorcycleModel, 
   getMotorcycleModelById, 
-  getMotorcycleModelByName, 
-  getAllMotorcycleModels, 
+  getAllMotorcycleModels,
   updateMotorcycleModel, 
   deleteMotorcycleModel 
 } from '../controllers/motorcycle-model.controller';
@@ -13,11 +12,9 @@ const router = express.Router();
 
 router.post('/', isAuthenticated, isAdmin, addMotorcycleModel);
 
-router.get('/:id',isAuthenticated, getMotorcycleModelById);
+router.get('/:id', isAuthenticated, getMotorcycleModelById);
 
-router.get('/',isAuthenticated, getMotorcycleModelByName);
-
-router.get('/all',isAuthenticated, getAllMotorcycleModels);
+router.get('/', isAuthenticated, getAllMotorcycleModels);
 
 router.put('/:id', isAuthenticated, isAdmin, updateMotorcycleModel);
 

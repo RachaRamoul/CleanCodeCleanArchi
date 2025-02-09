@@ -1,9 +1,10 @@
 import { Repository } from "typeorm";
-import { AppDataSource } from '../postgres.config';
+import { AppDataSource } from "../postgres.config";
 import { Motorcycle } from "../../../../domain/entities/motorcycle.entity";
 import { MotorcyclePostgresEntity } from "../persistence/entities/motorcycle.entity-postgres";
 import { IMotorcycleRepository } from "../../../../application/repositories/motorcycle.repository";
 import { MotorcycleMapper } from "../persistence/mappers/motorcycle.mapper-postgres";
+import Mileage from "../../../../domain/value-objects/mileage.vo";
 
 export class MotorcycleRepositoryPostgres implements IMotorcycleRepository {
   private repository: Repository<MotorcyclePostgresEntity>;
@@ -13,8 +14,8 @@ export class MotorcycleRepositoryPostgres implements IMotorcycleRepository {
   }
 
   async findById(id: string): Promise<Motorcycle | null> {
-    const motorcycle = await this.repository.findOneBy({ id });
-    return motorcycle ? MotorcycleMapper.toDomain(motorcycle) : null;
+    const motorcycleEntity = await this.repository.findOneBy({ id });
+    return motorcycleEntity ? MotorcycleMapper.toDomain(motorcycleEntity) : null;
   }
 
   async save(motorcycle: Motorcycle): Promise<Motorcycle> {
@@ -29,7 +30,11 @@ export class MotorcycleRepositoryPostgres implements IMotorcycleRepository {
   }
 
   async update(id: string, updateData: Partial<Motorcycle>): Promise<Motorcycle> {
-    await this.repository.update(id, updateData);
+    if (updateData.mileage && typeof updateData.mileage === "number") {
+      updateData.mileage = new Mileage(updateData.mileage);
+    }
+
+    await this.repository.update(id, MotorcycleMapper.toModel(updateData as Motorcycle));
     const updatedMotorcycle = await this.findById(id);
     if (!updatedMotorcycle) throw new Error("Motorcycle not found");
     return updatedMotorcycle;

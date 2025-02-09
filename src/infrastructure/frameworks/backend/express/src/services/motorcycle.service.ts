@@ -5,11 +5,10 @@ import { GetMotorcycleByIdUseCase } from "../../../../../../application/usecases
 import { UpdateMotorcycleUseCase } from "../../../../../../application/usecases/motorcycle/update-motorcycle.usecase";
 import { ListMotorcyclesUseCase } from "../../../../../../application/usecases/motorcycle/list-motorcycles.usecase";
 import { repositories } from "../../../../../database/config/repository.config";
-
-const { MotorcycleRepository } = repositories();
+import Mileage from "../../../../../../domain/value-objects/mileage.vo";
 
 export class MotorcycleService {
-  constructor(private motorcycleRepository = MotorcycleRepository) {}
+  constructor(private motorcycleRepository = repositories().MotorcycleRepository) {}
 
   async getMotorcycleById(id: string): Promise<Motorcycle | null> {
     const getMotorcycleByIdUseCase = new GetMotorcycleByIdUseCase(this.motorcycleRepository);
@@ -22,8 +21,9 @@ export class MotorcycleService {
     status: "AVAILABLE" | "IN_MAINTENANCE" | "RENTED" | "DECOMMISSIONED",
     companyId: string
   ): Promise<Motorcycle> {
+    const mileageObject = new Mileage(mileage);
     const addMotorcycleUseCase = new AddMotorcycleUseCase(this.motorcycleRepository);
-    return await addMotorcycleUseCase.execute(modelId, mileage, status, companyId);
+    return await addMotorcycleUseCase.execute(modelId, mileageObject, status, companyId);
   }
 
   async listMotorcycles(): Promise<Motorcycle[]> {
@@ -32,6 +32,10 @@ export class MotorcycleService {
   }
 
   async updateMotorcycle(id: string, updateData: Partial<Motorcycle>): Promise<Motorcycle> {
+    if (updateData.mileage && typeof updateData.mileage === "number") {
+      updateData.mileage = new Mileage(updateData.mileage);
+    }
+
     const updateMotorcycleUseCase = new UpdateMotorcycleUseCase(this.motorcycleRepository);
     return await updateMotorcycleUseCase.execute(id, updateData);
   }
