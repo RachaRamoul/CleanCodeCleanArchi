@@ -4,11 +4,13 @@ import { MotorcycleModelMapper } from '../persistence/mappers/motorcycle-model.m
 import { IMotorcycleModelRepository } from '../../../../application/repositories/motorcycle-model.repository';
 import Name from '../../../../domain/value-objects/name.vo';
 import { ObjectId } from 'mongodb';
+import mongoose from "mongoose";
+
 
 export class MotorcycleModelRepositoryMongoDB implements IMotorcycleModelRepository {
 
   async findById(id: string): Promise<MotorcycleModel | null> {
-    const motorcycleModelEntity = await MotorcycleModelModel.findById(new ObjectId(id));
+    const motorcycleModelEntity = await MotorcycleModelModel.findById(new mongoose.Types.ObjectId(id));
     return motorcycleModelEntity ? MotorcycleModelMapper.toDomain(motorcycleModelEntity) : null;
   }
 
@@ -29,6 +31,10 @@ export class MotorcycleModelRepositoryMongoDB implements IMotorcycleModelReposit
   }
 
   async remove(id: string): Promise<void> {
-    await MotorcycleModelModel.deleteOne({ _id: new ObjectId(id) });
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      throw new Error(`Invalid ObjectId format: ${id}`);
+    }
+    
+    await MotorcycleModelModel.deleteOne({ _id: new mongoose.Types.ObjectId(id) });
   }
 }

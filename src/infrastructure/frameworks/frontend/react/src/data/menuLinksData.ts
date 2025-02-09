@@ -4,14 +4,14 @@ import { LinkData } from '../types/linkData'
 export const adminLinksData: LinkData[] = [
     {
         navigateTo: "/model",
-        title: "Gérer les modèles de Moto",
+        title: "Gestion des modèles de Moto",
         description: "Ajoutez, supprimez et gérez les modèles du Triump",
         iconId: "motorcycle",
         imageUrl: "https://img.freepik.com/vecteurs-libre/illustration-moto-couleur-rouge_1308-35859.jpg",
     },
     {
       navigateTo: "/motorcycle",
-      title: "Gérer les Motos",
+      title: "Gestion des Motos",
       description: "Ajoutez, supprimez et gérez les informations des motos.",
       iconId: "motorcycle",
       imageUrl: "https://img.freepik.com/vecteurs-libre/illustration-moto-couleur-rouge_1308-35859.jpg",
