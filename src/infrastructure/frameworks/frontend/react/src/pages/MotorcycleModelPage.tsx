@@ -3,10 +3,11 @@ import SubHeader from '../components/SubHeader';
 import { motorcycleModelService } from '../services/motorcycleModelService';
 import { MotorcycleModel } from '../../../../../../domain/entities/motorcycle-model.entity';
 import "./MotorcyclePage.css";
+import { PartialModel } from '../types/modelPartial';
 
 const MotorcycleModelPage: React.FC = () => {
   const [motorcycleModels, setMotorcycleModels] = useState<MotorcycleModel[]>([]);
-  const [newModel, setNewModel] = useState({ name: '', maintenanceFrequencyInKilometers: 0 });
+  const [newModel, setNewModel] = useState<PartialModel>({ name: '', maintenanceFrequencyInKilometers: 0 });
   const [showAddForm, setShowAddForm] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [loadingModels, setLoadingModels] = useState<boolean>(true);
@@ -35,7 +36,7 @@ const MotorcycleModelPage: React.FC = () => {
   };
 
   const handleAddModel = async () => {
-    if (!newModel.name || newModel.maintenanceFrequencyInKilometers <= 0) {
+    if (!newModel.name || (newModel.maintenanceFrequencyInKilometers && newModel.maintenanceFrequencyInKilometers <= 0)) {
       setFormError("Tous les champs sont obligatoires et la fréquence de maintenance doit être positive.");
       return;
     }
@@ -87,7 +88,7 @@ const MotorcycleModelPage: React.FC = () => {
               <tbody>
                 {motorcycleModels.map((model) => (
                   <tr key={model.id}>
-                    <td>{model.name}</td>
+                    <td>{model.name.value}</td>
                     <td>{model.maintenanceFrequencyInKilometers} km</td>
                     <td>
                       <button className="delete" onClick={() => handleDeleteModel(model.id)}>🗑 Supprimer</button>

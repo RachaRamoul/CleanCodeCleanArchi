@@ -17,7 +17,7 @@ export async function createCompaniesFixtures() {
         number: "0123456789",
         siretNumber: "73282932000074",
         isAdmin: true,
-        password: "admin",
+        password: "Admin12345!",
     },
     {
       name: "Triumph Paris",
@@ -25,7 +25,7 @@ export async function createCompaniesFixtures() {
       number: "0987654321",
       siretNumber: "55210055400013",
       isAdmin : false,
-      password: "paris",
+      password: "Paris12345!",
     },
     {
       name: "Triumph Lyon",
@@ -33,7 +33,7 @@ export async function createCompaniesFixtures() {
       number: "0112233445",
       siretNumber: "34992384900019",
       isAdmin: false,
-      password: "lyon",
+      password: "Lyon12345!",
     },
     {
       name: "Triumph Marseille",
@@ -41,7 +41,7 @@ export async function createCompaniesFixtures() {
       number: "0156677889",
       siretNumber: "38012986600014",
       isAdmin: false,
-      password: "marseille",
+      password: "Marseille12345!",
     },
   ];
 

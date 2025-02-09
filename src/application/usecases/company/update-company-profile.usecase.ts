@@ -21,7 +21,6 @@ export class UpdateCompanyProfileUseCase {
     if (!company) {
         throw new Error('Company not found.');
     }
-
     Object.assign(company, updateData);
 
     return await this.companyRepository.save(company);

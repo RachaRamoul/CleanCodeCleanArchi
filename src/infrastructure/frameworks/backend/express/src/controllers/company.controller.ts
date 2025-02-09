@@ -1,5 +1,9 @@
 import { Request, Response } from 'express';
 import { CompanyService } from '../services/company.service';
+import { Company } from '../../../../../../domain/entities/company.entity';
+import Name from '../../../../../../domain/value-objects/name.vo';
+import Email from '../../../../../../domain/value-objects/email.vo';
+import SiretNumber from '../../../../../../domain/value-objects/siret-number.vo';
 
 const companyService = new CompanyService();
 
@@ -51,7 +55,14 @@ export const updateCompany = async (req: Request, res: Response) => {
     const { id } = req.params;
     const updateData = req.body;
 
-    const updatedCompany = await companyService.updateCompany(id, updateData);
+    const PartialCompany : Partial<Company> = {
+      name: new Name(updateData.name),
+      email: new Email(updateData.email),
+      number: updateData.number,
+      siretNumber: new SiretNumber(updateData.siretNumber),
+      isAdmin: updateData.isAdmin
+    }
+    const updatedCompany = await companyService.updateCompany(id, PartialCompany);
     res.status(200).json(updatedCompany);
 
   } catch (error) {

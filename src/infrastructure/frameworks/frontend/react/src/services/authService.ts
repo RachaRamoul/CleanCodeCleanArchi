@@ -45,7 +45,7 @@ export const authService = {
         
         return true;
 
-      }catch(error: unknown){
+      }catch(error){
         console.error('An error occurred while verifying authentication', error);
         return false;
       }

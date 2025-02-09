@@ -1,24 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import SubHeader from '../components/SubHeader';
-import { companyService } from '../services/companyService';
+import { CompanyService } from '../services/companyService';
 import './DashboardPage.css';
 import { LinkData } from '../types/linkData';
 import { isAdminFromToken } from '../utils/tokenUtils';
 import { adminLinksData, companyLinksData } from '../data/menuLinksData';
 import Card from '../components/Card';
-// import MotorcycleIcon from '@mui/icons-material/TwoWheeler';
-// import BuildIcon from '@mui/icons-material/Build';
-// import SettingsIcon from '@mui/icons-material/Settings';
-// import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
-// import BarChartIcon from '@mui/icons-material/BarChart';
-
-// const iconMap: { [key: string]: JSX.Element } = {
-//   motorcycle: <MotorcycleIcon style={{ fontSize: 40, color: '#ffffff' }} />,
-//   maintenance: <BuildIcon style={{ fontSize: 40, color: '#ffffff' }} />,
-//   parts: <SettingsIcon style={{ fontSize: 40, color: '#ffffff' }} />,
-//   testRides: <DirectionsBikeIcon style={{ fontSize: 40, color: '#ffffff' }} />,
-//   reports: <BarChartIcon style={{ fontSize: 40, color: '#ffffff' }} />
-// };
 
 
 const DashboardPage: React.FC = () => {
@@ -33,9 +20,7 @@ const DashboardPage: React.FC = () => {
   const getCompanyName = async () => {
     try {
       const filter = 'name';
-      const company = await companyService.getCompanyByfilter(filter);
-      console.log('Company fetched:', company);
-
+      const company = await CompanyService.getCompanyByfilter(filter);
       if (company && company.name && typeof company.name === 'string') {
         setCompanyName(company.name);
       }

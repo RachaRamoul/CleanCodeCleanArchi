@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './components/App';
+import App from './App';
 import './index.css';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme';

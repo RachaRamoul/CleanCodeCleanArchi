@@ -1,6 +1,7 @@
 import expressApiClient from './expressApiClient';
 import { MOTORCYCLE_MODELS_API_URL } from '../../config/api.config';
 import { MotorcycleModel } from '../../../../../../domain/entities/motorcycle-model.entity';
+import { PartialModel } from '../types/modelPartial';
 
 export const motorcycleModelService = {
   listMotorcycleModels: async (): Promise<MotorcycleModel[]> => {
@@ -13,7 +14,7 @@ export const motorcycleModelService = {
     }
   },
 
-  addMotorcycleModel: async (modelData: Partial<MotorcycleModel>): Promise<void> => {
+  addMotorcycleModel: async (modelData: PartialModel): Promise<void> => {
     try {
       await expressApiClient.post(MOTORCYCLE_MODELS_API_URL, modelData);
     } catch (error) {

@@ -35,6 +35,7 @@ services:
       - "3000:3000" 
     volumes:
       - ./src/infrastructure/frameworks/frontend/react:/usr/src/infrastructure/frameworks/frontend/react
+      - ./src/domain:/usr/src/domain
     environment:
       - CHOKIDAR_USEPOLLING=true
       - CHOKIDAR_INTERVAL=100
