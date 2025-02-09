@@ -25,6 +25,18 @@ export const motorcycleService = {
     }
   },
 
+  updateMotorcycle: async (id: string, updateData: Partial<Motorcycle>): Promise<void> => {
+    try {
+      await expressApiClient.put(`${MOTORCYCLES_API_URL}/${id}`, {
+        ...updateData,
+        mileage: typeof updateData.mileage === "object" ? updateData.mileage.value : updateData.mileage, // ✅ Ensure it's a number
+      });
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour de la moto :", error);
+      throw error;
+    }
+  },
+
   deleteMotorcycle: async (id: string): Promise<void> => {
     try {
       await expressApiClient.delete(`${MOTORCYCLES_API_URL}/${id}`);
