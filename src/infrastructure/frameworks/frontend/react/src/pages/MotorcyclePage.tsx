@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import SubHeader from '../components/SubHeader';
 import { motorcycleService } from '../services/motorcycleService';
+import { motorcycleModelService, MotorcycleModel } from '../services/motorcycleModelService';
 import { Motorcycle } from '../../../../../../domain/entities/motorcycle.entity';
 import "./MotorcyclePage.css";
 
 const MotorcyclePage: React.FC = () => {
   const [motorcycles, setMotorcycles] = useState<Motorcycle[]>([]);
+  const [motorcycleModels, setMotorcycleModels] = useState<MotorcycleModel[]>([]);
   const [newMotorcycle, setNewMotorcycle] = useState<{
     modelId: string;
     mileage: number;
@@ -25,6 +27,7 @@ const MotorcyclePage: React.FC = () => {
 
   useEffect(() => {
     fetchMotorcycles();
+    fetchMotorcycleModels();
   }, []);
 
   const fetchMotorcycles = async () => {
@@ -38,6 +41,16 @@ const MotorcyclePage: React.FC = () => {
       setErrorMessage('Erreur lors du chargement des motos.');
     }
     setLoading(false);
+  };
+
+  const fetchMotorcycleModels = async () => {
+    try {
+      const data = await motorcycleModelService.listMotorcycleModels();
+      setMotorcycleModels(data);
+    } catch (error) {
+      console.error('Error fetching motorcycle models:', error);
+      setErrorMessage("Erreur lors du chargement des modèles de motos.");
+    }
   };
 
   const handleAddMotorcycle = async () => {
@@ -103,7 +116,9 @@ const MotorcyclePage: React.FC = () => {
                 {motorcycles.map((moto) => (
                   <tr key={moto.id}>
                     <td>{moto.id}</td>
-                    <td>{moto.modelId}</td>
+                    <td>
+                        {motorcycleModels.find((model) => model.id === moto.modelId)?.name || "Modèle inconnu"}
+                    </td>
                     <td>{moto.mileage} km</td>
                     <td>{moto.status}</td>
                     <td>
@@ -121,12 +136,17 @@ const MotorcyclePage: React.FC = () => {
           <div className="modal-overlay">
             <div className="modal-content">
               <h2>Ajouter une nouvelle moto</h2>
-              <input
-                type="text"
-                placeholder="Modèle"
+              <select
                 value={newMotorcycle.modelId}
                 onChange={(e) => setNewMotorcycle({ ...newMotorcycle, modelId: e.target.value })}
-              />
+              >
+                <option value="">Sélectionner un modèle</option>
+                {motorcycleModels.map((model) => (
+                  <option key={model.id} value={model.id}>
+                    {model.name}
+                  </option>
+                ))}
+              </select>
               <input
                 type="number"
                 placeholder="Kilométrage"
