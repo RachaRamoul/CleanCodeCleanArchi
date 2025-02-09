@@ -15,15 +15,16 @@ export class MotorcycleMapper {
   }
 
   static toModel(motorcycle: Motorcycle): Partial<IMotorcycle> {
-    return {
-      _id: motorcycle.id
-        ? new mongoose.Types.ObjectId(motorcycle.id)
-        : new mongoose.Types.ObjectId(),
-
+    const modelData: Partial<IMotorcycle> = {
       modelId: new mongoose.Types.ObjectId(motorcycle.modelId),
       mileage: motorcycle.mileage.value,
       status: motorcycle.status,
       companyId: new mongoose.Types.ObjectId(motorcycle.companyId),
     };
+    if (motorcycle.id) {
+      modelData._id = new mongoose.Types.ObjectId(motorcycle.id);
+    }
+  
+    return modelData;
   }
 }

@@ -40,17 +40,19 @@ export class MotorcycleRepositoryMongoDB implements IMotorcycleRepository {
     if (updateData.mileage && typeof updateData.mileage === "number") {
       updateData.mileage = new Mileage(updateData.mileage);
     }
-
+    const updateFields = MotorcycleMapper.toModel(updateData as Motorcycle);
+    delete updateFields._id;
+  
     const updatedMotorcycleEntity = await MotorcycleModel.findByIdAndUpdate(
       id,
-      { $set: MotorcycleMapper.toModel(updateData as Motorcycle) },
+      { $set: updateFields },
       { new: true }
     );
-
+  
     if (!updatedMotorcycleEntity) {
       throw new Error("Motorcycle not found");
     }
-
+  
     return MotorcycleMapper.toDomain(updatedMotorcycleEntity);
   }
 
