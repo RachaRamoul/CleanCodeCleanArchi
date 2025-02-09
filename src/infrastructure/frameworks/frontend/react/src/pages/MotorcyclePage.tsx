@@ -2,18 +2,20 @@ import React, { useState, useEffect } from 'react';
 import SubHeader from '../components/SubHeader';
 import { motorcycleService } from '../services/motorcycleService';
 import { motorcycleModelService } from '../services/motorcycleModelService';
-import { companyService} from '../services/companyService';
+import { CompanyService} from '../services/companyService';
 import { Motorcycle } from '../../../../../../domain/entities/motorcycle.entity';
 import { MotorcycleModel } from '../../../../../../domain/entities/motorcycle-model.entity';
 import { Company } from '../../../../../../domain/entities/company.entity';
 import "./MotorcyclePage.css";
+import Loading from '../components/Loading';
+import { PartialMotorcycle } from '../types/motorcyclePartial';
 
 const MotorcyclePage: React.FC = () => {
   const [motorcycles, setMotorcycles] = useState<Motorcycle[]>([]);
   const [motorcycleModels, setMotorcycleModels] = useState<MotorcycleModel[]>([]);
   const [companies, setCompanies] = useState<Company[]>([]);
 
-  const [newMotorcycle, setNewMotorcycle] = useState({
+  const [newMotorcycle, setNewMotorcycle] = useState<PartialMotorcycle>({
     modelId: '',
     mileage: 0,
     status: 'AVAILABLE' as Motorcycle['status'],
@@ -73,7 +75,7 @@ const MotorcyclePage: React.FC = () => {
   const loadCompanies = async () => {
     setLoadingCompanies(true);
     try {
-      const data = await companyService.listCompanies();
+      const data = await CompanyService.listCompanies();
       setCompanies(data);
     } catch (error) {
       console.error('Error fetching companies:', error);
@@ -88,7 +90,7 @@ const MotorcyclePage: React.FC = () => {
   };
 
   const handleAddMotorcycle = async () => {
-    if (!newMotorcycle.modelId || newMotorcycle.mileage < 0 || !newMotorcycle.companyId) {
+    if (!newMotorcycle.modelId || (newMotorcycle.mileage && newMotorcycle.mileage < 0) || !newMotorcycle.companyId) {
       setFormError("Tous les champs sont obligatoires et le kilométrage doit être positif.");
       return;
     }
@@ -132,6 +134,12 @@ const MotorcyclePage: React.FC = () => {
       setErrorMessage("Erreur lors de la suppression de la moto.");
     }
   };
+
+  if(loadingModels || loadingMotorcycles || loadingCompanies){
+    return (
+    <Loading/>
+    );
+  }
   
   return (
     <div className="motorcycle-page">

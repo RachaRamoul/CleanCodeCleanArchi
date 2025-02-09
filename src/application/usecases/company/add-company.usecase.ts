@@ -22,14 +22,14 @@ export class AddCompanyUseCase {
         throw new Error("Invalid number: Must only contain 10 digits.");
     }
 
-    // if (!PasswordValidatorService.isValid(password)) {
-    //     throw new Error(`Invalid password. The password must meet the following criteria:
-    //                         - Minimum length of 8 characters
-    //                         - At least one uppercase letter (A-Z)
-    //                         - At least one lowercase letter (a-z)
-    //                         - At least one number (0-9)
-    //                         - At least one special character (!@#$%^&*(),.?":{}|<>)`);
-    // }
+    if (!PasswordValidatorService.isValid(password)) {
+        throw new Error(`Invalid password. The password must meet the following criteria:
+                            - Minimum length of 8 characters
+                            - At least one uppercase letter (A-Z)
+                            - At least one lowercase letter (a-z)
+                            - At least one number (0-9)
+                            - At least one special character (!@#$%^&*(),.?":{}|<>)`);
+    }
     
     const existingCompany = await this.companyRepository.findByEmail(email);
     if(existingCompany){

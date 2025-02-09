@@ -19,7 +19,6 @@ export class CompanyMapper {
 
   static toModel(company: Company): CompanyPostgresEntity {
     const companyEntity = new CompanyPostgresEntity();
-  
     companyEntity.name = company.name.value;
     companyEntity.email = company.email.value;
     companyEntity.number = company.number;
