@@ -13,24 +13,15 @@ import Loading from "../components/Loading";
 import { PartialMotorcycle } from "../types/motorcyclePartial";
 import {
   Alert,
-  Backdrop,
   Box,
   Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   IconButton,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  TextField,
 } from "@mui/material";
 import BackButton from "../components/BackButton";
 
@@ -120,12 +111,14 @@ const MotorcyclePage: React.FC = () => {
     setNewMotorcycle((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSelectChange = (e: SelectChangeEvent<string>) => {
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setNewMotorcycle((prev) => ({ ...prev, [name!]: value }));
+    setNewMotorcycle((prev) => ({ ...prev, [name]: value }));
   };
+  
 
   const handleAddMotorcycle = async () => {
+    setFormError("");
     if (
       !newMotorcycle.modelId ||
       (newMotorcycle.mileage && newMotorcycle.mileage < 0) ||
@@ -278,135 +271,63 @@ const MotorcyclePage: React.FC = () => {
           </div>
         )}
       </TableContainer>
+      {showAddForm && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <h2>Ajouter une nouvelle moto</h2>
+              {formError && <p className="error-message">{formError}</p>}
+              
+              <select name="modelId" value={newMotorcycle.modelId} onChange={handleSelectChange}>
+                <option value="">Sélectionner un modèle</option>
+                {motorcycleModels.map((model) => (
+                  <option key={model.id} value={model.id}>{model.name.toString()}</option>
+                ))}
+              </select>
 
-      <Dialog
-        open={showAddForm}
-        onClose={() => setShowAddForm(false)}
-        BackdropComponent={(props) => (
-          <Backdrop {...props} style={{ backgroundColor: "white" }} />
+              <select
+                value={newMotorcycle.status}
+                onChange={(e) => setNewMotorcycle({ ...newMotorcycle, status: e.target.value as Motorcycle['status'] })}
+              >
+                <option value="AVAILABLE">Disponible</option>
+                <option value="IN_MAINTENANCE">En maintenance</option>
+                <option value="RENTED">Louée</option>
+                <option value="DECOMMISSIONED">Hors service</option>
+              </select>
+
+              <select name="companyId" value={newMotorcycle.companyId} onChange={handleSelectChange}>
+                <option value="">Sélectionner une entreprise</option>
+                {companies.map((company) => (
+                  <option key={company.id} value={company.id}>{company.name?.value || company.name.toString()}</option>
+                ))}
+              </select>
+
+              <input type="number" name="mileage" placeholder="Kilométrage" value={newMotorcycle.mileage} onChange={handleTextFieldChange} />
+
+              <button onClick={handleAddMotorcycle}>Ajouter</button>
+              <button className="cancel" onClick={() => setShowAddForm(false)}>Annuler</button>
+            </div>
+          </div>
         )}
-      >
-        <DialogTitle>Ajouter une nouvelle moto</DialogTitle>
-        <DialogContent>
-          {formError && <Alert severity="error">{formError}</Alert>}
-          <Select
-            name="modelId"
-            value={newMotorcycle.modelId}
-            onChange={handleSelectChange}
-            fullWidth
-            displayEmpty
-            sx={{ marginBottom: "15px" }}
-          >
-            <MenuItem value="">Sélectionner un modèle</MenuItem>
-            {motorcycleModels.map((model) => (
-              <MenuItem key={model.id} value={model.id}>
-                {model.name.toString()}
-              </MenuItem>
-            ))}
-          </Select>
-          <TextField
-            name="mileage"
-            label="Kilométrage"
-            type="number"
-            fullWidth
-            margin="normal"
-            value={newMotorcycle.mileage}
-            onChange={handleTextFieldChange}
-          />
-          <Select
-            name="companyId"
-            value={newMotorcycle.companyId}
-            onChange={handleSelectChange}
-            fullWidth
-            displayEmpty
-            sx={{ marginBottom: "15px" }}
-          >
-            <MenuItem value="">Sélectionner une entreprise</MenuItem>
-            {companies.map((company) => (
-              <MenuItem key={company.id} value={company.id}>
-                {company.name.toString()}
-              </MenuItem>
-            ))}
-          </Select>
-          <Select
-            value={newMotorcycle.status}
-            onChange={(e) =>
-              setNewMotorcycle({
-                ...newMotorcycle,
-                status: e.target.value as Motorcycle["status"],
-              })
-            }
-            fullWidth
-            sx={{ marginBottom: "15px" }}
-          >
-            <MenuItem value="AVAILABLE">Disponible</MenuItem>
-            <MenuItem value="IN_MAINTENANCE">En maintenance</MenuItem>
-            <MenuItem value="RENTED">Louée</MenuItem>
-            <MenuItem value="DECOMMISSIONED">Hors service</MenuItem>
-          </Select>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={handleAddMotorcycle}
-            variant="contained"
-            color="primary"
-          >
-            Ajouter
-          </Button>
-          <Button onClick={() => setShowAddForm(false)} color="secondary">
-            Annuler
-          </Button>
-        </DialogActions>
-      </Dialog>
 
-      {showEditForm && editMotorcycle && (
-        <Dialog open={showEditForm} onClose={() => setShowEditForm(false)}>
-          <DialogTitle>Modifier la moto</DialogTitle>
-          <DialogContent>
-            <TextField
-              label="Kilométrage"
-              type="number"
-              fullWidth
-              margin="normal"
-              value={editMotorcycle.mileage}
-              onChange={(e) =>
-                setEditMotorcycle({
-                  ...editMotorcycle,
-                  mileage: parseInt(e.target.value, 10),
-                })
-              }
-            />
-            <Select
-              value={editMotorcycle.status}
-              onChange={(e) =>
-                setEditMotorcycle({
-                  ...editMotorcycle,
-                  status: e.target.value as Motorcycle["status"],
-                })
-              }
-              fullWidth
-              sx={{ marginBottom: "15px" }}
-            >
-              <MenuItem value="AVAILABLE">Disponible</MenuItem>
-              <MenuItem value="IN_MAINTENANCE">En maintenance</MenuItem>
-              <MenuItem value="RENTED">Louée</MenuItem>
-              <MenuItem value="DECOMMISSIONED">Hors service</MenuItem>
-            </Select>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              onClick={handleEditMotorcycle}
-              variant="contained"
-              color="primary"
-            >
-              Mettre à jour
-            </Button>
-            <Button onClick={() => setShowEditForm(false)} color="secondary">
-              Annuler
-            </Button>
-          </DialogActions>
-        </Dialog>
-      )}
+        {showEditForm && editMotorcycle && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <h2>Modifier la moto</h2>
+
+              <input type="number" value={editMotorcycle.mileage} onChange={(e) => setEditMotorcycle({ ...editMotorcycle, mileage: parseInt(e.target.value, 10) })} />
+
+              <select value={editMotorcycle.status} onChange={(e) => setEditMotorcycle({ ...editMotorcycle, status: e.target.value as Motorcycle['status'] })}>
+                <option value="AVAILABLE">Disponible</option>
+                <option value="IN_MAINTENANCE">En maintenance</option>
+                <option value="RENTED">Louée</option>
+                <option value="DECOMMISSIONED">Hors service</option>
+              </select>
+
+              <button onClick={handleEditMotorcycle}>Mettre à jour</button>
+              <button className="cancel" onClick={() => setShowEditForm(false)}>Annuler</button>
+            </div>
+          </div>
+        )}
     </div>
   );
 };

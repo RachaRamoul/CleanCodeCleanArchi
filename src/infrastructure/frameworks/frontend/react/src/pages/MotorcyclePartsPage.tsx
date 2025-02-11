@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import SubHeader from '../components/SubHeader';
 import { motorcyclePartService } from '../services/motorcyclePartService';
 import { MotorcyclePart } from '../../../../../../domain/entities/motorcycle-part.entity';
-import "./MotorcyclePage.css";
+import "./MotorcyclePartsPage.css";
 
 const MotorcyclePartsPage: React.FC = () => {
   const [parts, setParts] = useState<MotorcyclePart[]>([]);
@@ -14,7 +14,6 @@ const MotorcyclePartsPage: React.FC = () => {
     lowStockAlert: 0,
   });
   const [showForm, setShowForm] = useState(false);
-  const [selectedPart, setSelectedPart] = useState<MotorcyclePart | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 

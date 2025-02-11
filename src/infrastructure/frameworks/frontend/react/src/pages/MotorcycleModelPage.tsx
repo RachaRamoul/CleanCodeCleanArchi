@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Alert, IconButton, Backdrop } from '@mui/material';
+import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Alert, IconButton } from '@mui/material';
 import SubHeader from '../components/SubHeader';
 import { motorcycleModelService } from '../services/motorcycleModelService';
 import { MotorcycleModel } from '../../../../../../domain/entities/motorcycle-model.entity';
@@ -105,7 +105,7 @@ const MotorcycleModelPage: React.FC = () => {
                 <TableBody>
                   {motorcycleModels.map((model) => (
                     <TableRow sx={{ backgroundColor: 'white' }} key={model.id}>
-                      <TableCell>{model.name.value}</TableCell>
+                      <TableCell>{typeof model.name=== 'string' ? model.name : model.name.toString()}</TableCell>
                       <TableCell>{model.maintenanceFrequencyInKilometers} km</TableCell>
                       <TableCell>
                         <IconButton color="error" onClick={() => handleDeleteModel(model.id)}>
@@ -118,40 +118,18 @@ const MotorcycleModelPage: React.FC = () => {
               </Table></>
         )}
       </TableContainer>
-
-      <Dialog 
-          open={showAddForm} 
-          onClose={() => setShowAddForm(false)} 
-          BackdropComponent={(props) => (
-            <Backdrop {...props} style={{ backgroundColor: 'white' }} />
-          )}
-      >
-        <DialogTitle>Ajouter un modèle de moto</DialogTitle>
-        <DialogContent>
-          {formError && <Alert severity="error" sx={{ marginBottom: '10px' }}>{formError}</Alert>}
-          <TextField
-            label="Nom du modèle"
-            name="name"
-            fullWidth
-            margin="dense"
-            value={newModel.name}
-            onChange={handleInputChange}
-          />
-          <TextField
-            label="Fréquence de maintenance (en km)"
-            name="maintenanceFrequencyInKilometers"
-            type="number"
-            fullWidth
-            margin="dense"
-            value={newModel.maintenanceFrequencyInKilometers}
-            onChange={handleInputChange}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleAddModel} variant="contained" color="primary">Ajouter</Button>
-          <Button onClick={() => setShowAddForm(false)} color="secondary">Annuler</Button>
-        </DialogActions>
-      </Dialog>
+        {showAddForm && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <h2>Ajouter un modèle</h2>
+              {formError && <p className="error-message">{formError}</p>}
+              <input type="text" name="name" placeholder="Nom du modèle" value={newModel.name} onChange={handleInputChange} />
+              <input type="number" name="maintenanceFrequencyInKilometers" placeholder="Fréquence de maintenance (km)" value={newModel.maintenanceFrequencyInKilometers} onChange={handleInputChange} />
+              <button onClick={handleAddModel}>Ajouter</button>
+              <button className="cancel" onClick={() => setShowAddForm(false)}>Annuler</button>
+            </div>
+          </div>
+        )}
     </div>
   );
 };

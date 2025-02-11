@@ -28,8 +28,21 @@ export class MotorcyclePartRepositoryPostgres implements IMotorcyclePartReposito
     return parts.map(MotorcyclePartMapper.toDomain);
   }
 
-  async update(motorcyclePart: MotorcyclePart): Promise<void> {
-    await this.repository.update(motorcyclePart.id, motorcyclePart);
+  async update(motorcyclePart: MotorcyclePart): Promise<MotorcyclePart> {
+    const result = await this.repository.createQueryBuilder()
+      .update(MotorcyclePart)
+      .set(motorcyclePart)
+      .where("id = :id", { id: motorcyclePart.id })
+      .returning("*")
+      .execute();
+  
+    const updatedMotorcyclePart = result.raw[0];
+  
+    if (!updatedMotorcyclePart) {
+      throw new Error('motorcycle Part not found for update');
+    }
+  
+    return MotorcyclePartMapper.toDomain(updatedMotorcyclePart);
   }
 
   async delete(id: string): Promise<void> {
